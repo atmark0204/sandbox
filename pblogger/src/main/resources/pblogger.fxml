@@ -24,6 +24,27 @@
     </ChoiceBox>
     <Accordion prefHeight="376.0" prefWidth="807.999977929685" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
       <expandedPane>
+        <TitledPane fx:id="x2" animated="false" text="統計">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="pbStatTable" prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                  <columns>
+                    <TableColumn id="seriesName" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" text="系列" fx:id="statIdCol" />
+                    <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="1面" fx:id="statStage1Col" />
+                    <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="2面" fx:id="statStage2Col" />
+                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="3面" fx:id="statStage3Col" />
+                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="4面" fx:id="statStage4Col" />
+                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="5面" fx:id="statStage5Col" />
+                    <TableColumn id="totalPoint" maxWidth="200.0" prefWidth="100.0" text="合計" fx:id="statStageTotalCol" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+      </expandedPane>
+      <panes>
         <TitledPane fx:id="x1" animated="false" text="チャート" textAlignment="LEFT" underline="false">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -48,32 +69,12 @@
                     </FXCollections>
                   </items>
                 </ChoiceBox>
+                <Label id="chatExtraLabel" fx:id="chartExtraLabel" layoutX="120.0" layoutY="-2.0" prefHeight="21.0" prefWidth="212.0" text="" />
               </children>
             </AnchorPane>
           </content>
         </TitledPane>
-      </expandedPane>
-      <panes>
-        <fx:reference source="x1" />
-        <TitledPane fx:id="x2" animated="false" text="統計">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView fx:id="pbStatTable" prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="125.0" text="系列" fx:id="statIdCol" />
-                    <TableColumn prefWidth="100.0" text="1面" fx:id="statStage1Col" />
-                    <TableColumn prefWidth="100.0" text="2面" fx:id="statStage2Col" />
-                    <TableColumn prefWidth="100.0" text="3面" fx:id="statStage3Col" />
-                    <TableColumn prefWidth="100.0" text="4面" fx:id="statStage4Col" />
-                    <TableColumn prefWidth="100.0" text="5面" fx:id="statStage5Col" />
-                    <TableColumn prefWidth="100.0" text="合計" fx:id="statStageTotalCol" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </TitledPane>
+        <fx:reference source="x2" />
       </panes>
     </Accordion>
     <Button fx:id="clear1b" layoutX="392.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="1面クリア" textAlignment="CENTER" />

@@ -20,11 +20,16 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
+import org.gillius.jfxutils.chart.ChartPanManager;
+import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.format.FormatUtils;
@@ -87,13 +92,13 @@ public class PbLoggerController extends AbstractMainController {
     @FXML
     private LineChart<Number, Number> pbChart;
 
+    @FXML
+    private Label chartExtraLabel;
+
     /**
      * ポイント戦の得点データ保持.
      *
-     * リストの要素 : 1-5, 全面
-     * マップ
-     *  key : 系列名(id)
-     *  value : 系列のSeries
+     * リストの要素 : 1-5, 全面 マップ key : 系列名(id) value : 系列のSeries
      */
     private List<Map<String, XYChart.Series<Number, Number>>> pbDataMapList = new ArrayList<Map<String, XYChart.Series<Number, Number>>>(6);
 
@@ -113,31 +118,31 @@ public class PbLoggerController extends AbstractMainController {
      * 1面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStage1Col;
+    private TableColumn<PbStatTable, String> statStage1Col;
 
     /**
      * 2面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStage2Col;
+    private TableColumn<PbStatTable, String> statStage2Col;
 
     /**
      * 3面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStage3Col;
+    private TableColumn<PbStatTable, String> statStage3Col;
 
     /**
      * 4面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStage4Col;
+    private TableColumn<PbStatTable, String> statStage4Col;
 
     /**
      * 5面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStage5Col;
+    private TableColumn<PbStatTable, String> statStage5Col;
 
     /**
      * 全面点数.
@@ -175,11 +180,11 @@ public class PbLoggerController extends AbstractMainController {
         PbLoggerLogic logic = (PbLoggerLogic) getService().getLogic();
 
         statIdCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("id"));
-        statStage1Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point1"));
-        statStage2Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point2"));
-        statStage3Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point3"));
-        statStage4Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point4"));
-        statStage5Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point5"));
+        statStage1Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage1"));
+        statStage2Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage2"));
+        statStage3Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage3"));
+        statStage4Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage4"));
+        statStage5Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage5"));
         statStageTotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("pointTotal"));
 
         logic.getPointBattleLogic().setStatTable(pbStatTable);
@@ -342,12 +347,47 @@ public class PbLoggerController extends AbstractMainController {
                 display(newVal.intValue() + 1);
             }
         });
+
+        pbChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                double xStart = pbChart.getXAxis().getLocalToParentTransform().getTx();
+                double axisXRelativeMousePosition = mouseEvent.getX() - xStart;
+                chartExtraLabel.setText(String.format("%d, %d (%d, %d); %d - %d", (int) mouseEvent.getSceneX(), (int) mouseEvent.getSceneY(),
+                        (int) mouseEvent.getX(), (int) mouseEvent.getY(), (int) xStart,
+                        pbChart.getXAxis().getValueForDisplay(axisXRelativeMousePosition).intValue()));
+            }
+        });
+
+        // Panning works via either secondary (right) mouse or primary with ctrl
+        // held down
+        ChartPanManager panner = new ChartPanManager(pbChart);
+        panner.setMouseFilter(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY || (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.isShortcutDown())) {
+                    // let it through
+                } else {
+                    mouseEvent.consume();
+                }
+            }
+        });
+        panner.start();
+
+        JFXChartUtil.setupZooming(pbChart, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() != MouseButton.PRIMARY || mouseEvent.isShortcutDown())
+                    mouseEvent.consume();
+            }
+        });
     }
 
     /**
      * 指定ステージの全系列のデータを表示する.
      *
-     * @param stageNo ステージ番号
+     * @param stageNo
+     *            ステージ番号
      */
     private void display(int stageNo) {
 
@@ -369,7 +409,8 @@ public class PbLoggerController extends AbstractMainController {
      */
     private AnimationTimer prepareTimeline(final int stageNo) {
         return new AnimationTimer() {
-            @Override public void handle(long now) {
+            @Override
+            public void handle(long now) {
                 addDataToSeries(stageNo);
             }
         };
