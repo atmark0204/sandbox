@@ -65,24 +65,45 @@ public class PbLoggerController extends AbstractMainController {
     @FXML
     private ToggleButton startTb;
 
+    /**
+     * 1面クリアボタン.
+     */
     @FXML
     private Button clear1b;
 
+    /**
+     * 2面クリアボタン.
+     */
     @FXML
     private Button clear2b;
 
+    /**
+     * 3面クリアボタン.
+     */
     @FXML
     private Button clear3b;
 
+    /**
+     * 4面クリアボタン.
+     */
     @FXML
     private Button clear4b;
 
+    /**
+     * 5面クリアボタン.
+     */
     @FXML
     private Button clear5b;
 
+    /**
+     * 過去データ読み込みボタン.
+     */
     @FXML
     private Button loadPastDataB;
 
+    /**
+     * ステージ選択.
+     */
     @FXML
     private ChoiceBox<String> stageCb;
 
@@ -92,6 +113,9 @@ public class PbLoggerController extends AbstractMainController {
     @FXML
     private LineChart<Number, Number> pbChart;
 
+    /**
+     * 座標表示用.
+     */
     @FXML
     private Label chartExtraLabel;
 
@@ -377,8 +401,9 @@ public class PbLoggerController extends AbstractMainController {
         JFXChartUtil.setupZooming(pbChart, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() != MouseButton.PRIMARY || mouseEvent.isShortcutDown())
+                if (mouseEvent.getButton() != MouseButton.PRIMARY || mouseEvent.isShortcutDown()) {
                     mouseEvent.consume();
+                }
             }
         });
     }
@@ -406,6 +431,8 @@ public class PbLoggerController extends AbstractMainController {
 
     /**
      * チャートの更新アニメーションを定義する.
+     *
+     * @return AnimationTimer
      */
     private AnimationTimer prepareTimeline(final int stageNo) {
         return new AnimationTimer() {

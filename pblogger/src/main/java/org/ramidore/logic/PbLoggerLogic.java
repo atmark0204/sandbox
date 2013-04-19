@@ -3,8 +3,6 @@ package org.ramidore.logic;
 import java.util.Properties;
 
 import org.ramidore.core.PacketData;
-import org.ramidore.logic.AbstractRedomiraLogic;
-import org.ramidore.logic.DebugLogic;
 import org.ramidore.logic.system.PointBattleLogic;
 
 /**
@@ -16,31 +14,9 @@ import org.ramidore.logic.system.PointBattleLogic;
 public final class PbLoggerLogic extends AbstractRedomiraLogic {
 
     /**
-     * . 日本語エンコードはWindows-31J
-     *
-     * ※ SJISだと機種依存文字が化ける
-     */
-    public static final String ENCODING = "Windows-31J";
-
-    /**
-     * 0x00以外の16進文字列にマッチする正規表現パターン.
-     */
-    public static final String BASE_PATTERN = "((?:[1-9A-F]{2}|[1-9A-F]0|0[1-9A-F])+)";
-
-    /**
-     * お知らせメッセージ.
-     */
-    private String oshiraseMessage;
-
-    /**
      * ポイント戦.
      */
     private PointBattleLogic pointBattleLogic;
-
-    /**
-     * デバッグ.
-     */
-    private DebugLogic debugLogic;
 
     /**
      * コンストラクタ.
@@ -61,8 +37,6 @@ public final class PbLoggerLogic extends AbstractRedomiraLogic {
         if (pointBattleLogic.execute(data)) {
             return true;
         }
-
-        //debugLogic.execute(data);
 
         return false;
     }
@@ -97,54 +71,21 @@ public final class PbLoggerLogic extends AbstractRedomiraLogic {
     }
 
     @Override
-    public final void loadConfig() {
+    public void loadConfig() {
         // nop
     }
     @Override
-    public final void saveConfig() {
+    public void saveConfig() {
         // nop
-    }
-
-    /**
-     * . accessor
-     *
-     * @return debugLogic
-     */
-    public DebugLogic getDebugLogic() {
-        return debugLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param debugLogic
-     *            セットする debugLogic
-     */
-    public void setDebugLogic(DebugLogic debugLogic) {
-        this.debugLogic = debugLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return oshiraseMessage
-     */
-    public String getOshiraseMessage() {
-        return oshiraseMessage;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param oshiraseMessage セットする oshiraseMessage
-     */
-    public void setOshiraseMessage(String oshiraseMessage) {
-        this.oshiraseMessage = oshiraseMessage;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO 自動生成されたメソッド・スタブ
         return false;
+    }
+
+    @Override
+    public String getOshiraseMessage() {
+        return null;
     }
 }
