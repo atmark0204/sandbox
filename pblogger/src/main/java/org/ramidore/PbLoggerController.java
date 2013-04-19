@@ -389,9 +389,7 @@ public class PbLoggerController extends AbstractMainController {
         panner.setMouseFilter(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() == MouseButton.SECONDARY || (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.isShortcutDown())) {
-                    // let it through
-                } else {
+                if (!(mouseEvent.getButton() == MouseButton.SECONDARY || (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.isShortcutDown()))) {
                     mouseEvent.consume();
                 }
             }
@@ -432,6 +430,7 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * チャートの更新アニメーションを定義する.
      *
+     * @param stageNo ステージ番号
      * @return AnimationTimer
      */
     private AnimationTimer prepareTimeline(final int stageNo) {
@@ -445,6 +444,8 @@ public class PbLoggerController extends AbstractMainController {
 
     /**
      * 別スレッドで更新されているデータを取得し、チャートにデータを追加する.
+     *
+     * @param stageNo ステージ番号
      */
     private void addDataToSeries(int stageNo) {
 

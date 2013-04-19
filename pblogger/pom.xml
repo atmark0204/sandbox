@@ -8,9 +8,7 @@
 	<artifactId>pblogger</artifactId>
 	<name>pblogger</name>
 
-	<!--
 	<packaging>jar</packaging>
-	-->
 	<version>0.0.1-SNAPSHOT</version>
 
 	<organization>
@@ -19,7 +17,7 @@
 	</organization>
 
 	<properties>
-		<slf4j.version>1.6.1</slf4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
 	</properties>
 
 	<build>
