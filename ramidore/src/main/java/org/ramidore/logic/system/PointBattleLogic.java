@@ -118,17 +118,20 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
         Matcher matcher = pattern.matcher(data.getStrData());
 
-        if (!isEnd && currentStageNo == 0) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        if (!isEnd && currentStageNo < 6 && matcher.matches()) {
 
-            this.id = sdf.format(new Date());
+            if (currentStageNo == 0) {
 
-            LOG.info(id);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-            currentStat.setId(id);
+                this.id = sdf.format(new Date());
 
-            addStageNo();
-        } else if (!isEnd && currentStageNo < 6 && matcher.matches()) {
+                LOG.info(id);
+
+                currentStat.setId(id);
+
+                addStageNo();
+            }
 
             ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
             ConcurrentLinkedQueue<PointBatteleChartBean> allDataQ = chartDataQList.get(5);

@@ -5,7 +5,20 @@
 	<artifactId>ramidore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<!-- jnetpcap用にリモートリポジトリ追加 -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- jnetpcap -->
 	<repositories>
 		<repository>
 			<id>clojars.org</id>
