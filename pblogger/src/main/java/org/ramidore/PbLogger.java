@@ -6,9 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * . メインクラス
  *
@@ -16,11 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PbLogger extends Application {
-
-    /**
-     * . Logger
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(PbLogger.class);
 
     /**
      * アプリケーション名.
@@ -39,8 +31,6 @@ public class PbLogger extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-
-        LOG.info("JavaFX " + System.getProperty("javafx.version"));
 
         stage.setTitle(APPLICATION_NAME);
 
@@ -76,6 +66,8 @@ public class PbLogger extends Application {
      *            引数
      */
     public static void main(final String[] args) {
+
+        System.loadLibrary("jnetpcap");
 
         launch(args);
     }
