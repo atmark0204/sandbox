@@ -20,11 +20,15 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -300,6 +304,7 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * チャート初期化.
      */
+    @SuppressWarnings("rawtypes")
     private void initializeChart() {
 
         clear1b.setDisable(true);
@@ -364,7 +369,6 @@ public class PbLoggerController extends AbstractMainController {
         }
 
         stageCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @SuppressWarnings("rawtypes")
             @Override
             public void changed(ObservableValue ov, Number oldVal, Number newVal) {
 
@@ -377,9 +381,8 @@ public class PbLoggerController extends AbstractMainController {
             public void handle(MouseEvent mouseEvent) {
                 double xStart = pbChart.getXAxis().getLocalToParentTransform().getTx();
                 double axisXRelativeMousePosition = mouseEvent.getX() - xStart;
-                chartExtraLabel.setText(String.format("%d, %d (%d, %d); %d - %d", (int) mouseEvent.getSceneX(), (int) mouseEvent.getSceneY(),
-                        (int) mouseEvent.getX(), (int) mouseEvent.getY(), (int) xStart,
-                        pbChart.getXAxis().getValueForDisplay(axisXRelativeMousePosition).intValue()));
+                chartExtraLabel.setText(String.format("%d, %d (%d, %d); %d - %d", (int) mouseEvent.getSceneX(), (int) mouseEvent.getSceneY(), (int) mouseEvent.getX(), (int) mouseEvent.getY(),
+                        (int) xStart, pbChart.getXAxis().getValueForDisplay(axisXRelativeMousePosition).intValue()));
             }
         });
 
@@ -404,6 +407,29 @@ public class PbLoggerController extends AbstractMainController {
                 }
             }
         });
+
+        ContextMenu menu = new ContextMenu();
+        MenuItem item = new MenuItem("コピー");
+        item.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PbStatTable stat = pbStatTable.getSelectionModel().getSelectedItem();
+
+                final Clipboard cb = Clipboard.getSystemClipboard();
+
+                final ClipboardContent c = new ClipboardContent();
+
+                c.putString(stat.getId() + "\t" + stat.getStage1() + "\t" + stat.getStage2() + "\t" + stat.getStage3() + "\t" + stat.getStage4() + "\t" + stat.getStage5() + "\t"
+                        + +stat.getPointTotal());
+
+                cb.setContent(c);
+
+                event.consume();
+            }
+        });
+        menu.getItems().addAll(item);
+
+        pbStatTable.setContextMenu(menu);
     }
 
     /**
@@ -430,7 +456,8 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * チャートの更新アニメーションを定義する.
      *
-     * @param stageNo ステージ番号
+     * @param stageNo
+     *            ステージ番号
      * @return AnimationTimer
      */
     private AnimationTimer prepareTimeline(final int stageNo) {
@@ -445,7 +472,8 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * 別スレッドで更新されているデータを取得し、チャートにデータを追加する.
      *
-     * @param stageNo ステージ番号
+     * @param stageNo
+     *            ステージ番号
      */
     private void addDataToSeries(int stageNo) {
 
@@ -459,7 +487,7 @@ public class PbLoggerController extends AbstractMainController {
             return;
         }
 
-        org.ramidore.bean.PointBatteleChartBean data = dataQ.remove();
+        PointBatteleChartBean data = dataQ.remove();
 
         // データ系列名
         String id = data.getId();
