@@ -121,6 +121,12 @@ public class PbStatTable {
         stage5 = new SimpleStringProperty();
     }
 
+    @Override
+    public String toString() {
+
+        return getId() + "\t" + getStage1() + "\t" + getStage2() + "\t" + getStage3() + "\t" + getStage4() + "\t" + getStage5();
+    }
+
     public String getStage1() {
 
         return stage1.get();

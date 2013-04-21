@@ -97,6 +97,11 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     private PointBatteleChartBean currentData = null;
 
     /**
+     * 現在のポイントマップ.
+     */
+    private Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
+
+    /**
      * 現在の統計情報.
      */
     private PbStatTable currentStat = null;
@@ -111,6 +116,8 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         for (int i = 0; i < 6; i++) {
             chartDataQList.add(new ConcurrentLinkedQueue<PointBatteleChartBean>());
         }
+
+        pointMap.put(0, 0);
     }
 
     @Override
@@ -138,7 +145,9 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
             int point = RedomiraUtil.intValueFromDescHexString(matcher.group(1));
 
-            currentData = new PointBatteleChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point);
+            pointMap.put(currentStageNo, point);
+
+            currentData = new PointBatteleChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
             dataQ.add(currentData);
             allDataQ.add(currentData);
 
@@ -191,7 +200,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
                 String id = list.get(0);
 
-                if (this.id.equals(id)) {
+                if (id.equals(this.id)) {
                     // 記録中のファイルは無視
                     continue;
                 }
@@ -200,12 +209,6 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
                 for (int i = 1; i < list.size(); i++) {
                     PointBatteleChartBean bean = loadLine(id, list.get(i));
-
-                    ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = chartDataQList.get(bean.getStageNo() - 1);
-                    ConcurrentLinkedQueue<PointBatteleChartBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
-
-                    dataQ.add(bean);
-                    allDataQ.add(bean);
 
                     dataList.add(bean);
                 }
@@ -249,16 +252,30 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      */
     private void statData(String id, List<PointBatteleChartBean> dataList) {
 
+        // key : ステージ番号 value : 得点
         Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
+        // key : ステージ番号 value : 得点扱いになった数（死亡によるポイント減少含む）
         Map<Integer, Integer> mobCountMap = new HashMap<Integer, Integer>();
-        for (int i = 0; i < 6; i++) {
-            pointMap.put(i + 1, 0);
-            mobCountMap.put(i + 1, 0);
+        for (int i = 0; i < 7; i++) {
+            // 0で初期化
+            pointMap.put(i, 0);
+            mobCountMap.put(i, 0);
         }
 
         for (PointBatteleChartBean data : dataList) {
             pointMap.put(data.getStageNo(), data.getPoint());
             mobCountMap.put(data.getStageNo(), data.getStageSequentialNo());
+        }
+
+        for (PointBatteleChartBean data : dataList) {
+
+            data.setPointOffset(pointMap.get(data.getStageNo() - 1));
+
+            ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = chartDataQList.get(data.getStageNo() - 1);
+            ConcurrentLinkedQueue<PointBatteleChartBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
+
+            dataQ.add(data);
+            allDataQ.add(data);
         }
 
         PbStatTable row = new PbStatTable();
@@ -311,6 +328,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             break;
         case 2:
             stat.setMobCount2(currentData.getStageSequentialNo());
+            // 前面の最終点数をマイナスする
             stat.setPoint2(p - stat.getPoint1());
             stat.setStage2();
             break;

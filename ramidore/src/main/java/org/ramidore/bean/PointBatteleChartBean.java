@@ -43,7 +43,41 @@ public class PointBatteleChartBean {
     private int point;
 
     /**
+     * 前ステージのポイント.
+     */
+    private int pointOffset = 0;
+
+    /**
      * コンストラクタ.
+     *
+     * @param id
+     *            識別子
+     * @param sequentialNo
+     *            シーケンス番号
+     * @param stageNo
+     *            ステージ番号
+     * @param stageSequentialNo
+     *            ステージシーケンス番号
+     * @param date
+     *            時刻
+     * @param point
+     *            点数
+     * @param pointOffset
+     *            前面の最終点数
+     */
+    public PointBatteleChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point, int pointOffset) {
+
+        this.id = id;
+        this.sequentialNo = sequentialNo;
+        this.stageNo = stageNo;
+        this.stageSequentialNo = stageSequentialNo;
+        this.date = date;
+        this.point = point;
+        this.pointOffset = pointOffset;
+    }
+
+    /**
+     * コンストラクタ(pointOffset無し).
      *
      * @param id
      *            識別子
@@ -70,7 +104,7 @@ public class PointBatteleChartBean {
 
     public Data<Number, Number> toStageData() {
 
-        return new Data<Number, Number>(stageSequentialNo, point);
+        return new Data<Number, Number>(stageSequentialNo, point - pointOffset);
     }
 
     public Data<Number, Number> toData() {
@@ -173,4 +207,22 @@ public class PointBatteleChartBean {
         this.id = id;
     }
 
+    /**
+     * getter.
+     *
+     * @return pointOffset
+     */
+    public int getPointOffset() {
+        return pointOffset;
+    }
+
+    /**
+     * setter.
+     *
+     * @param pointOffset
+     *            セットする pointOffset
+     */
+    public void setPointOffset(int pointOffset) {
+        this.pointOffset = pointOffset;
+    }
 }
