@@ -2,17 +2,25 @@
 
 	<timestamp key="byMinutes" datePattern="yyyy-MM-dd_HH-mm"/>
 
-	<appender name="FILE_PB" class="ch.qos.logback.core.FileAppender">
-		<file>ポイント戦_${byMinutes}.log</file>
-		<append>false</append>
-		<encoder>
-			<pattern>%msg%n
-			</pattern>
-		</encoder>
+	<appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>notuse</key>
+			<defaultValue>notuse</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE_PB" class="ch.qos.logback.core.FileAppender">
+				<file>ポイント戦_${byMinutes}.log</file>
+				<append>false</append>
+				<encoder>
+					<pattern>%msg%n
+					</pattern>
+				</encoder>
+			</appender>
+		</sift>
 	</appender>
 
 	<logger name="org.ramidore.logic.system.PointBattleLogic" level="INFO">
-		<appender-ref ref="FILE_PB" />
+		<appender-ref ref="SIFT" />
 	</logger>
 
 	<!-- for dev env -->
