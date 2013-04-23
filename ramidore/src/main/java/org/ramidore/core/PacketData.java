@@ -2,6 +2,8 @@ package org.ramidore.core;
 
 import java.util.Date;
 
+import org.ramidore.util.RedomiraUtil;
+
 /**
  * パケットモデル.
  *
@@ -40,14 +42,7 @@ public class PacketData {
 
         this.rawData = b;
 
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < b.length; i++) {
-
-            builder.append(String.format("%02X", b[i]));
-        }
-
-        strData = builder.toString();
+        strData = RedomiraUtil.toHex(b);
     }
 
     /**

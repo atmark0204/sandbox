@@ -1,11 +1,16 @@
 package org.ramidore.core;
 
+import java.io.File;
+
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapDumper;
 import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.PcapPacket;
-import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.JPacketHandler;
 
 /**
  * ダンプファイル作成用.
@@ -15,18 +20,12 @@ import org.jnetpcap.packet.PcapPacketHandler;
  * @author atmark
  *
  */
-@Deprecated
 public class DumperTask extends OnlineTask {
 
     /**
      * ダンパー.
      */
-    private PcapDumper dumper;
-
-    /**
-     * ハンドラ.
-     */
-    private PcapPacketHandler<PcapDumper> dumpHandler;
+    private PcapDumper dumper = null;
 
     /**
      * コンストラクタ.
@@ -38,27 +37,27 @@ public class DumperTask extends OnlineTask {
 
         super(device, listenAddress);
 
-        setHandler();
+        dumper = new PcapDumper();
     }
 
-    /**
-     * ハンドラを設定する.
-     */
-    protected void setHandler() {
-        dumpHandler = new PcapPacketHandler<PcapDumper>() {
+    @SuppressWarnings("rawtypes")
+    @Override
+    protected JPacketHandler packetHandlerFactory() {
+        return new JPacketHandler<PcapDumper>() {
             @Override
-            public void nextPacket(PcapPacket packet, PcapDumper dumper) {
+            public void nextPacket(JPacket packet, PcapDumper dumper) {
                 dumper.dump(packet.getCaptureHeader(), packet);
             }
         };
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Void call() {
 
         if (open() && setFilter()) {
 
-            pcap.loop(Pcap.LOOP_INFINITE, dumpHandler, dumper);
+            pcap.loop(Pcap.LOOP_INFINITE, packetHandlerFactory(), dumper);
         }
 
         return null;
@@ -67,11 +66,20 @@ public class DumperTask extends OnlineTask {
     @Override
     protected boolean open() {
 
-        boolean result = super.open();
+        if (!super.open()) {
 
-        dumper = pcap.dumpOpen("dump.pcap");
+            return false;
+        }
 
-        return result;
+        File f = saveFile("PCAP", "*.pcap");
+
+        if (f != null) {
+            dumper = pcap.dumpOpen(f.getAbsolutePath());
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -94,6 +102,23 @@ public class DumperTask extends OnlineTask {
 
         dumper.close();
         pcap.close();
+    }
+
+    /**
+     * ファイル保存ダイアログを開く.
+     *
+     * @param kind ファイル種別
+     * @param extensionPat 拡張子(*.foo)
+     * @return File
+     */
+    private File saveFile(String kind, String extensionPat) {
+
+        FileChooser fc = new FileChooser();
+        fc.setTitle("select file");
+        fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
+        fc.getExtensionFilters().add(new ExtensionFilter(kind, extensionPat));
+
+        return fc.showSaveDialog(null);
     }
 
 }

@@ -32,11 +32,6 @@ public class OnlineTask extends RamidoreTask {
     private PcapIf device;
 
     /**
-     * パケットハンドラ.
-     */
-    private JPacketHandler<AbstractRedomiraLogic> packetHandler;
-
-    /**
      * ロジック.
      */
     private AbstractRedomiraLogic logic;
@@ -53,8 +48,6 @@ public class OnlineTask extends RamidoreTask {
         this.device = device;
         this.listenAddress = listenAddress;
         this.logic = logic;
-
-        setHandler();
     }
 
     /**
@@ -68,13 +61,12 @@ public class OnlineTask extends RamidoreTask {
         this.device = device;
         this.listenAddress = listenAddress;
     }
-    /**
-     * . パケットのハンドラを設定
-     */
-    protected void setHandler() {
 
-        // キャプチャしたパケットのハンドル
-        packetHandler = new JPacketHandler<AbstractRedomiraLogic>() {
+    @SuppressWarnings("rawtypes")
+    @Override
+    protected JPacketHandler packetHandlerFactory() {
+
+        return new JPacketHandler<AbstractRedomiraLogic>() {
 
             private Tcp tcp = new Tcp();
 
@@ -109,6 +101,7 @@ public class OnlineTask extends RamidoreTask {
         };
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Void call() {
 
@@ -116,7 +109,7 @@ public class OnlineTask extends RamidoreTask {
 
         if (open() && setFilter()) {
 
-            pcap.loop(Pcap.LOOP_INFINITE, packetHandler, logic);
+            pcap.loop(Pcap.LOOP_INFINITE, packetHandlerFactory(), logic);
         }
 
         return null;

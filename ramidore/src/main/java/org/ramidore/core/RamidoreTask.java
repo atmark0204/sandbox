@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapBpfProgram;
+import org.jnetpcap.packet.JPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,4 +85,11 @@ public abstract class RamidoreTask extends Task<Void> {
 
         LOG.trace("pcap close");
     }
+
+    /**
+     * パケットハンドラを生成するファクトリ.
+     *
+     * @return パケットハンドラ
+     */
+    protected abstract JPacketHandler packetHandlerFactory();
 }

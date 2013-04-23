@@ -4,6 +4,7 @@
 package org.ramidore.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -29,17 +30,23 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * リアルタイムキャプチャ用.
      */
-    public static final int MODE_ONLINE = 1;
+    public static final int MODE_ONLINE = 0;
 
     /**
      * オフラインファイル読み込み用.
      */
-    public static final int MODE_OFFLINE = 2;
+    public static final int MODE_OFFLINE = 1;
 
     /**
      * ダンプ出力用.
      */
-    public static final int MODE_DUMP = 3;
+    public static final int MODE_DUMP = 2;
+
+    public static final List<String> MODE = Collections.unmodifiableList(new ArrayList<String>(){{
+        add("on-line cap");
+        add("off-line cap");
+        add("dump");
+    }});
 
     /**
      * 動作モード.

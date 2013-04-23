@@ -45,12 +45,7 @@ public class OfflineTask extends OnlineTask {
 
         StringBuilder errbuf = new StringBuilder();
 
-        FileChooser fc = new FileChooser();
-        fc.setTitle("select file");
-        fc.setInitialDirectory(new File(System.getProperty("user.home")));
-        fc.getExtensionFilters().add(new ExtensionFilter("PCAP", "*.pcap"));
-
-        File f = fc.showOpenDialog(null);
+        File f = selectFile("PCAP", "*.pcap");
 
         if (f != null) {
             pcap = Pcap.openOffline(f.getAbsolutePath(), errbuf);
@@ -67,5 +62,22 @@ public class OfflineTask extends OnlineTask {
         }
 
         return true;
+    }
+
+    /**
+     * ファイルを選択する.
+     *
+     * @param kind 種別
+     * @param extensionPat 拡張子(*.foo)
+     * @return File
+     */
+    private File selectFile(String kind, String extensionPat) {
+
+        FileChooser fc = new FileChooser();
+        fc.setTitle("select file");
+        fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
+        fc.getExtensionFilters().add(new ExtensionFilter(kind, extensionPat));
+
+        return fc.showOpenDialog(null);
     }
 }
