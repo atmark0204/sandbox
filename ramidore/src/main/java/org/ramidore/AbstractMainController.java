@@ -143,4 +143,13 @@ public abstract class AbstractMainController implements Initializable, IConfigur
         this.service = service;
     }
 
+    /**
+     * getter.
+     *
+     * @return log
+     */
+    public static Logger getLog() {
+        return LOG;
+    }
+
 }

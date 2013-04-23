@@ -44,7 +44,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * 動作モード.
      */
-    private int mode;
+    private int mode = MODE_ONLINE;
 
     /**
      * . Logger
@@ -80,6 +80,23 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      * カレントタスク.
      */
     private RamidoreTask currentTask;
+
+    /**
+     * コンストラクタ.
+     *
+     * @param logic
+     *            ロジック
+     * @param config
+     *            設定
+     */
+    public PacketAnalyzeService(AbstractRedomiraLogic logic, Properties config) {
+
+        this.logic = logic;
+
+        initialize();
+
+        loadConfig(config);
+    }
 
     /**
      * コンストラクタ.
@@ -326,5 +343,23 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      */
     public void setLogic(AbstractRedomiraLogic logic) {
         this.logic = logic;
+    }
+
+    /**
+     * getter.
+     *
+     * @return mode
+     */
+    public int getMode() {
+        return mode;
+    }
+
+    /**
+     * setter.
+     *
+     * @param mode セットする mode
+     */
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 }

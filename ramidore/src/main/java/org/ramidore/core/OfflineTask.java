@@ -1,5 +1,10 @@
 package org.ramidore.core;
 
+import java.io.File;
+
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
 import org.ramidore.logic.AbstractRedomiraLogic;
@@ -40,7 +45,18 @@ public class OfflineTask extends OnlineTask {
 
         StringBuilder errbuf = new StringBuilder();
 
-        pcap = Pcap.openOffline("dump.pcap", errbuf);
+        FileChooser fc = new FileChooser();
+        fc.setTitle("select file");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        fc.getExtensionFilters().add(new ExtensionFilter("PCAP", "*.pcap"));
+
+        File f = fc.showOpenDialog(null);
+
+        if (f != null) {
+            pcap = Pcap.openOffline(f.getAbsolutePath(), errbuf);
+        } else {
+            return false;
+        }
 
         if (pcap == null) {
             LOG.error("Error while opening offline file for capture: " + errbuf.toString());
