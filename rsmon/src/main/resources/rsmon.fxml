@@ -13,9 +13,6 @@
     <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
       <items>
         <FXCollections fx:factory="observableArrayList">
-          <String fx:value="アイテム1" />
-          <String fx:value="アイテム2" />
-          <String fx:value="アイテム3" />
         </FXCollections>
       </items>
     </ChoiceBox>
@@ -23,9 +20,6 @@
     <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
       <items>
         <FXCollections fx:factory="observableArrayList">
-          <String fx:value="アイテム1" />
-          <String fx:value="アイテム2" />
-          <String fx:value="アイテム3" />
         </FXCollections>
       </items>
     </ChoiceBox>
