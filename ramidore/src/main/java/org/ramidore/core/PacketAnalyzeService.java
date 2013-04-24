@@ -86,7 +86,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * カレントタスク.
      */
-    private RamidoreTask currentTask;
+    private AbstractTask currentTask;
 
     /**
      * コンストラクタ.
@@ -181,7 +181,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
             currentTask = new DumperTask(currentDevice, listenAddress);
         }
 
-        LOG.trace("RedomiraTask created");
+        LOG.trace("Task created");
 
         return currentTask;
     }
@@ -278,6 +278,48 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     }
 
     /**
+     * 表示用デバイス名一覧を取得.
+     * @return list
+     */
+    public List<String> getDeviceNameList() {
+
+        List<String> deviceNameList = new ArrayList<String>();
+
+        for (PcapIf device : devices) {
+
+            deviceNameList.add(device.getDescription());
+        }
+
+        return deviceNameList;
+    }
+
+    /**
+     * 表示用IPアドレス一覧を取得.
+     * @return list
+     */
+    public List<String> getAddressList() {
+
+        List<String> addressList = new ArrayList<String>();
+
+        for (PcapAddr pcapAddr : addresses) {
+
+            addressList.add(FormatUtils.ip(pcapAddr.getAddr().getData()));
+        }
+
+        return addressList;
+    }
+
+    public int getCurrentDeviceIndex() {
+
+        return devices.indexOf(currentDevice);
+    }
+
+    public int getCurrentListenAddressIndex() {
+
+        return addresses.indexOf(listenAddress);
+    }
+
+    /**
      * . ListenするIPアドレスを設定する
      *
      * @param i
@@ -338,7 +380,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      *
      * @return currentTask
      */
-    public RamidoreTask getCurrentTask() {
+    public AbstractTask getCurrentTask() {
         return currentTask;
     }
 

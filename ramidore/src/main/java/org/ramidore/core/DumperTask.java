@@ -15,8 +15,6 @@ import org.jnetpcap.packet.JPacketHandler;
 /**
  * ダンプファイル作成用.
  *
- * バグあり
- *
  * @author atmark
  *
  */
@@ -51,16 +49,18 @@ public class DumperTask extends OnlineTask {
         };
     }
 
+    @Override
+    protected void hookOnTaskStart() {
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    protected Void call() {
+    protected void concreteCall() {
 
         if (open() && setFilter()) {
 
             pcap.loop(Pcap.LOOP_INFINITE, packetHandlerFactory(), dumper);
         }
-
-        return null;
     }
 
     @Override

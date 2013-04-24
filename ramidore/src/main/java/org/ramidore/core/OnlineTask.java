@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author atmark
  *
  */
-public class OnlineTask extends RamidoreTask {
+public class OnlineTask extends AbstractTask {
 
     /**
      * Logger.
@@ -101,18 +101,20 @@ public class OnlineTask extends RamidoreTask {
         };
     }
 
+    @Override
+    protected void hookOnTaskStart() {
+
+        logic.hookOnTaskStart();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    protected Void call() {
-
-        LOG.trace("call Task.call");
+    protected void concreteCall() {
 
         if (open() && setFilter()) {
 
             pcap.loop(Pcap.LOOP_INFINITE, packetHandlerFactory(), logic);
         }
-
-        return null;
     }
 
     /**

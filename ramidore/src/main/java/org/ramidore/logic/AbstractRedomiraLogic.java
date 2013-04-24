@@ -11,4 +11,9 @@ import org.ramidore.core.INoticeable;
  */
 public abstract class AbstractRedomiraLogic implements IPacketExecutable, INoticeable, IConfigurable {
 
+    /**
+     * タスク開始にフックする.
+     */
+    public void hookOnTaskStart() {
+    }
 }

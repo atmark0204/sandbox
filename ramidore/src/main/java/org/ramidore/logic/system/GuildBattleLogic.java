@@ -41,7 +41,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      *
      * ※1パケット中に複数回現れる場合がある
      */
-    private static final String UNIT_PATTERN = "00380069120000(..)00(....)0000(....)0000(....)0000" + BASE_PATTERN + "00(?:CC)+" + BASE_PATTERN + "00(?:CC)+";
+    private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + BASE_PATTERN + "00(?:CC)+" + BASE_PATTERN + "00(?:CC)+";
 
     /**
      * パケット全体にマッチする正規表現パターン.
@@ -58,6 +58,11 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      * 正規表現オブジェクト.
      */
     private static Pattern pattern = Pattern.compile(PATTERN);
+
+    /**
+     * 開始時刻.
+     */
+    private Date startDate = null;
 
     /**
      * 重複チェッカー.
@@ -96,10 +101,29 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
         timelineChartDataQ = new ConcurrentLinkedQueue<GvTimelineChartBean>();
         logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
+
+        reset();
+    }
+
+    /**
+     * 必要オブジェクトをリセットする.
+     */
+    public void reset() {
+
+        startDate = null;
+
+        timelineChartDataQ.clear();
+        logDataQ.clear();
     }
 
     @Override
     public boolean execute(PacketData data) {
+
+        if (startDate == null) {
+            // 最初に受信したパケットのタイムスタンプを開始時刻とする
+            startDate = data.getDate();
+            setStart();
+        }
 
         Matcher matcher = pattern.matcher(data.getStrData());
 
@@ -152,31 +176,31 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 pointChecker.check(logRow.getPoint0(), logRow.getPoint1());
             }
 
-            // LOG.info(DebugUtil.hexDump(data));
-
             return true;
         }
+
+        //LOG.info(DebugUtil.hexDump(data));
 
         return false;
     }
 
     public void setStart() {
 
-        Date d = new Date();
-
         // x = 0, y = 0のデータを生成
         GvTimelineChartBean startTimeline0 = new GvTimelineChartBean();
-        startTimeline0.setDate(DATE_FORMAT.format(d));
+        startTimeline0.setDate(DATE_FORMAT.format(startDate));
         startTimeline0.setSeries(0);
 
         timelineChartDataQ.add(startTimeline0);
 
         GvTimelineChartBean startTimeline1 = new GvTimelineChartBean();
-        startTimeline1.setDate(DATE_FORMAT.format(d));
+        startTimeline1.setDate(DATE_FORMAT.format(startDate));
         startTimeline1.setSeries(1);
 
+        timelineChartDataQ.add(startTimeline1);
+
         // 開始時刻を書き込む
-        LOG.info(DATE_FORMAT.format(d));
+        LOG.info(DATE_FORMAT.format(startDate));
     }
 
     /**
@@ -185,6 +209,10 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      * @param absolutePath
      */
     public void loadPastData(String absolutePath) {
+
+        LOG.trace("load " + absolutePath);
+
+        reset();
 
         BufferedReader br = null;
 

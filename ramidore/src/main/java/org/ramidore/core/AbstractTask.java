@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
  * @author atmark
  *
  */
-public abstract class RamidoreTask extends Task<Void> {
+public abstract class AbstractTask extends Task<Void> {
 
     /**
      * Logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(RamidoreTask.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractTask.class);
 
     /**
      * Pcapオブジェクト.
@@ -36,8 +36,30 @@ public abstract class RamidoreTask extends Task<Void> {
     /**
      * コンストラクタ.
      */
-    public RamidoreTask() {
+    public AbstractTask() {
 
+    }
+
+    @Override
+    protected Void call() {
+
+        LOG.trace("call Task.call");
+
+        hookOnTaskStart();
+
+        concreteCall();
+
+        hookOnTaskEnd();
+
+        return null;
+    }
+
+    protected void hookOnTaskStart() {
+    }
+
+    protected abstract void concreteCall();
+
+    protected void hookOnTaskEnd() {
     }
 
     /**
@@ -91,5 +113,6 @@ public abstract class RamidoreTask extends Task<Void> {
      *
      * @return パケットハンドラ
      */
+    @SuppressWarnings("rawtypes")
     protected abstract JPacketHandler packetHandlerFactory();
 }
