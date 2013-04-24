@@ -76,11 +76,11 @@ public abstract class AbstractMainController implements Initializable, IConfigur
             // 入力ストリームはloadFromXMLでクローズされる
             config.loadFromXML(in);
         } catch (FileNotFoundException e) {
-            LOG.debug("setting.xml not found");
+            LOG.debug(CONFIG + " is not found");
         } catch (InvalidPropertiesFormatException e) {
-            LOG.debug("setting.xml is invalid format");
+            LOG.debug(CONFIG + " is invalid format");
         } catch (IOException e) {
-            LOG.debug("io error on loading setting.xml");
+            LOG.debug("io error on loading " + CONFIG);
         }
     }
 
