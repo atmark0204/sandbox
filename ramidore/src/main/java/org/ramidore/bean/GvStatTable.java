@@ -2,6 +2,7 @@ package org.ramidore.bean;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.chart.BarChart;
 
 public class GvStatTable {
 
@@ -47,6 +48,11 @@ public class GvStatTable {
     public void addDeathCount() {
 
         this.deathCount.set(getDeathCount() + 1);
+    }
+
+    public BarChart.Data<String, Number> toBarChartData() {
+
+        return new BarChart.Data<String, Number>(charaName.get(), point.get());
     }
 
     /**

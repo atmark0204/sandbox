@@ -1,9 +1,8 @@
 package org.ramidore.logic.system;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +16,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.ramidore.bean.GvLogTable;
-import org.ramidore.bean.GvTimelineChartBean;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RedomiraUtil;
 import org.slf4j.Logger;
@@ -75,11 +73,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     private PointChecker pointChecker;
 
     /**
-     * チャート表示用のデータを流し込むキュー.
-     */
-    private ConcurrentLinkedQueue<GvTimelineChartBean> timelineChartDataQ;
-
-    /**
      * ログデータを流し込むキュー.
      *
      * コントローラ側で統計処理する
@@ -99,7 +92,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         dupChecker = new DuplicateChecker();
         pointChecker = new PointChecker();
 
-        timelineChartDataQ = new ConcurrentLinkedQueue<GvTimelineChartBean>();
         logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
 
         reset();
@@ -112,7 +104,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
         startDate = null;
 
-        timelineChartDataQ.clear();
         logDataQ.clear();
     }
 
@@ -122,7 +113,15 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         if (startDate == null) {
             // 最初に受信したパケットのタイムスタンプを開始時刻とする
             startDate = data.getDate();
-            setStart();
+
+            // 0 vs 0のデータ追加
+            GvLogTable log0 = new GvLogTable();
+            log0.setDate(DATE_FORMAT.format(startDate));
+
+            logDataQ.add(log0);
+
+            // 開始時刻を書き込む
+            LOG.info(DATE_FORMAT.format(startDate));
         }
 
         Matcher matcher = pattern.matcher(data.getStrData());
@@ -156,24 +155,12 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 logRow.setPoint0(point0);
                 logRow.setPoint1(point1);
 
-                // 時系列チャート
-                GvTimelineChartBean timelineBean = new GvTimelineChartBean();
-                timelineBean.setDate(DATE_FORMAT.format(data.getDate()));
-                timelineBean.setSeries(order);
-                if (order == 0) {
-                    timelineBean.setPoint(point0);
-                } else if (order == 1) {
-                    timelineBean.setPoint(point1);
-                }
-                timelineChartDataQ.add(timelineBean);
-
                 // 統計
                 logDataQ.add(logRow);
 
-                writeLog(logRow);
+                LOG.info(logRow.toLogFormat());
 
-                pointChecker.add(logRow.getGuildName(), logRow.getPoint());
-                pointChecker.check(logRow.getPoint0(), logRow.getPoint1());
+                pointChecker.check(logRow);
             }
 
             return true;
@@ -182,25 +169,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         //LOG.info(DebugUtil.hexDump(data));
 
         return false;
-    }
-
-    public void setStart() {
-
-        // x = 0, y = 0のデータを生成
-        GvTimelineChartBean startTimeline0 = new GvTimelineChartBean();
-        startTimeline0.setDate(DATE_FORMAT.format(startDate));
-        startTimeline0.setSeries(0);
-
-        timelineChartDataQ.add(startTimeline0);
-
-        GvTimelineChartBean startTimeline1 = new GvTimelineChartBean();
-        startTimeline1.setDate(DATE_FORMAT.format(startDate));
-        startTimeline1.setSeries(1);
-
-        timelineChartDataQ.add(startTimeline1);
-
-        // 開始時刻を書き込む
-        LOG.info(DATE_FORMAT.format(startDate));
     }
 
     /**
@@ -217,23 +185,15 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         BufferedReader br = null;
 
         try {
-
-            br = new BufferedReader(new FileReader(absolutePath));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePath), ENCODING));
 
             List<String> list = IOUtils.readLines(br);
 
-            // x = 0, y = 0のデータを追加
-            GvTimelineChartBean startTimeline0 = new GvTimelineChartBean();
-            startTimeline0.setDate(list.get(0));
-            startTimeline0.setSeries(0);
+            // 0 vs 0のデータ追加
+            GvLogTable log0 = new GvLogTable();
+            log0.setDate(list.get(0));
 
-            timelineChartDataQ.add(startTimeline0);
-
-            GvTimelineChartBean startTimeline1 = new GvTimelineChartBean();
-            startTimeline1.setDate(list.get(0));
-            startTimeline1.setSeries(1);
-
-            timelineChartDataQ.add(startTimeline1);
+            logDataQ.add(log0);
 
             for (int i = 1; i < list.size(); i++) {
                 GvLogTable logRow = loadLine(list.get(i));
@@ -243,21 +203,9 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 }
 
                 logDataQ.add(logRow);
-
-                GvTimelineChartBean timelineBean = new GvTimelineChartBean();
-                timelineBean.setDate(logRow.getDate());
-                timelineBean.setSeries(logRow.getGuildName());
-                if (logRow.getGuildName() == 0) {
-                    timelineBean.setPoint(logRow.getPoint0());
-                } else if (logRow.getGuildName() == 1) {
-                    timelineBean.setPoint(logRow.getPoint1());
-                }
-                timelineChartDataQ.add(timelineBean);
             }
 
-        } catch (FileNotFoundException e) {
-            LOG.error(ExceptionUtils.getStackTrace(e));
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error(ExceptionUtils.getStackTrace(e));
         } finally {
             IOUtils.closeQuietly(br);
@@ -293,31 +241,21 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         return row;
     }
 
-    private void writeLog(GvLogTable row) {
-
-        LOG.info(row.getDate() + "\t" + row.getSrcCharaName() + "\t" + row.getDstCharaName() + "\t" + row.getGuildName() + "\t" + row.getPoint() + "\t" + row.getPoint0() + "\t" + row.getPoint1());
-    }
-
     /**
      * 重複チェッカ.
      */
     private class DuplicateChecker {
         private static final String FORMAT = "%d:%d";
-        private int p1;
-        private int p2;
         private Set<String> set = new HashSet<String>();
 
         public DuplicateChecker() {
-            p1 = 0;
-            p2 = 0;
-            set.add(String.format(FORMAT, p1, p2));
+            set.add(String.format(FORMAT, 0, 0));
         }
 
         public boolean check(int p1, int p2) {
-
             String val = String.format(FORMAT, p1, p2);
-
             if (set.contains(val)) {
+                LOG.warn("重複した点数情報を受信 : " + p1 + " - " + p2);
                 return false;
             } else {
                 set.add(val);
@@ -334,58 +272,27 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      */
     private class PointChecker {
 
-        private int p0;
-        private int p1;
-
-        private int diff0;
-        private int diff1;
+        private int[] p;
+        private int[] diff;
 
         public PointChecker() {
-
-            p0 = 0;
-            p1 = 0;
-            diff0 = 0;
-            diff1 = 0;
+            p = new int[]{0, 0};
+            diff = new int[]{0, 0};
         }
 
-        public void add(int order, int p) {
+        public void check(GvLogTable t) {
 
-            if (order == 0) {
-                this.p0 += p;
-            } else if (order == 1) {
-                this.p1 += p;
+            this.p[t.getGuildName()] += t.getPoint();
+
+            if (this.p[0] - t.getPoint0() != diff[0]) {
+                diff[0] = this.p[0] - t.getPoint0();
+                LOG.warn("先入れ側点数にズレが発生 : " + diff[0]);
+            }
+            if (this.p[1] - t.getPoint1() != diff[1]) {
+                diff[1] = this.p[1] - t.getPoint1();
+                LOG.warn("後入れ側点数にズレが発生 : " + diff[1]);
             }
         }
-
-        public void check(int p0, int p1) {
-
-            if (this.p0 - p0 != diff0) {
-                diff0 = this.p0 - p0;
-                LOG.warn("先入れ側点数にズレが発生 : " + diff0);
-            }
-            if (this.p1 - p1 != diff1) {
-                diff1 = this.p1 - p1;
-                LOG.warn("後入れ側点数にズレが発生 : " + diff1);
-            }
-        }
-    }
-    /**
-     * getter.
-     *
-     * @return timelineChartDataQ
-     */
-    public ConcurrentLinkedQueue<GvTimelineChartBean> getTimelineChartDataQ() {
-        return timelineChartDataQ;
-    }
-
-    /**
-     * setter.
-     *
-     * @param timelineChartDataQ
-     *            セットする timelineChartDataQ
-     */
-    public void setTimelineChartDataQ(ConcurrentLinkedQueue<GvTimelineChartBean> timelineChartDataQ) {
-        this.timelineChartDataQ = timelineChartDataQ;
     }
 
     /**
@@ -395,15 +302,5 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      */
     public ConcurrentLinkedQueue<GvLogTable> getLogDataQ() {
         return logDataQ;
-    }
-
-    /**
-     * setter.
-     *
-     * @param logDataQ
-     *            セットする logDataQ
-     */
-    public void setLogDataQ(ConcurrentLinkedQueue<GvLogTable> logDataQ) {
-        this.logDataQ = logDataQ;
     }
 }
