@@ -10,7 +10,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,9 +33,6 @@ import javafx.scene.input.MouseEvent;
 
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
-import org.jnetpcap.PcapAddr;
-import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.format.FormatUtils;
 import org.ramidore.bean.PbStatTable;
 import org.ramidore.bean.PointBatteleChartBean;
 import org.ramidore.core.PacketAnalyzeService;
@@ -224,17 +220,9 @@ public class PbLoggerController extends AbstractMainController {
     private void initializeDeviceSetting() {
 
         // デバイス一覧を初期化
-        ObservableList<String> deviceList = deviceCb.getItems();
-        deviceList.clear();
-
-        for (PcapIf device : getService().getDevices()) {
-
-            deviceList.add(device.getDescription());
-        }
-
+        deviceCb.getItems().addAll(getService().getDeviceNameList());
         // 初期設定を取得
-        int defaultDeviceIndex = getService().getDevices().indexOf(getService().getCurrentDevice());
-        deviceCb.getSelectionModel().select(defaultDeviceIndex);
+        deviceCb.getSelectionModel().select(getService().getCurrentDeviceIndex());
 
         // 使用デバイス選択
         deviceCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -244,30 +232,20 @@ public class PbLoggerController extends AbstractMainController {
 
                 getService().setDevice(newVal.intValue());
 
-                ObservableList<String> addrs = addressCb.getItems();
-                addrs.clear();
-
-                for (PcapAddr pcapAddr : getService().getAddresses()) {
-
-                    addrs.add(FormatUtils.ip(pcapAddr.getAddr().getData()));
-                }
-
+                addressCb.getItems().clear();
+                addressCb.getItems().addAll(getService().getAddressList());
                 addressCb.getSelectionModel().selectFirst();
+
+                // 新しいIPアドレスを設定
                 getService().setListenAddress(0);
             }
         });
 
         // IPアドレス一覧を初期化
-        ObservableList<String> addrs = addressCb.getItems();
-        addrs.clear();
-        for (PcapAddr pcapAddr : getService().getAddresses()) {
-
-            addrs.add(FormatUtils.ip(pcapAddr.getAddr().getData()));
-        }
+        addressCb.getItems().addAll(getService().getAddressList());
 
         // 初期設定を取得
-        int defaultListenAddressIndex = getService().getAddresses().indexOf(getService().getListenAddress());
-        addressCb.getSelectionModel().select(defaultListenAddressIndex);
+        addressCb.getSelectionModel().select(getService().getCurrentListenAddressIndex());
 
         // ListenするIPアドレス選択
         addressCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
