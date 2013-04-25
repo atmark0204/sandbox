@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.rsmon</groupId>
+    <artifactId>rsmon</artifactId>
+    <name>rsmon</name>
+
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <organization>
+        <!-- Used as the 'Vendor' for JNLP generation -->
+        <name>Your Organisation</name>
+    </organization>
+
+    <properties>
+        <slf4j.version>1.6.1</slf4j.version>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+
+                    <mainClass>org.redomira.ChatLoggerMain</mainClass>
+
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+	<!-- jnetpcap -->
+	<repositories>
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>jnetpcap</groupId>
+			<artifactId>jnetpcap</artifactId>
+			<version>1.4.r1390-1b</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ramidore</groupId>
+			<artifactId>ramidore</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+</project>
