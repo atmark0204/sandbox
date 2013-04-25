@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +48,9 @@ public class SakebiChatLogic extends AbstractChatLogic {
 
         if (m.matches()) {
 
-            String name = RedomiraUtil.encode(m.group(1), ENCODING);
+            String name = RamidoreUtil.encode(m.group(1), ENCODING);
 
-            String content = RedomiraUtil.encode(m.group(2), ENCODING);
+            String content = RamidoreUtil.encode(m.group(2), ENCODING);
 
             addData(new ChatTable(data.getDate(), name, content));
 

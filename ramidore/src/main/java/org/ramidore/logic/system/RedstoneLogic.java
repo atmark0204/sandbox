@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.ramidore.bean.RedStoneChartBean;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 
 /**
  * Redstone返却先.
@@ -72,9 +72,9 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
             String chikaCnt = m.group(3);
             String akumaCnt = m.group(4);
 
-            dataBean.setCurrentTenjoCount(RedomiraUtil.intValueFromDescHexString(tenjoCnt));
-            dataBean.setCurrentChikaCount(RedomiraUtil.intValueFromDescHexString(chikaCnt));
-            dataBean.setCurrentAkumaCount(RedomiraUtil.intValueFromDescHexString(akumaCnt));
+            dataBean.setCurrentTenjoCount(RamidoreUtil.intValueFromDescHexString(tenjoCnt));
+            dataBean.setCurrentChikaCount(RamidoreUtil.intValueFromDescHexString(chikaCnt));
+            dataBean.setCurrentAkumaCount(RamidoreUtil.intValueFromDescHexString(akumaCnt));
 
             dataBean.setCurrentTotalCount();
 

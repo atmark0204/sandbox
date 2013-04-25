@@ -8,12 +8,12 @@ import java.io.UnsupportedEncodingException;
  * @author atmark
  *
  */
-public final class RedomiraUtil {
+public final class RamidoreUtil {
 
     /**
      * . コンストラクタ
      */
-    private RedomiraUtil() {
+    private RamidoreUtil() {
     }
 
     /**

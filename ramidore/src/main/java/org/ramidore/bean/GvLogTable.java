@@ -51,6 +51,7 @@ public class GvLogTable {
      *
      * @return XYChart.Data[]
      */
+    @SuppressWarnings("rawtypes")
     public XYChart.Data[] toTimelineData() {
 
         XYChart.Data<String, Number> data0 = new XYChart.Data<String, Number>(date, point0);

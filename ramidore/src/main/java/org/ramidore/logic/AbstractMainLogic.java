@@ -5,11 +5,12 @@ import org.ramidore.core.INoticeable;
 
 /**
  * 基底のファサードロジック.
+ * 小さなロジッククラスのインスタンスを保持し、まとめて実行する.
  *
  * @author atmark
  *
  */
-public abstract class AbstractRedomiraLogic implements IPacketExecutable, INoticeable, IConfigurable {
+public abstract class AbstractMainLogic implements IPacketExecutable, INoticeable, IConfigurable {
 
     /**
      * タスク開始にフックする.

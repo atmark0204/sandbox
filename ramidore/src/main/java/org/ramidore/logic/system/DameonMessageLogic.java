@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +45,7 @@ public class DameonMessageLogic extends AbstractSystemMessageLogic {
 
         if (matcher.matches()) {
 
-            String content = RedomiraUtil.encode(matcher.group(1), ENCODING);
+            String content = RamidoreUtil.encode(matcher.group(1), ENCODING);
 
             LOG.info(content);
 

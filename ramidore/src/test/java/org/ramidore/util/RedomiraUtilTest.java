@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.ramidore.logic.AbstractLogic;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 
 /**
  * Test.
@@ -83,7 +83,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "00";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(0));
     }
@@ -96,7 +96,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "01";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(1));
     }
@@ -109,7 +109,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "0F";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(15));
     }
@@ -122,7 +122,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "0000";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(0));
     }
@@ -135,7 +135,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "0100";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(1));
     }
@@ -148,7 +148,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "0F00";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(15));
     }
@@ -161,7 +161,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "0001";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(256));
     }
@@ -174,7 +174,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "000F";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(3840));
     }
@@ -187,7 +187,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "ABCD";
 
-        int actual = RedomiraUtil.intValueFromDescHexString(hexStr);
+        int actual = RamidoreUtil.intValueFromDescHexString(hexStr);
 
         assertThat(actual, is(52651));
     }
@@ -200,7 +200,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "82A0";
 
-        String actual = RedomiraUtil.encode(hexStr, AbstractLogic.ENCODING);
+        String actual = RamidoreUtil.encode(hexStr, AbstractLogic.ENCODING);
 
         assertThat(actual, is("あ"));
     }
@@ -213,7 +213,7 @@ public class RedomiraUtilTest {
 
         String hexStr = "82A0";
 
-        String actual = RedomiraUtil.encode(hexStr, "NotDefinedEncoding");
+        String actual = RamidoreUtil.encode(hexStr, "NotDefinedEncoding");
 
         assertThat(actual, is("エンコード失敗"));
     }
@@ -226,7 +226,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] {};
 
-        String actual = RedomiraUtil.toHex(bytes);
+        String actual = RamidoreUtil.toHex(bytes);
 
         assertThat(actual, is(""));
     }
@@ -239,7 +239,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0x00 };
 
-        String actual = RedomiraUtil.toHex(bytes);
+        String actual = RamidoreUtil.toHex(bytes);
 
         assertThat(actual, is("00"));
     }
@@ -252,7 +252,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0xFF };
 
-        String actual = RedomiraUtil.toHex(bytes);
+        String actual = RamidoreUtil.toHex(bytes);
 
         assertThat(actual, is("FF"));
     }
@@ -265,7 +265,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0x00, (byte) 0x01 };
 
-        String actual = RedomiraUtil.toHex(bytes);
+        String actual = RamidoreUtil.toHex(bytes);
 
         assertThat(actual, is("0001"));
     }
@@ -278,7 +278,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0x00 };
 
-        int actual = RedomiraUtil.intValueFromDescByteArray(bytes);
+        int actual = RamidoreUtil.intValueFromDescByteArray(bytes);
 
         assertThat(actual, is(0));
     }
@@ -291,7 +291,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0xFF };
 
-        int actual = RedomiraUtil.intValueFromDescByteArray(bytes);
+        int actual = RamidoreUtil.intValueFromDescByteArray(bytes);
 
         assertThat(actual, is(255));
     }
@@ -304,7 +304,7 @@ public class RedomiraUtilTest {
 
         byte[] bytes = new byte[] { (byte) 0x00, (byte) 0x01 };
 
-        int actual = RedomiraUtil.intValueFromDescByteArray(bytes);
+        int actual = RamidoreUtil.intValueFromDescByteArray(bytes);
 
         assertThat(actual, is(256));
     }

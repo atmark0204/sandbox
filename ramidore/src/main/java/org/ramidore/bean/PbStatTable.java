@@ -121,8 +121,12 @@ public class PbStatTable {
         stage5 = new SimpleStringProperty();
     }
 
-    @Override
-    public String toString() {
+    /**
+     * コピペ用.
+     *
+     * @return コピーする文字列
+     */
+    public String toCopyStr() {
 
         return getId() + "\t" + getStage1() + "\t" + getStage2() + "\t" + getStage3() + "\t" + getStage4() + "\t" + getStage5();
     }

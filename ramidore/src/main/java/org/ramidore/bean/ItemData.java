@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.ramidore.logic.item.Equip;
 import org.ramidore.logic.item.ItemGroupEnum;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 
 /**
  * ItemBeanのデコレータ.
@@ -79,7 +79,7 @@ public class ItemData {
         if (value.isEmpty()) {
             return 0;
         } else {
-            return RedomiraUtil.intValueFromDescHexString(value);
+            return RamidoreUtil.intValueFromDescHexString(value);
         }
     }
 
@@ -101,7 +101,7 @@ public class ItemData {
      */
     public String getAttackSpeed() {
 
-        int attackSpeedInt = RedomiraUtil.intValueFromDescHexString(itemBean.getAttackSpeed());
+        int attackSpeedInt = RamidoreUtil.intValueFromDescHexString(itemBean.getAttackSpeed());
 
         float attackSpeed = (float) attackSpeedInt / 100;
 
@@ -115,7 +115,7 @@ public class ItemData {
      */
     public int getLowAP() {
 
-        return RedomiraUtil.intValueFromDescHexString(itemBean.getLowAP());
+        return RamidoreUtil.intValueFromDescHexString(itemBean.getLowAP());
     }
 
     /**
@@ -125,7 +125,7 @@ public class ItemData {
      */
     public int getHighAP() {
 
-        return RedomiraUtil.intValueFromDescHexString(itemBean.getHighAP());
+        return RamidoreUtil.intValueFromDescHexString(itemBean.getHighAP());
     }
 
     /**
@@ -135,6 +135,6 @@ public class ItemData {
      */
     public int getModel() {
 
-        return RedomiraUtil.intValueFromDescHexString(itemBean.getModel());
+        return RamidoreUtil.intValueFromDescHexString(itemBean.getModel());
     }
 }

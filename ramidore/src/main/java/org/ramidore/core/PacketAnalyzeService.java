@@ -15,7 +15,7 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.format.FormatUtils;
-import org.ramidore.logic.AbstractRedomiraLogic;
+import org.ramidore.logic.AbstractMainLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * . パケット解析ロジック
      */
-    private AbstractRedomiraLogic logic;
+    private AbstractMainLogic logic;
 
     /**
      * . ネットワークインターフェースのリスト
@@ -96,7 +96,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      * @param config
      *            設定
      */
-    public PacketAnalyzeService(AbstractRedomiraLogic logic, Properties config) {
+    public PacketAnalyzeService(AbstractMainLogic logic, Properties config) {
 
         this.logic = logic;
 
@@ -115,7 +115,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      * @param mode
      *            動作モード
      */
-    public PacketAnalyzeService(AbstractRedomiraLogic logic, Properties config, int mode) {
+    public PacketAnalyzeService(AbstractMainLogic logic, Properties config, int mode) {
 
         this.logic = logic;
         this.mode = mode;
@@ -335,7 +335,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      *
      * @return logic
      */
-    public AbstractRedomiraLogic getLogic() {
+    public AbstractMainLogic getLogic() {
         return logic;
     }
 
@@ -390,7 +390,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      * @param logic
      *            セットする logic
      */
-    public void setLogic(AbstractRedomiraLogic logic) {
+    public void setLogic(AbstractMainLogic logic) {
         this.logic = logic;
     }
 

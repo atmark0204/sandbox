@@ -9,7 +9,7 @@ import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.JPacketHandler;
 import org.jnetpcap.protocol.tcpip.Tcp;
-import org.ramidore.logic.AbstractRedomiraLogic;
+import org.ramidore.logic.AbstractMainLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class OnlineTask extends AbstractTask {
     /**
      * ロジック.
      */
-    private AbstractRedomiraLogic logic;
+    private AbstractMainLogic logic;
 
     /**
      * コンストラクタ.
@@ -43,7 +43,7 @@ public class OnlineTask extends AbstractTask {
      * @param listenAddress listenするアドレス
      * @param logic ロジック
      */
-    public OnlineTask(PcapIf device, PcapAddr listenAddress, AbstractRedomiraLogic logic) {
+    public OnlineTask(PcapIf device, PcapAddr listenAddress, AbstractMainLogic logic) {
 
         this.device = device;
         this.listenAddress = listenAddress;
@@ -66,12 +66,12 @@ public class OnlineTask extends AbstractTask {
     @Override
     protected JPacketHandler packetHandlerFactory() {
 
-        return new JPacketHandler<AbstractRedomiraLogic>() {
+        return new JPacketHandler<AbstractMainLogic>() {
 
             private Tcp tcp = new Tcp();
 
             @Override
-            public void nextPacket(JPacket p, AbstractRedomiraLogic logic) {
+            public void nextPacket(JPacket p, AbstractMainLogic logic) {
 
                 try {
 

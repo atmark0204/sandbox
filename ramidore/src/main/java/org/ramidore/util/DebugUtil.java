@@ -87,7 +87,7 @@ public final class DebugUtil {
 
             byte[] line = ArrayUtils.subarray(b, indexS, indexE);
 
-            lineBuilder.append(RedomiraUtil.encode(RedomiraUtil.toHex(line), AbstractLogic.ENCODING));
+            lineBuilder.append(RamidoreUtil.encode(RamidoreUtil.toHex(line), AbstractLogic.ENCODING));
 
             resultBuilder.append(lineBuilder.toString() + "\n");
         }

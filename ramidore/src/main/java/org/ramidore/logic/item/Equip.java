@@ -32,6 +32,7 @@ public class Equip {
         this.euipId = equipId;
     }
 
+    @Override
     public String toString() {
 
         Matcher m = pattern.matcher(euipId);

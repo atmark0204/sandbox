@@ -12,7 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.ramidore.bean.ItemBean;
 import org.ramidore.bean.ItemData;
 import org.ramidore.bean.OptionBean;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +72,7 @@ public class ItemDatHolder {
 
             byte[] itemCounByte = ArrayUtils.subarray(header, 0, 2);
 
-            int itemCount = RedomiraUtil.intValueFromDescByteArray(itemCounByte);
+            int itemCount = RamidoreUtil.intValueFromDescByteArray(itemCounByte);
 
             log.debug("itemCount: " + itemCount);
 
@@ -95,7 +95,7 @@ public class ItemDatHolder {
 
             IOUtils.read(bis, optionCountByte);
 
-            int optionCount = RedomiraUtil.intValueFromDescByteArray(optionCountByte);
+            int optionCount = RamidoreUtil.intValueFromDescByteArray(optionCountByte);
 
             log.debug("optionCount: " + optionCount);
 
@@ -134,7 +134,7 @@ public class ItemDatHolder {
 
         ItemBean item = new ItemBean();
 
-        String id = RedomiraUtil.toHex(ArrayUtils.subarray(buf, 0, 2));
+        String id = RamidoreUtil.toHex(ArrayUtils.subarray(buf, 0, 2));
 
         item.setId(id);
 
@@ -142,55 +142,55 @@ public class ItemDatHolder {
 
         byte[] nameArray = ArrayUtils.subarray(nameBuffer, 0, ArrayUtils.indexOf(nameBuffer, (byte) 0x00));
 
-        String itemName = RedomiraUtil.encode(RedomiraUtil.toHex(nameArray), ENCODING);
+        String itemName = RamidoreUtil.encode(RamidoreUtil.toHex(nameArray), ENCODING);
 
         item.setName(itemName);
 
         byte[] groupBuf = ArrayUtils.subarray(buf, 76, 77);
 
-        String groupId = RedomiraUtil.toHex(groupBuf);
+        String groupId = RamidoreUtil.toHex(groupBuf);
 
         item.setGroupId(groupId);
 
         byte[] equipBuf = ArrayUtils.subarray(buf, 78, 96);
 
-        String equipId = RedomiraUtil.toHex(equipBuf);
+        String equipId = RamidoreUtil.toHex(equipBuf);
 
         item.setEquipId(equipId);
 
         byte[] valueBuf = ArrayUtils.subarray(buf, 96, 98);
 
-        String value = RedomiraUtil.toHex(valueBuf);
+        String value = RamidoreUtil.toHex(valueBuf);
 
         item.setValue(value);
 
         byte[] fluctuationBuf = ArrayUtils.subarray(buf, 98, 106);
 
-        String fluctuation = RedomiraUtil.toHex(fluctuationBuf);
+        String fluctuation = RamidoreUtil.toHex(fluctuationBuf);
 
         item.setFluctuation(fluctuation);
 
         byte[] attackSpeedBuf = ArrayUtils.subarray(buf, 106, 108);
 
-        String attackSpeed = RedomiraUtil.toHex(attackSpeedBuf);
+        String attackSpeed = RamidoreUtil.toHex(attackSpeedBuf);
 
         item.setAttackSpeed(attackSpeed);
 
         byte[] lowAPBuf = ArrayUtils.subarray(buf, 108, 110);
 
-        String lowAP = RedomiraUtil.toHex(lowAPBuf);
+        String lowAP = RamidoreUtil.toHex(lowAPBuf);
 
         item.setLowAP(lowAP);
 
         byte[] highAPBuf = ArrayUtils.subarray(buf, 110, 112);
 
-        String highAP = RedomiraUtil.toHex(highAPBuf);
+        String highAP = RamidoreUtil.toHex(highAPBuf);
 
         item.setHighAP(highAP);
 
         byte[] modelBuf = ArrayUtils.subarray(buf, 112, 114);
 
-        String model = RedomiraUtil.toHex(modelBuf);
+        String model = RamidoreUtil.toHex(modelBuf);
 
         item.setModel(model);
 
@@ -207,7 +207,7 @@ public class ItemDatHolder {
 
         OptionBean option = new OptionBean();
 
-        String id = RedomiraUtil.toHex(ArrayUtils.subarray(buf, 2, 4));
+        String id = RamidoreUtil.toHex(ArrayUtils.subarray(buf, 2, 4));
 
         option.setId(id);
 
@@ -215,7 +215,7 @@ public class ItemDatHolder {
 
         byte[] nameArray = ArrayUtils.subarray(nameBuffer, 0, ArrayUtils.indexOf(nameBuffer, (byte) 0x00));
 
-        String name = RedomiraUtil.encode(RedomiraUtil.toHex(nameArray), ENCODING);
+        String name = RamidoreUtil.encode(RamidoreUtil.toHex(nameArray), ENCODING);
 
         option.setName(name);
 

@@ -2,7 +2,7 @@ package org.ramidore.core;
 
 import java.util.Date;
 
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 
 /**
  * パケットモデル.
@@ -42,7 +42,7 @@ public class PacketData {
 
         this.rawData = b;
 
-        strData = RedomiraUtil.toHex(b);
+        strData = RamidoreUtil.toHex(b);
     }
 
     /**

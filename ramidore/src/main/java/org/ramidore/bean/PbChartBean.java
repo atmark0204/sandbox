@@ -10,7 +10,7 @@ import javafx.scene.chart.XYChart.Data;
  * @author atmark
  *
  */
-public class PointBatteleChartBean {
+public class PbChartBean {
 
     /**
      * 識別子.
@@ -65,7 +65,7 @@ public class PointBatteleChartBean {
      * @param pointOffset
      *            前面の最終点数
      */
-    public PointBatteleChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point, int pointOffset) {
+    public PbChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point, int pointOffset) {
 
         this.id = id;
         this.sequentialNo = sequentialNo;
@@ -92,7 +92,7 @@ public class PointBatteleChartBean {
      * @param point
      *            点数
      */
-    public PointBatteleChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point) {
+    public PbChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point) {
 
         this.id = id;
         this.sequentialNo = sequentialNo;

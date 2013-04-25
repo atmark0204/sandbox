@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,15 +97,15 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mFromTo.matches()) {
 
-            String toName = RedomiraUtil.encode(mFromTo.group(1), ENCODING);
-            String toContent = RedomiraUtil.encode(mFromTo.group(2), ENCODING);
+            String toName = RamidoreUtil.encode(mFromTo.group(1), ENCODING);
+            String toContent = RamidoreUtil.encode(mFromTo.group(2), ENCODING);
 
             addData(new ChatTable(data.getDate(), TO, toName, toContent));
 
             LOG.info(TO + "【" + toName + "】 " + toContent);
 
-            String fromName = RedomiraUtil.encode(mFromTo.group(3), ENCODING);
-            String fromContent = RedomiraUtil.encode(mFromTo.group(4), ENCODING);
+            String fromName = RamidoreUtil.encode(mFromTo.group(3), ENCODING);
+            String fromContent = RamidoreUtil.encode(mFromTo.group(4), ENCODING);
 
             addData(new ChatTable(data.getDate(), FROM, fromName, fromContent));
 
@@ -118,9 +118,9 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mTo.matches()) {
 
-            String name = RedomiraUtil.encode(mTo.group(1), ENCODING);
+            String name = RamidoreUtil.encode(mTo.group(1), ENCODING);
 
-            String content = RedomiraUtil.encode(mTo.group(2), ENCODING);
+            String content = RamidoreUtil.encode(mTo.group(2), ENCODING);
 
             addData(new ChatTable(data.getDate(), TO, name, content));
 
@@ -133,9 +133,9 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mFrom.matches()) {
 
-            String name = RedomiraUtil.encode(mFrom.group(1), ENCODING);
+            String name = RamidoreUtil.encode(mFrom.group(1), ENCODING);
 
-            String content = RedomiraUtil.encode(mFrom.group(2), ENCODING);
+            String content = RamidoreUtil.encode(mFrom.group(2), ENCODING);
 
             addData(new ChatTable(data.getDate(), FROM, name, content));
 

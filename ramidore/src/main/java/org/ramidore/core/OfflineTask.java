@@ -7,7 +7,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
-import org.ramidore.logic.AbstractRedomiraLogic;
+import org.ramidore.logic.AbstractMainLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class OfflineTask extends OnlineTask {
      * @param listenAddress
      * @param logic
      */
-    public OfflineTask(PcapAddr listenAddress, AbstractRedomiraLogic logic) {
+    public OfflineTask(PcapAddr listenAddress, AbstractMainLogic logic) {
 
         super(null, listenAddress, logic);
     }

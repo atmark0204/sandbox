@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.ramidore.bean.GvLogTable;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,12 +132,12 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
             while (unitMatcher.find()) {
 
-                int order = RedomiraUtil.intValueFromAscHexString(unitMatcher.group(1));
-                int point = RedomiraUtil.intValueFromDescHexString(unitMatcher.group(2));
-                int point0 = RedomiraUtil.intValueFromDescHexString(unitMatcher.group(3));
-                int point1 = RedomiraUtil.intValueFromDescHexString(unitMatcher.group(4));
-                String srcName = RedomiraUtil.encode(unitMatcher.group(5), ENCODING);
-                String dstName = RedomiraUtil.encode(unitMatcher.group(6), ENCODING);
+                int order = RamidoreUtil.intValueFromAscHexString(unitMatcher.group(1));
+                int point = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(2));
+                int point0 = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(3));
+                int point1 = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(4));
+                String srcName = RamidoreUtil.encode(unitMatcher.group(5), ENCODING);
+                String dstName = RamidoreUtil.encode(unitMatcher.group(6), ENCODING);
 
                 if (!dupChecker.check(point0, point1)) {
 

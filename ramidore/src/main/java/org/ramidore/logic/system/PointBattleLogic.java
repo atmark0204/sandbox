@@ -23,9 +23,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.ramidore.bean.PbStatTable;
-import org.ramidore.bean.PointBatteleChartBean;
+import org.ramidore.bean.PbChartBean;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * JavaFXスレッドと同期するためのLinkedQueueのリスト.
      */
-    private List<ConcurrentLinkedQueue<PointBatteleChartBean>> chartDataQList = new ArrayList<ConcurrentLinkedQueue<PointBatteleChartBean>>();
+    private List<ConcurrentLinkedQueue<PbChartBean>> chartDataQList = new ArrayList<ConcurrentLinkedQueue<PbChartBean>>();
 
     /**
      * 統計表示用テーブル.
@@ -94,7 +94,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * 現在のデータ.
      */
-    private PointBatteleChartBean currentData = null;
+    private PbChartBean currentData = null;
 
     /**
      * 現在のポイントマップ.
@@ -114,7 +114,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         currentStat = new PbStatTable();
 
         for (int i = 0; i < 6; i++) {
-            chartDataQList.add(new ConcurrentLinkedQueue<PointBatteleChartBean>());
+            chartDataQList.add(new ConcurrentLinkedQueue<PbChartBean>());
         }
 
         pointMap.put(0, 0);
@@ -140,14 +140,14 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                 addStageNo();
             }
 
-            ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
-            ConcurrentLinkedQueue<PointBatteleChartBean> allDataQ = chartDataQList.get(5);
+            ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
+            ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(5);
 
-            int point = RedomiraUtil.intValueFromDescHexString(matcher.group(1));
+            int point = RamidoreUtil.intValueFromDescHexString(matcher.group(1));
 
             pointMap.put(currentStageNo, point);
 
-            currentData = new PointBatteleChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
+            currentData = new PbChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
             dataQ.add(currentData);
             allDataQ.add(currentData);
 
@@ -205,10 +205,10 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                     continue;
                 }
 
-                List<PointBatteleChartBean> dataList = new ArrayList<PointBatteleChartBean>();
+                List<PbChartBean> dataList = new ArrayList<PbChartBean>();
 
                 for (int i = 1; i < list.size(); i++) {
-                    PointBatteleChartBean bean = loadLine(id, list.get(i));
+                    PbChartBean bean = loadLine(id, list.get(i));
 
                     dataList.add(bean);
                 }
@@ -234,11 +234,11 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      *            1行の文字列
      * @return PointBatteleChartBean
      */
-    private PointBatteleChartBean loadLine(String id, String line) {
+    private PbChartBean loadLine(String id, String line) {
 
         String[] element = StringUtils.split(line, '\t');
 
-        return new PointBatteleChartBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]), Integer.valueOf(element[2]), null,
+        return new PbChartBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]), Integer.valueOf(element[2]), null,
                 Integer.valueOf(element[3]));
     }
 
@@ -250,7 +250,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      * @param dataList
      *            データのリスト
      */
-    private void statData(String id, List<PointBatteleChartBean> dataList) {
+    private void statData(String id, List<PbChartBean> dataList) {
 
         // key : ステージ番号 value : 得点
         Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
@@ -262,17 +262,17 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             mobCountMap.put(i, 0);
         }
 
-        for (PointBatteleChartBean data : dataList) {
+        for (PbChartBean data : dataList) {
             pointMap.put(data.getStageNo(), data.getPoint());
             mobCountMap.put(data.getStageNo(), data.getStageSequentialNo());
         }
 
-        for (PointBatteleChartBean data : dataList) {
+        for (PbChartBean data : dataList) {
 
             data.setPointOffset(pointMap.get(data.getStageNo() - 1));
 
-            ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = chartDataQList.get(data.getStageNo() - 1);
-            ConcurrentLinkedQueue<PointBatteleChartBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
+            ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(data.getStageNo() - 1);
+            ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
 
             dataQ.add(data);
             allDataQ.add(data);
@@ -357,7 +357,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      *
      * @return chartDataQList
      */
-    public List<ConcurrentLinkedQueue<PointBatteleChartBean>> getChartDataQList() {
+    public List<ConcurrentLinkedQueue<PbChartBean>> getChartDataQList() {
         return chartDataQList;
     }
 
@@ -367,7 +367,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      * @param chartDataQList
      *            セットする chartDataQList
      */
-    public void setChartDataQList(List<ConcurrentLinkedQueue<PointBatteleChartBean>> chartDataQList) {
+    public void setChartDataQList(List<ConcurrentLinkedQueue<PbChartBean>> chartDataQList) {
         this.chartDataQList = chartDataQList;
     }
 

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
-import org.ramidore.util.RedomiraUtil;
+import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +41,9 @@ public class PartyChatLogic extends AbstractChatLogic {
 
         if (matcher.matches()) {
 
-            String name = RedomiraUtil.encode(matcher.group(1), ENCODING);
+            String name = RamidoreUtil.encode(matcher.group(1), ENCODING);
 
-            String content = RedomiraUtil.encode(matcher.group(2), ENCODING);
+            String content = RamidoreUtil.encode(matcher.group(2), ENCODING);
 
             addData(new ChatTable(data.getDate(), name, content));
 
