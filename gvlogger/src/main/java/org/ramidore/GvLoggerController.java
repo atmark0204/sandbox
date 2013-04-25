@@ -265,15 +265,6 @@ public class GvLoggerController extends AbstractMainController {
 
                 if (newVal.intValue() != -1) {
                     getService().setMode(newVal.intValue());
-
-                    if (getService().getMode() == PacketAnalyzeService.MODE_OFFLINE) {
-
-                        deviceCb.setDisable(true);
-                        addressCb.setDisable(true);
-                    } else {
-                        deviceCb.setDisable(false);
-                        addressCb.setDisable(false);
-                    }
                 }
             }
         });
