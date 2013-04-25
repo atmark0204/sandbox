@@ -33,8 +33,8 @@ import javafx.scene.input.MouseEvent;
 
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
+import org.ramidore.bean.PbChartBean;
 import org.ramidore.bean.PbStatTable;
-import org.ramidore.bean.PointBatteleChartBean;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.PbLoggerLogic;
 import org.ramidore.logic.system.PointBattleLogic;
@@ -397,8 +397,7 @@ public class PbLoggerController extends AbstractMainController {
 
                 final ClipboardContent c = new ClipboardContent();
 
-                c.putString(stat.getId() + "\t" + stat.getStage1() + "\t" + stat.getStage2() + "\t" + stat.getStage3() + "\t" + stat.getStage4() + "\t" + stat.getStage5() + "\t"
-                        + +stat.getPointTotal());
+                c.putString(stat.toCopyStr());
 
                 cb.setContent(c);
 
@@ -457,7 +456,7 @@ public class PbLoggerController extends AbstractMainController {
 
         PointBattleLogic logic = ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic();
 
-        ConcurrentLinkedQueue<PointBatteleChartBean> dataQ = logic.getChartDataQList().get(stageNo - 1);
+        ConcurrentLinkedQueue<PbChartBean> dataQ = logic.getChartDataQList().get(stageNo - 1);
 
         Map<String, Series<Number, Number>> pbDataMap = pbDataMapList.get(stageNo - 1);
 
@@ -465,7 +464,7 @@ public class PbLoggerController extends AbstractMainController {
             return;
         }
 
-        PointBatteleChartBean data = dataQ.remove();
+        PbChartBean data = dataQ.remove();
 
         // データ系列名
         String id = data.getId();

@@ -11,7 +11,7 @@ import org.ramidore.logic.system.PointBattleLogic;
  * @author atmark
  *
  */
-public final class PbLoggerLogic extends AbstractRedomiraLogic {
+public final class PbLoggerLogic extends AbstractMainLogic {
 
     /**
      * ポイント戦.
