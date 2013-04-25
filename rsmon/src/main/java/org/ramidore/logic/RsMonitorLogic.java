@@ -3,10 +3,7 @@ package org.ramidore.logic;
 import java.util.Properties;
 
 import org.ramidore.core.PacketData;
-import org.ramidore.logic.AbstractRedomiraLogic;
 import org.ramidore.logic.system.RedstoneLogic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * . メインロジック
@@ -14,12 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author atmark
  *
  */
-public class RsMonitorLogic extends AbstractRedomiraLogic {
-
-    /**
-     * . Logger
-     */
-    private static Logger LOG = LoggerFactory.getLogger(RsMonitorLogic.class);
+public class RsMonitorLogic extends AbstractMainLogic {
 
     /**
      * 0x00以外の16進文字列にマッチする正規表現パターン.
