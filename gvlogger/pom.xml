@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.gvlogger</groupId>
+	<artifactId>gvlogger</artifactId>
+	<name>gvlogger</name>
+
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<organization>
+		<!-- Used as the 'Vendor' for JNLP generation -->
+		<name>Your Organisation</name>
+	</organization>
+
+	<properties>
+		<slf4j.version>1.7.5</slf4j.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.zenjava</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<mainClass>org.ramidore.GvLogger</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<!-- jnetpcap -->
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
+		</repository>
+		<!-- JFXUtils -->
+		<repository>
+			<id>gillius-org</id>
+			<name>Gillius.org Maven Repository</name>
+			<url>http://www.gillius.org/maven2</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>jnetpcap</groupId>
+			<artifactId>jnetpcap</artifactId>
+			<version>1.4.r1390-1b</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ramidore</groupId>
+			<artifactId>ramidore</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gillius</groupId>
+			<artifactId>jfxutils</artifactId>
+			<version>0.3</version>
+		</dependency>
+	</dependencies>
+
+</project>

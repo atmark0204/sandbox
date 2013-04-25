@@ -1,0 +1,47 @@
+<configuration>
+
+	<appender name="FILE_TRACE" class="ch.qos.logback.core.FileAppender">
+		<file>trace.log</file>
+		<encoder>
+			<pattern>%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<timestamp key="byMinutes" datePattern="yyyy-MM-dd_HH-mm" />
+
+	<appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>notuse</key>
+			<defaultValue>notuse</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE_GV" class="ch.qos.logback.core.FileAppender">
+				<file>ギルド戦_${byMinutes}.log</file>
+				<encoder>
+					<pattern>%msg%n</pattern>
+					<charset>Windows-31J</charset>
+				</encoder>
+				<append>false</append>
+			</appender>
+		</sift>
+	</appender>
+
+	<logger name="org.ramidore.logic.system.GuildBattleLogic" level="INFO">
+		<appender-ref ref="SIFT" />
+	</logger>
+
+	<!-- for dev env -->
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE_TRACE" />
+	</root>
+</configuration>
