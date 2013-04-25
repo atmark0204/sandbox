@@ -159,7 +159,7 @@ public class OnlineTask extends AbstractTask {
 
             return false;
         } else {
-            LOG.trace("pcap open");
+            LOG.trace("pcap open on-line");
         }
 
         return true;

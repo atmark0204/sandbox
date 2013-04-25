@@ -11,6 +11,8 @@ import org.jnetpcap.PcapDumper;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.JPacketHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ダンプファイル作成用.
@@ -19,6 +21,11 @@ import org.jnetpcap.packet.JPacketHandler;
  *
  */
 public class DumperTask extends OnlineTask {
+
+    /**
+     * . Logger
+     */
+    private static Logger LOG = LoggerFactory.getLogger(DumperTask.class);
 
     /**
      * ダンパー.
@@ -75,11 +82,16 @@ public class DumperTask extends OnlineTask {
 
         if (f != null) {
             dumper = pcap.dumpOpen(f.getAbsolutePath());
+
+            LOG.trace("pcap open dump-file : " + f.getAbsolutePath());
+
+            return true;
         } else {
+
+            LOG.trace("pcap open dump-file failed");
+
             return false;
         }
-
-        return true;
     }
 
     @Override

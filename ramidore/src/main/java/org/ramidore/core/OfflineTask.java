@@ -58,7 +58,7 @@ public class OfflineTask extends OnlineTask {
 
             return false;
         } else {
-            LOG.trace("pcap open");
+            LOG.trace("pcap open offline-file : " + f.getAbsolutePath());
         }
 
         return true;
