@@ -18,7 +18,7 @@ import org.ramidore.util.RamidoreUtil;
  * @author atmark
  *
  */
-public class RedomiraUtilTest {
+public class RamidoreUtilTest {
 
     /**
      * Main.
@@ -27,7 +27,7 @@ public class RedomiraUtilTest {
      *            引数
      */
     public static void main(String[] args) {
-        JUnitCore.main(RedomiraUtilTest.class.getName());
+        JUnitCore.main(RamidoreUtilTest.class.getName());
     }
 
     /**

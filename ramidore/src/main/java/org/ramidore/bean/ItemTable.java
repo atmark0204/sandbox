@@ -13,6 +13,11 @@ import java.util.Date;
 public class ItemTable {
 
     /**
+     * 日付のフォーマット.
+     */
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+    /**
      * 日付.
      */
     private String date;
@@ -30,9 +35,7 @@ public class ItemTable {
      */
     public ItemTable(Date date, String name) {
 
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-        this.date = df.format(date);
+        this.date = DATE_FORMAT.format(date);
         this.name = name;
     }
 
