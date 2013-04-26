@@ -22,8 +22,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.ramidore.bean.PbStatTable;
 import org.ramidore.bean.PbChartBean;
+import org.ramidore.bean.PbStatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -43,11 +43,21 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     private static final Logger LOG = LoggerFactory.getLogger(PointBattleLogic.class);
 
     /**
+     * 得点情報にマッチする正規表現パターン.
+     *
+     */
+    private static final String UNIT_PATTERN = "10005C1200000B00....0000(......)00";
+
+    /**
      * パケット全体にマッチする正規表現パターン.
      *
      */
-    //private static final String PATTERN = "^4500..........007406....CB8DF166C0A80B0DD567....................5018........0000....2811CDCDCDCD..000000(?:.{2})*10005C1200000B00....0000(......)00(?:.{2})*$";
-    private static final String PATTERN = "^(?:.{2})*10005C1200000B00....0000(......)00(?:.{2})*$";
+    private static final String PATTERN = "^(?:.{2})*(" + UNIT_PATTERN + ")(?:.{2})*$";
+
+    /**
+     * 正規表現オブジェクト.
+     */
+    private static Pattern unitPattern = Pattern.compile(UNIT_PATTERN);
 
     /**
      * 正規表現オブジェクト.
@@ -140,24 +150,29 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                 addStageNo();
             }
 
-            ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
-            ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(5);
+            Matcher unitMatcher = unitPattern.matcher(data.getStrData());
 
-            int point = RamidoreUtil.intValueFromDescHexString(matcher.group(1));
+            while(unitMatcher.find()) {
 
-            pointMap.put(currentStageNo, point);
+                ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
+                ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(5);
 
-            currentData = new PbChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
-            dataQ.add(currentData);
-            allDataQ.add(currentData);
+                int point = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(1));
 
-            // リアルタイム統計
-            statRealTimeData();
+                pointMap.put(currentStageNo, point);
 
-            LOG.info(sequentialNo + "\t" + currentStageNo + "\t" + stageSequentialNo + "\t" + point);
+                currentData = new PbChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
+                dataQ.add(currentData);
+                allDataQ.add(currentData);
 
-            sequentialNo++;
-            stageSequentialNo++;
+                // リアルタイム統計
+                statRealTimeData();
+
+                LOG.info(sequentialNo + "\t" + currentStageNo + "\t" + stageSequentialNo + "\t" + point);
+
+                sequentialNo++;
+                stageSequentialNo++;
+            }
 
             return true;
         } else if (currentStageNo == 6) {

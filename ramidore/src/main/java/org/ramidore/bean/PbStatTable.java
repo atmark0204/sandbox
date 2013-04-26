@@ -128,7 +128,7 @@ public class PbStatTable {
      */
     public String toCopyStr() {
 
-        return getId() + "\t" + getStage1() + "\t" + getStage2() + "\t" + getStage3() + "\t" + getStage4() + "\t" + getStage5();
+        return getId() + "\t" + getStage1() + "\t" + getStage2() + "\t" + getStage3() + "\t" + getStage4() + "\t" + getStage5() + "\t" + getPointTotal();
     }
 
     public String getStage1() {

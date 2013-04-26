@@ -5,6 +5,11 @@
 	<artifactId>ramidore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<properties>
+	   <jmockit.version>1.1</jmockit.version>
+	   <junit.version>4.11</junit.version>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -48,14 +53,29 @@
 			<version>1.4.r1390-1b</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-		</dependency>
-		<dependency>
 			<groupId>com.googlecode.jmockit</groupId>
 			<artifactId>jmockit</artifactId>
-			<version>1.1</version>
+			<version>${jmockit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- testスコープのみで依存 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.0.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.11</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
