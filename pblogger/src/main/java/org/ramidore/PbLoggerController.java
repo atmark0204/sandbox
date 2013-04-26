@@ -487,6 +487,7 @@ public class PbLoggerController extends AbstractMainController {
             XYChart.Series<Number, Number> newSeries = new XYChart.Series<Number, Number>();
 
             newSeries.setName(data.getId());
+            newSeries.getData().add(new Data<Number, Number>(0, 0));
             newSeries.getData().add(dataElement);
 
             pbDataMap.put(id, newSeries);
