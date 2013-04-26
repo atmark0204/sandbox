@@ -1,12 +1,8 @@
 package org.ramidore.util;
 
-import java.util.regex.Matcher;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.ramidore.core.PacketData;
 import org.ramidore.logic.AbstractLogic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * デバッグ用ユーティリティクラス.
@@ -17,27 +13,9 @@ import org.slf4j.LoggerFactory;
 public final class DebugUtil {
 
     /**
-     * Logger.
-     */
-    private static Logger log = LoggerFactory.getLogger(DebugUtil.class);
-
-    /**
      * コンストラクタ.
      */
     private DebugUtil() {
-    }
-
-    /**
-     * マッチ後の文字列をデバッグ出力する.
-     *
-     * @param m
-     *            Matcher
-     */
-    public static void debugMatcher(Matcher m) {
-
-        for (int i = 0; i < m.groupCount(); i++) {
-            log.debug(i + ":" + m.group(i));
-        }
     }
 
     /**
@@ -59,7 +37,7 @@ public final class DebugUtil {
 
         byte[] b = data.getRawData();
 
-        int lineCount = (int) (b.length / 16) + 1;
+        int lineCount = (int) (b.length / 17) + 1;
 
         int index = 0;
 
