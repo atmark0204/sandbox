@@ -74,7 +74,7 @@ public class OfflineTask extends OnlineTask {
     private File selectFile(String kind, String extensionPat) {
 
         FileChooser fc = new FileChooser();
-        fc.setTitle("select file");
+        fc.setTitle("読み込むファイルを選択してください。");
         fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
         fc.getExtensionFilters().add(new ExtensionFilter(kind, extensionPat));
 

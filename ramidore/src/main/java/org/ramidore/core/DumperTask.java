@@ -126,7 +126,7 @@ public class DumperTask extends OnlineTask {
     private File saveFile(String kind, String extensionPat) {
 
         FileChooser fc = new FileChooser();
-        fc.setTitle("select file");
+        fc.setTitle("保存するダンプファイル名を入力してください。");
         fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
         fc.getExtensionFilters().add(new ExtensionFilter(kind, extensionPat));
 
