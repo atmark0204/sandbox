@@ -30,7 +30,7 @@ public class ChatLoggerMain extends Application {
     /**
      * FXMLのパス.
      */
-    private static final String FXML = "/ChatLogger.fxml";
+    private static final String FXML = "/chatLogger.fxml";
 
     /**
      * Controller.
@@ -53,6 +53,8 @@ public class ChatLoggerMain extends Application {
         Parent root = loader.getRoot();
 
         Scene scene = new Scene(root);
+
+        scene.getStylesheets().add("chatlogger.css");
 
         stage.setScene(scene);
 

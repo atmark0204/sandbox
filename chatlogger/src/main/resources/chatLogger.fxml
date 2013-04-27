@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?scenebuilder-stylesheet chatlogger.css?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.ChatLoggerController">
   <children>
@@ -132,21 +133,13 @@
     </MenuButton>
     <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
       <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="アイテム1" />
-          <String fx:value="アイテム2" />
-          <String fx:value="アイテム3" />
-        </FXCollections>
+        <FXCollections fx:factory="observableArrayList" />
       </items>
     </ChoiceBox>
     <ToggleButton fx:id="startTb" layoutX="348.0" layoutY="1.0" mnemonicParsing="false" prefHeight="23.0" text="開始" />
     <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
       <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="アイテム1" />
-          <String fx:value="アイテム2" />
-          <String fx:value="アイテム3" />
-        </FXCollections>
+        <FXCollections fx:factory="observableArrayList" />
       </items>
     </ChoiceBox>
     <Slider fx:id="opacitySlider" layoutX="531.0" layoutY="2.0" prefHeight="23.0" prefWidth="64.0" />

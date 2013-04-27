@@ -267,7 +267,7 @@ public class ChatLoggerController extends AbstractMainController {
     @Override
     public void concreteInitialize() {
 
-        setService(new PacketAnalyzeService(new ChatLoggerLogic(), getConfig(), PacketAnalyzeService.MODE_OFFLINE));
+        setService(new PacketAnalyzeService(new ChatLoggerLogic(), getConfig(), PacketAnalyzeService.MODE_ONLINE));
 
         loadConfig();
 
