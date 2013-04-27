@@ -74,7 +74,7 @@ public abstract class AbstractTask extends Task<Void> {
         String dstAddr = FormatUtils.ip(listenAddress.getAddr().getData());
 
         String expression = "tcp && (dst net " + dstAddr + ") && ((src port 54631) || (src port 56621))";
-        int optimize = 0;
+        int optimize = 1;
         int netmask = 0xFFFFFF00;
 
         if (pcap.compile(program, expression, optimize, netmask) != Pcap.OK) {
