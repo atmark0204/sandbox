@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import org.ramidore.bean.RedStoneChartBean;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Redstone返却先.
@@ -15,6 +17,11 @@ import org.ramidore.util.RamidoreUtil;
  *
  */
 public class RedstoneLogic extends AbstractSystemMessageLogic {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(RedstoneLogic.class);
 
     /**
      * フラグ　天上.
@@ -68,13 +75,15 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
 
             String flag = m.group(1);
 
-            String tenjoCnt = m.group(2);
-            String chikaCnt = m.group(3);
-            String akumaCnt = m.group(4);
+            int tenjoCnt = RamidoreUtil.intValueFromDescHexString(m.group(2));
+            int chikaCnt = RamidoreUtil.intValueFromDescHexString(m.group(3));
+            int akumaCnt = RamidoreUtil.intValueFromDescHexString(m.group(4));
 
-            dataBean.setCurrentTenjoCount(RamidoreUtil.intValueFromDescHexString(tenjoCnt));
-            dataBean.setCurrentChikaCount(RamidoreUtil.intValueFromDescHexString(chikaCnt));
-            dataBean.setCurrentAkumaCount(RamidoreUtil.intValueFromDescHexString(akumaCnt));
+            check(tenjoCnt, chikaCnt, akumaCnt);
+
+            dataBean.setCurrentTenjoCount(tenjoCnt);
+            dataBean.setCurrentChikaCount(chikaCnt);
+            dataBean.setCurrentAkumaCount(akumaCnt);
 
             dataBean.setCurrentTotalCount();
 
@@ -95,6 +104,32 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
         }
 
         return false;
+    }
+
+    /**
+     * 取得漏れチェック.
+     *
+     * @param tenjoCnt 天上個数
+     * @param chikaCnt 地下個数
+     * @param akumaCnt 悪魔個数
+     */
+    private void check(int tenjoCnt, int chikaCnt, int akumaCnt) {
+
+        if (dataBean.getCurrentTenjoCount() == 0 || dataBean.getCurrentChikaCount() == 0 || dataBean.getCurrentAkumaCount() == 0) {
+
+            return;
+        } else {
+
+            int diffTenjo = tenjoCnt - dataBean.getCurrentTenjoCount();
+            int diffChika = chikaCnt - dataBean.getCurrentChikaCount();
+            int diffAkuma = akumaCnt - dataBean.getCurrentAkumaCount();
+
+            if (diffTenjo > 1 || diffChika > 1 || diffAkuma > 1) {
+
+                LOG.warn("取得漏れ発生:" + diffTenjo + ":" + diffChika + ":" + diffAkuma);
+            }
+        }
+
     }
 
     /**
