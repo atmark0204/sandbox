@@ -409,6 +409,10 @@ public class GvLoggerController extends AbstractMainController {
         GvLogTable log = logDataQ.remove();
 
         if (log.getGuildName() == -1) {
+
+            timelineChart.getData().get(0).getData().add(log.toTimelineData()[0]);
+            timelineChart.getData().get(1).getData().add(log.toTimelineData()[1]);
+
             return;
         }
 
