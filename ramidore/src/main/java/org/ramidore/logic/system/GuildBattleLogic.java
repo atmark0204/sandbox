@@ -139,7 +139,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 String srcName = RamidoreUtil.encode(unitMatcher.group(5), ENCODING);
                 String dstName = RamidoreUtil.encode(unitMatcher.group(6), ENCODING);
 
-                if (!dupChecker.check(point0, point1)) {
+                if (!dupChecker.check(data.getDate(), point0, point1)) {
 
                     continue;
                 }
@@ -160,12 +160,14 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
                 LOG.info(logRow.toLogFormat());
 
-                pointChecker.check(logRow);
+                pointChecker.check(data.getDate(), logRow);
             }
 
             return true;
         }
 
+        // 引っかからなかったパケットをダンプ
+        //LOG.info(DATE_FORMAT.format(data.getDate()));
         //LOG.info(DebugUtil.hexDump(data));
 
         return false;
@@ -252,10 +254,10 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             set.add(String.format(FORMAT, 0, 0));
         }
 
-        public boolean check(int p1, int p2) {
+        public boolean check(Date date, int p1, int p2) {
             String val = String.format(FORMAT, p1, p2);
             if (set.contains(val)) {
-                LOG.warn("重複した点数情報を受信 : " + p1 + " - " + p2);
+                LOG.warn(DATE_FORMAT.format(date) + "\t重複した点数情報を受信 : " + p1 + " - " + p2);
                 return false;
             } else {
                 set.add(val);
@@ -280,17 +282,17 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             diff = new int[]{0, 0};
         }
 
-        public void check(GvLogTable t) {
+        public void check(Date date, GvLogTable t) {
 
             this.p[t.getGuildName()] += t.getPoint();
 
             if (this.p[0] - t.getPoint0() != diff[0]) {
                 diff[0] = this.p[0] - t.getPoint0();
-                LOG.warn("先入れ側点数にズレが発生 : " + diff[0]);
+                LOG.warn(DATE_FORMAT.format(date) + "\t先入れ側点数にズレが発生 : " + diff[0]);
             }
             if (this.p[1] - t.getPoint1() != diff[1]) {
                 diff[1] = this.p[1] - t.getPoint1();
-                LOG.warn("後入れ側点数にズレが発生 : " + diff[1]);
+                LOG.warn(DATE_FORMAT.format(date) + "\t後入れ側点数にズレが発生 : " + diff[1]);
             }
         }
     }
