@@ -48,6 +48,16 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     private static final String PATTERN = "^(?:.{2})+(" + UNIT_PATTERN + ")(?:.{2})*$";
 
     /**
+     * 開始情報にマッチする正規表現パターン.
+     */
+    private static final String START_PATTERN = "^6C002811CDCDCDCD0200000008001012000001FF58006A120000" + BASE_PATTERN + "00(?:CC)+" + BASE_PATTERN + "00(?:CC)+0000000000000000CDCDCCCC$";
+
+    /**
+     * 結果情報にマッチする正規表現パターン.
+     */
+    private static final String RESULT_PATTERN = "4400F1110000(....)" + BASE_PATTERN + "00(?:.{2})+(?:CC)+(?:....)CCCC..000000..00(..)00(..)00(..)00(....)(..)00..00CCCC";
+
+    /**
      * 正規表現オブジェクト.
      */
     private static Pattern unitPattern = Pattern.compile(UNIT_PATTERN);
@@ -56,6 +66,16 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      * 正規表現オブジェクト.
      */
     private static Pattern pattern = Pattern.compile(PATTERN);
+
+    /**
+     * 正規表現オブジェクト.
+     */
+    private static Pattern startPattern = Pattern.compile(START_PATTERN);
+
+    /**
+     * 正規表現オブジェクト.
+     */
+    private static Pattern resultPattern = Pattern.compile(RESULT_PATTERN);
 
     /**
      * 開始時刻.
@@ -89,9 +109,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      */
     public GuildBattleLogic() {
 
-        dupChecker = new DuplicateChecker();
-        pointChecker = new PointChecker();
-
         logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
 
         reset();
@@ -105,6 +122,9 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         startDate = null;
 
         logDataQ.clear();
+
+        dupChecker = new DuplicateChecker();
+        pointChecker = new PointChecker();
     }
 
     @Override
@@ -162,6 +182,48 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
                 pointChecker.check(data.getDate(), logRow);
             }
+
+            return true;
+        }
+
+        Matcher startMatcher = startPattern.matcher(data.getStrData());
+
+        if (startMatcher.matches()) {
+
+            String gName0 = RamidoreUtil.encode(startMatcher.group(1), ENCODING);
+            String gName1 = RamidoreUtil.encode(startMatcher.group(2), ENCODING);
+
+            LOG.info("開始 : " + gName0 + " vs " + gName1);
+
+            return true;
+        }
+
+        Matcher resultMatcher = resultPattern.matcher(data.getStrData());
+
+        if (resultMatcher.find()) {
+
+            String gCode = resultMatcher.group(1);
+            String gName = RamidoreUtil.encode(resultMatcher.group(2), ENCODING);
+            int winCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(3));
+            int loseCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(4));
+            int drawCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(5));
+            int winPoint = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(6));
+            String resultCode = resultMatcher.group(7);
+
+            String result = StringUtils.EMPTY;
+
+            if ("00".equals(resultCode)) {
+                result = "勝利しました。";
+            } else
+            if ("01".equals(resultCode)) {
+                result = "敗北しました。";
+            } else
+            if ("02".equals(resultCode)) {
+                result = "引き分けです。";
+            }
+
+            LOG.info("終了 : 【ギルドコード[" + gCode + "]】は【" + gName + "】との対戦で" + result);
+            LOG.info(winCnt + "勝 " + loseCnt + "敗 " + drawCnt + "分 勝ち点 " + winPoint);
 
             return true;
         }
