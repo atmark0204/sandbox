@@ -70,6 +70,7 @@ public class GvLogTableTest {
         target.setPoint0(100);
         target.setPoint1(500);
 
+        @SuppressWarnings("unchecked")
         XYChart.Data<String, Number>[] actual = target.toTimelineData();
 
         assertThat(actual.length, is(2));
