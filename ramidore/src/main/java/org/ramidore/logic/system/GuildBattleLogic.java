@@ -1,9 +1,12 @@
 package org.ramidore.logic.system;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -12,10 +15,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.collections.ObservableList;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.ramidore.bean.GvLogTable;
+import org.ramidore.bean.GvStatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -303,6 +310,39 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         row.setPoint1(Integer.valueOf(elem[6]));
 
         return row;
+    }
+
+    /**
+     * 統計情報をテキストに保存する.
+     *
+     * @param items
+     */
+    public void saveStatData(ObservableList<GvStatTable> items, File f) {
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add("name\tkill\tdeath\tpoint\tnote");
+
+        for (GvStatTable item : items) {
+            List<String> itemList = new ArrayList<String>();
+
+            itemList.add(item.getCharaName());
+            itemList.add(String.valueOf(item.getKillCount()));
+            itemList.add(String.valueOf(item.getDeathCount()));
+            itemList.add(String.valueOf(item.getPoint()));
+            itemList.add(item.getNote());
+
+            String line = StringUtils.join(itemList, '\t');
+
+            lines.add(line);
+        }
+
+        try {
+            FileUtils.writeLines(f, ENCODING, lines);
+        } catch (IOException e) {
+
+            LOG.error("I/O error " + f.getAbsolutePath());
+        }
     }
 
     /**

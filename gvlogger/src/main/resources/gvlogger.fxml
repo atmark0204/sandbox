@@ -30,18 +30,20 @@
     </ChoiceBox>
     <Accordion prefHeight="376.0" prefWidth="807.999977929685" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
       <expandedPane>
-        <TitledPane fx:id="x1" animated="false" text="時系列" textAlignment="LEFT" underline="false">
+        <TitledPane id="x2" fx:id="x4" animated="false" contentDisplay="LEFT" text="統計" textAlignment="LEFT">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <LineChart fx:id="timelineChart" prefHeight="284.0" prefWidth="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                  <xAxis>
-                    <CategoryAxis side="BOTTOM" />
-                  </xAxis>
-                  <yAxis>
-                    <NumberAxis side="LEFT" />
-                  </yAxis>
-                </LineChart>
+                <TableView id="pbStatTable" fx:id="statTable" prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                  <columns>
+                    <TableColumn editable="false" id="seriesName" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" text="guild" fx:id="statGuildCol" />
+                    <TableColumn editable="false" maxWidth="250.0" minWidth="10.0" prefWidth="200.0" text="name" fx:id="statCharaCol" />
+                    <TableColumn editable="false" id="totalPoint" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="kill" fx:id="statKillCountCol" />
+                    <TableColumn editable="false" id="totalPoint" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="death" fx:id="statDeathCountCol" />
+                    <TableColumn editable="false" id="totalPoint" maxWidth="100.0" prefWidth="100.0" text="point" fx:id="statPointCol" />
+                    <TableColumn editable="true" id="totalPoint" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" text="note" fx:id="statNoteCol" />
+                  </columns>
+                </TableView>
               </children>
             </AnchorPane>
           </content>
@@ -67,24 +69,23 @@
             </AnchorPane>
           </content>
         </TitledPane>
-        <TitledPane id="x2" animated="false" contentDisplay="LEFT" text="統計" textAlignment="LEFT">
+        <fx:reference source="x4" />
+        <TitledPane fx:id="x1" animated="false" text="時系列" textAlignment="LEFT" underline="false">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView id="pbStatTable" fx:id="statTable" prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn id="seriesName" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" text="guild" fx:id="statGuildCol" />
-                    <TableColumn maxWidth="250.0" minWidth="10.0" prefWidth="200.0" text="name" fx:id="statCharaCol" />
-                    <TableColumn id="totalPoint" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="kill" fx:id="statKillCountCol" />
-                    <TableColumn id="totalPoint" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="death" fx:id="statDeathCountCol" />
-                    <TableColumn id="totalPoint" maxWidth="100.0" prefWidth="100.0" text="point" fx:id="statPointCol" />
-                  </columns>
-                </TableView>
+                <LineChart fx:id="timelineChart" prefHeight="284.0" prefWidth="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                  <xAxis>
+                    <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                    <NumberAxis side="LEFT" />
+                  </yAxis>
+                </LineChart>
               </children>
             </AnchorPane>
           </content>
         </TitledPane>
-        <fx:reference source="x1" />
         <TitledPane id="x1" fx:id="x3" animated="false" text="個人" textAlignment="LEFT" underline="false">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -118,12 +119,17 @@
     </Button>
     <ChoiceBox id="deviceList" fx:id="captureModeCb" layoutX="348.0" layoutY="0.0" prefHeight="23.0" prefWidth="96.0">
       <items>
-        <FXCollections fx:factory="observableArrayList">
-        </FXCollections>
+        <FXCollections fx:factory="observableArrayList" />
       </items>
       <tooltip>
         <Tooltip text="動作モード" />
       </tooltip>
     </ChoiceBox>
+    <Button id="clear1b" fx:id="clearB" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="クリア" textAlignment="CENTER">
+      <tooltip>
+        <Tooltip text="表示されているデータをクリア" />
+      </tooltip>
+    </Button>
+    <Button id="clear1b" fx:id="saveStatDataB" layoutX="629.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="統計情報保存" textAlignment="CENTER" />
   </children>
 </AnchorPane>

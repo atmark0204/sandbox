@@ -17,12 +17,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
+import javafx.util.converter.DefaultStringConverter;
 
 import org.ramidore.bean.GvLogTable;
 import org.ramidore.bean.GvStatTable;
@@ -67,6 +72,18 @@ public class GvLoggerController extends AbstractMainController {
      */
     @FXML
     private Button loadPastDataB;
+
+    /**
+     * クリアボタン.
+     */
+    @FXML
+    private Button clearB;
+
+    /**
+     * 統計情報保存ボタン.
+     */
+    @FXML
+    private Button saveStatDataB;
 
     /**
      * 時系列表示用チャート.
@@ -171,6 +188,12 @@ public class GvLoggerController extends AbstractMainController {
     private TableColumn<GvStatTable, Integer> statPointCol;
 
     /**
+     * 備考欄.
+     */
+    @FXML
+    private TableColumn<GvStatTable, String> statNoteCol;
+
+    /**
      * キャラ名と統計データのマップ.
      */
     private Map<String, GvStatTable> statMap = new ConcurrentHashMap<String, GvStatTable>();
@@ -205,11 +228,27 @@ public class GvLoggerController extends AbstractMainController {
         logPoint0Col.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("point0"));
         logPoint1Col.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("point1"));
 
+        statTable.setEditable(true);
         statGuildCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("guildName"));
         statCharaCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, String>("charaName"));
         statKillCountCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("killCount"));
         statDeathCountCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("deathCount"));
         statPointCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("point"));
+        statNoteCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, String>("note"));
+
+        statNoteCol.setCellFactory(new Callback<TableColumn<GvStatTable, String>, TableCell<GvStatTable, String>>() {
+            @Override
+            public TableCell<GvStatTable, String> call(TableColumn<GvStatTable, String> arg0) {
+                return new TextFieldTableCell<GvStatTable, String>(new DefaultStringConverter());
+            }
+        });
+
+        statNoteCol.setOnEditCommit(new EventHandler<CellEditEvent<GvStatTable, String>>() {
+            @Override
+            public void handle(CellEditEvent<GvStatTable, String> t) {
+                ((GvStatTable) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNote(t.getNewValue());
+            }
+        });
     }
 
     /**
@@ -299,6 +338,7 @@ public class GvLoggerController extends AbstractMainController {
             }
         });
 
+        // 過去データ読み込みボタン押下
         loadPastDataB.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ae) {
@@ -320,6 +360,33 @@ public class GvLoggerController extends AbstractMainController {
                 }
 
                 loadPastDataB.setDisable(false);
+            }
+        });
+
+        // クリアボタン押下
+        clearB.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                clearData();
+            }
+        });
+
+        // 統計情報保存ボタン押下
+        saveStatDataB.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                FileChooser fc = new FileChooser();
+                fc.setTitle("保存するファイル名を入力してください。");
+                fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
+                fc.getExtensionFilters().add(new ExtensionFilter("TEXT", ".txt"));
+
+                File f = fc.showSaveDialog(null);
+
+                if (f != null) {
+                    ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic().saveStatData(statTable.getItems(), f);
+                }
             }
         });
     }

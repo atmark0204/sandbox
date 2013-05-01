@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.chart.BarChart;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class GvStatTable {
 
     private SimpleIntegerProperty guildName;
@@ -16,6 +18,8 @@ public class GvStatTable {
 
     private SimpleIntegerProperty point;
 
+    private SimpleStringProperty note;
+
     public GvStatTable() {
 
         guildName = new SimpleIntegerProperty();
@@ -23,6 +27,7 @@ public class GvStatTable {
         killCount = new SimpleIntegerProperty(0);
         deathCount = new SimpleIntegerProperty(0);
         point = new SimpleIntegerProperty(0);
+        note = new SimpleStringProperty(StringUtils.EMPTY);
     }
 
     public SimpleIntegerProperty guildNameProperty() {
@@ -43,6 +48,10 @@ public class GvStatTable {
 
     public SimpleIntegerProperty deathCountProperty() {
         return deathCount;
+    }
+
+    public SimpleStringProperty noteProperty() {
+        return note;
     }
 
     public void addDeathCount() {
@@ -143,5 +152,23 @@ public class GvStatTable {
      */
     public void setPoint(int point) {
         this.point.set(point);
+    }
+
+    /**
+     * getter.
+     *
+     * @return note
+     */
+    public String getNote() {
+        return note.get();
+    }
+
+    /**
+     * setter.
+     *
+     * @param note セットする note
+     */
+    public void setNote(String note) {
+        this.note.set(note);
     }
 }
