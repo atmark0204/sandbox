@@ -7,6 +7,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
+import org.jnetpcap.PcapBpfProgram;
 import org.ramidore.logic.AbstractMainLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,5 +80,33 @@ public class OfflineTask extends OnlineTask {
         fc.getExtensionFilters().add(new ExtensionFilter(kind, extensionPat));
 
         return fc.showOpenDialog(null);
+    }
+
+    @Override
+    protected boolean setFilter() {
+
+        PcapBpfProgram program = new PcapBpfProgram();
+
+        String expression = "tcp && ((src port 54631) || (src port 56621))";
+        int optimize = 1;
+        int netmask = 0xFFFFFF00;
+
+        if (pcap.compile(program, expression, optimize, netmask) != Pcap.OK) {
+
+            LOG.error(pcap.getErr());
+
+            return false;
+        }
+
+        if (pcap.setFilter(program) != Pcap.OK) {
+
+            LOG.error(pcap.getErr());
+
+            return false;
+        }
+
+        LOG.debug("set filter : " + expression);
+
+        return true;
     }
 }
