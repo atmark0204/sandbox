@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.ramidore.bean.PbChartBean;
+import org.ramidore.bean.PbLogBean;
 import org.ramidore.bean.PbStatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
@@ -67,7 +69,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * JavaFXスレッドと同期するためのLinkedQueueのリスト.
      */
-    private List<ConcurrentLinkedQueue<PbChartBean>> chartDataQList = new ArrayList<ConcurrentLinkedQueue<PbChartBean>>();
+    private List<ConcurrentLinkedQueue<PbLogBean>> chartDataQList = new ArrayList<ConcurrentLinkedQueue<PbLogBean>>();
 
     /**
      * 統計表示用テーブル.
@@ -104,7 +106,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * 現在のデータ.
      */
-    private PbChartBean currentData = null;
+    private PbLogBean currentData = null;
 
     /**
      * 現在のポイントマップ.
@@ -117,6 +119,11 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     private PbStatTable currentStat = null;
 
     /**
+     * 重複チェックオブジェクト.
+     */
+    private DuplicateChecker dupChecker;
+
+    /**
      * コンストラクタ.
      */
     public PointBattleLogic() {
@@ -124,10 +131,12 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         currentStat = new PbStatTable();
 
         for (int i = 0; i < 6; i++) {
-            chartDataQList.add(new ConcurrentLinkedQueue<PbChartBean>());
+            chartDataQList.add(new ConcurrentLinkedQueue<PbLogBean>());
         }
 
         pointMap.put(0, 0);
+
+        dupChecker = new DuplicateChecker();
     }
 
     @Override
@@ -154,14 +163,18 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
             while(unitMatcher.find()) {
 
-                ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(currentStageNo - 1);
-                ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(5);
+                ConcurrentLinkedQueue<PbLogBean> dataQ = chartDataQList.get(currentStageNo - 1);
+                ConcurrentLinkedQueue<PbLogBean> allDataQ = chartDataQList.get(5);
 
                 int point = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(1));
 
+                if (!dupChecker.check(point)) {
+                    continue;
+                }
+
                 pointMap.put(currentStageNo, point);
 
-                currentData = new PbChartBean(id, sequentialNo, currentStageNo, stageSequentialNo, data.getDate(), point, pointMap.get(currentStageNo - 1));
+                currentData = new PbLogBean(id, sequentialNo, currentStageNo, stageSequentialNo, point, pointMap.get(currentStageNo - 1));
                 dataQ.add(currentData);
                 allDataQ.add(currentData);
 
@@ -220,10 +233,10 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                     continue;
                 }
 
-                List<PbChartBean> dataList = new ArrayList<PbChartBean>();
+                List<PbLogBean> dataList = new ArrayList<PbLogBean>();
 
                 for (int i = 1; i < list.size(); i++) {
-                    PbChartBean bean = loadLine(id, list.get(i));
+                    PbLogBean bean = loadLine(id, list.get(i));
 
                     dataList.add(bean);
                 }
@@ -249,12 +262,15 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      *            1行の文字列
      * @return PointBatteleChartBean
      */
-    private PbChartBean loadLine(String id, String line) {
+    private PbLogBean loadLine(String id, String line) {
 
         String[] element = StringUtils.split(line, '\t');
 
-        return new PbChartBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]), Integer.valueOf(element[2]), null,
-                Integer.valueOf(element[3]));
+        if (element.length != 4) {
+            return null;
+        }
+
+        return new PbLogBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]), Integer.valueOf(element[2]), Integer.valueOf(element[3]));
     }
 
     /**
@@ -265,7 +281,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      * @param dataList
      *            データのリスト
      */
-    private void statData(String id, List<PbChartBean> dataList) {
+    private void statData(String id, List<PbLogBean> dataList) {
 
         // key : ステージ番号 value : 得点
         Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
@@ -277,17 +293,17 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             mobCountMap.put(i, 0);
         }
 
-        for (PbChartBean data : dataList) {
+        for (PbLogBean data : dataList) {
             pointMap.put(data.getStageNo(), data.getPoint());
             mobCountMap.put(data.getStageNo(), data.getStageSequentialNo());
         }
 
-        for (PbChartBean data : dataList) {
+        for (PbLogBean data : dataList) {
 
             data.setPointOffset(pointMap.get(data.getStageNo() - 1));
 
-            ConcurrentLinkedQueue<PbChartBean> dataQ = chartDataQList.get(data.getStageNo() - 1);
-            ConcurrentLinkedQueue<PbChartBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
+            ConcurrentLinkedQueue<PbLogBean> dataQ = chartDataQList.get(data.getStageNo() - 1);
+            ConcurrentLinkedQueue<PbLogBean> allDataQ = chartDataQList.get(chartDataQList.size() - 1);
 
             dataQ.add(data);
             allDataQ.add(data);
@@ -372,7 +388,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      *
      * @return chartDataQList
      */
-    public List<ConcurrentLinkedQueue<PbChartBean>> getChartDataQList() {
+    public List<ConcurrentLinkedQueue<PbLogBean>> getChartDataQList() {
         return chartDataQList;
     }
 
@@ -382,7 +398,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      * @param chartDataQList
      *            セットする chartDataQList
      */
-    public void setChartDataQList(List<ConcurrentLinkedQueue<PbChartBean>> chartDataQList) {
+    public void setChartDataQList(List<ConcurrentLinkedQueue<PbLogBean>> chartDataQList) {
         this.chartDataQList = chartDataQList;
     }
 
@@ -405,4 +421,26 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         this.statTable = statTable;
     }
 
+    /**
+     * 重複ポイント受信チェッカー.
+     *
+     * @author atmark
+     *
+     */
+    private class DuplicateChecker {
+
+        private Set<Integer> set;
+
+        public DuplicateChecker() {
+            set = new HashSet<Integer>();
+        }
+
+        public boolean check(int point) {
+            if (set.contains(point)) {
+                return false;
+            }
+            set.add(point);
+            return true;
+        }
+    }
 }

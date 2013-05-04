@@ -1,7 +1,5 @@
 package org.ramidore.bean;
 
-import java.util.Date;
-
 import javafx.scene.chart.XYChart.Data;
 
 /**
@@ -10,7 +8,7 @@ import javafx.scene.chart.XYChart.Data;
  * @author atmark
  *
  */
-public class PbChartBean {
+public class PbLogBean {
 
     /**
      * 識別子.
@@ -33,11 +31,6 @@ public class PbChartBean {
     private int stageSequentialNo;
 
     /**
-     * 時刻.
-     */
-    private Date date;
-
-    /**
      * 点数.
      */
     private int point;
@@ -58,20 +51,17 @@ public class PbChartBean {
      *            ステージ番号
      * @param stageSequentialNo
      *            ステージシーケンス番号
-     * @param date
-     *            時刻
      * @param point
      *            点数
      * @param pointOffset
      *            前面の最終点数
      */
-    public PbChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point, int pointOffset) {
+    public PbLogBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, int point, int pointOffset) {
 
         this.id = id;
         this.sequentialNo = sequentialNo;
         this.stageNo = stageNo;
         this.stageSequentialNo = stageSequentialNo;
-        this.date = date;
         this.point = point;
         this.pointOffset = pointOffset;
     }
@@ -87,48 +77,36 @@ public class PbChartBean {
      *            ステージ番号
      * @param stageSequentialNo
      *            ステージシーケンス番号
-     * @param date
-     *            時刻
      * @param point
      *            点数
      */
-    public PbChartBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, Date date, int point) {
+    public PbLogBean(String id, int sequentialNo, int stageNo, int stageSequentialNo, int point) {
 
         this.id = id;
         this.sequentialNo = sequentialNo;
         this.stageNo = stageNo;
         this.stageSequentialNo = stageSequentialNo;
-        this.date = date;
         this.point = point;
     }
 
+    /**
+     * ステージ中のチャート表示用データを返す.
+     *
+     * @return チャート表示用データ
+     */
     public Data<Number, Number> toStageData() {
 
         return new Data<Number, Number>(stageSequentialNo, point - pointOffset);
     }
 
+    /**
+     * 全体のチャート表示用データを返す.
+     *
+     * @return チャート表示用データ
+     */
     public Data<Number, Number> toData() {
 
         return new Data<Number, Number>(sequentialNo, point);
-    }
-
-    /**
-     * getter.
-     *
-     * @return date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * setter.
-     *
-     * @param date
-     *            セットする date
-     */
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     /**

@@ -33,7 +33,7 @@ import javafx.scene.input.MouseEvent;
 
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
-import org.ramidore.bean.PbChartBean;
+import org.ramidore.bean.PbLogBean;
 import org.ramidore.bean.PbStatTable;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.PbLoggerLogic;
@@ -456,7 +456,7 @@ public class PbLoggerController extends AbstractMainController {
 
         PointBattleLogic logic = ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic();
 
-        ConcurrentLinkedQueue<PbChartBean> dataQ = logic.getChartDataQList().get(stageNo - 1);
+        ConcurrentLinkedQueue<PbLogBean> dataQ = logic.getChartDataQList().get(stageNo - 1);
 
         Map<String, Series<Number, Number>> pbDataMap = pbDataMapList.get(stageNo - 1);
 
@@ -464,7 +464,7 @@ public class PbLoggerController extends AbstractMainController {
             return;
         }
 
-        PbChartBean data = dataQ.remove();
+        PbLogBean data = dataQ.remove();
 
         // データ系列名
         String id = data.getId();

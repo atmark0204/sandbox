@@ -9,7 +9,7 @@
 	<name>pblogger</name>
 
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<organization>
 		<!-- Used as the 'Vendor' for JNLP generation -->
@@ -38,6 +38,17 @@
 					<mainClass>org.ramidore.PbLogger</mainClass>
 				</configuration>
 			</plugin>
+			<plugin>
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-assembly-plugin</artifactId>
+		      <version>2.2.1</version>
+		      <configuration>
+		        <descriptors>
+		          <descriptor>src/main/resources/distribution_x86_64.xml</descriptor>
+		          <descriptor>src/main/resources/distribution_x86.xml</descriptor>
+		        </descriptors>
+		      </configuration>
+    		</plugin>
 		</plugins>
 	</build>
 

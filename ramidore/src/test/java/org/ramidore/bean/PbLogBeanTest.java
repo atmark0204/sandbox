@@ -2,9 +2,6 @@ package org.ramidore.bean;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
-
-import java.util.Date;
-
 import javafx.scene.chart.XYChart;
 
 import org.junit.After;
@@ -14,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
-public class PbChartBeanTest {
+public class PbLogBeanTest {
 
     /**
      * Main.
@@ -23,7 +20,7 @@ public class PbChartBeanTest {
      *            引数
      */
     public static void main(String[] args) {
-        JUnitCore.main(PbChartBeanTest.class.getName());
+        JUnitCore.main(PbLogBeanTest.class.getName());
     }
 
     /**
@@ -68,7 +65,7 @@ public class PbChartBeanTest {
     @Test
     public void toStageDataTest01() {
 
-        PbChartBean target = new PbChartBean("id", 100, 1, 2, new Date(), 100, 0);
+        PbLogBean target = new PbLogBean("id", 100, 1, 2, 100, 0);
 
         XYChart.Data<Number, Number> actual = target.toStageData();
 
@@ -82,7 +79,7 @@ public class PbChartBeanTest {
     @Test
     public void toStageDataTest02() {
 
-        PbChartBean target = new PbChartBean("id", 100, 1, 2, new Date(), 100, 1);
+        PbLogBean target = new PbLogBean("id", 100, 1, 2, 100, 1);
 
         XYChart.Data<Number, Number> actual = target.toStageData();
 
@@ -96,7 +93,7 @@ public class PbChartBeanTest {
     @Test
     public void toDataTest01() {
 
-        PbChartBean target = new PbChartBean("id", 100, 1, 2, new Date(), 100, 0);
+        PbLogBean target = new PbLogBean("id", 100, 1, 2, 100, 0);
 
         XYChart.Data<Number, Number> actual = target.toData();
 
@@ -110,7 +107,7 @@ public class PbChartBeanTest {
     @Test
     public void toDataTest02() {
 
-        PbChartBean target = new PbChartBean("id", 100, 1, 2, new Date(), 100, 1);
+        PbLogBean target = new PbLogBean("id", 100, 1, 2, 100, 1);
 
         XYChart.Data<Number, Number> actual = target.toData();
 
