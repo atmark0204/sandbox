@@ -60,42 +60,28 @@
 		</encoder>
 	</appender>
 
-	<appender name="FILE_PB"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>%d{yyyy-MM}/ポイント戦_%d{MM-dd}.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%msg%n</pattern>
-		</encoder>
-	</appender>
-
-	<logger name="org.redomira.logic.chat.SakebiChatLogic" level="INFO">
+	<logger name="org.ramidore.logic.chat.SakebiChatLogic" level="INFO">
 		<appender-ref ref="FILE_S" />
 	</logger>
 
-	<logger name="org.redomira.logic.chat.NormalChatLogic" level="INFO">
+	<logger name="org.ramidore.logic.chat.NormalChatLogic" level="INFO">
 		<appender-ref ref="FILE_N" />
 	</logger>
 
-	<logger name="org.redomira.logic.chat.PartyChatLogic" level="INFO">
+	<logger name="org.ramidore.logic.chat.PartyChatLogic" level="INFO">
 		<appender-ref ref="FILE_PT" />
 	</logger>
 
-	<logger name="org.redomira.logic.chat.GuildChatLogic" level="INFO">
+	<logger name="org.ramidore.logic.chat.GuildChatLogic" level="INFO">
 		<appender-ref ref="FILE_G" />
 	</logger>
 
-	<logger name="org.redomira.logic.chat.MimiChatLogic" level="INFO">
+	<logger name="org.ramidore.logic.chat.MimiChatLogic" level="INFO">
 		<appender-ref ref="FILE_W" />
 	</logger>
 
-	<logger name="org.redomira.logic.item.ItemDatHolder" level="INFO" additivity="false">
+	<logger name="org.ramidore.logic.item.ItemDatHolder" level="INFO" additivity="false">
 		<appender-ref ref="FILE_ITEMDAT" />
-	</logger>
-
-	<logger name="org.redomira.logic.system.PointBattleLogic" level="INFO">
-		<appender-ref ref="FILE_W" />
 	</logger>
 
 	<!-- for dev env -->
@@ -109,7 +95,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.redomira.logic.DebugLogic" level="DEBUG" additivity="false">
+	<logger name="org.ramidore.logic.DebugLogic" level="DEBUG" additivity="false">
 		<appender-ref ref="FILE_DEBUG" />
 	</logger>
 

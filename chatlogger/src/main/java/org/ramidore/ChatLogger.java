@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
  * @author atmark
  *
  */
-public class ChatLoggerMain extends Application {
+public class ChatLogger extends Application {
 
     /**
      * . Logger
      */
-    private static final Logger LOG = LoggerFactory.getLogger(ChatLoggerMain.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ChatLogger.class);
 
     /**
      * アプリケーション名.
