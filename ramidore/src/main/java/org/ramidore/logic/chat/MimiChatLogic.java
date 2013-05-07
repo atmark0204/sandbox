@@ -158,7 +158,7 @@ public class MimiChatLogic extends AbstractChatLogic {
     @Override
     public void saveConfig(Properties config) {
 
-        config.setProperty("mimiChat.enabled", String.valueOf(isEnabled()));
+        config.setProperty("mimiChat.enabled", String.valueOf(isNoticeable()));
     }
 
     @Override

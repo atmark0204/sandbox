@@ -51,7 +51,7 @@ public class RsMonitorLogic extends AbstractMainLogic {
 
 
     @Override
-    public boolean isEnabled() {
+    public boolean isNoticeable() {
         return false;
     }
 

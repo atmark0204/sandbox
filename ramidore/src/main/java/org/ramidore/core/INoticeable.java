@@ -13,7 +13,7 @@ public interface INoticeable {
      *
      * @return 可/否
      */
-    boolean isEnabled();
+    boolean isNoticeable();
 
     /**
      * お知らせメッセージを返す.

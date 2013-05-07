@@ -21,6 +21,11 @@ import org.ramidore.logic.system.RedstoneLogic;
 public class ChatLoggerLogic extends AbstractMainLogic {
 
     /**
+     * お知らせ表示の初期設定.
+     */
+    private boolean noticeable;
+
+    /**
      * お知らせメッセージ.
      */
     private String oshiraseMessage;
@@ -148,6 +153,8 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     @Override
     public void loadConfig(Properties config) {
 
+        noticeable = Boolean.parseBoolean(config.getProperty("oshirase.enabled", "false"));
+
         sakebiChatLogic.loadConfig(config);
         normalChatLogic.loadConfig(config);
         partyChatLogic.loadConfig(config);
@@ -157,6 +164,8 @@ public class ChatLoggerLogic extends AbstractMainLogic {
 
     @Override
     public void saveConfig(Properties config) {
+
+        config.setProperty("oshirase.enabled", String.valueOf(noticeable));
 
         sakebiChatLogic.saveConfig(config);
         normalChatLogic.saveConfig(config);
@@ -180,8 +189,8 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     }
 
     @Override
-    public boolean isEnabled() {
-        return true;
+    public boolean isNoticeable() {
+        return noticeable;
     }
 
     /**
@@ -315,5 +324,14 @@ public class ChatLoggerLogic extends AbstractMainLogic {
      */
     public void setItemLogic(ItemLogic itemLogic) {
         this.itemLogic = itemLogic;
+    }
+
+    /**
+     * setter.
+     *
+     * @param noticeable セットする noticeable
+     */
+    public void setNoticeable(boolean noticeable) {
+        this.noticeable = noticeable;
     }
 }

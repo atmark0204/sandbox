@@ -40,7 +40,7 @@ public class OshiraseJDialog extends JDialog implements IConfigurable {
     public OshiraseJDialog(Properties config) {
 
         // getContentPane()に設定しないと適用されない？
-        getContentPane().setBackground(new Color(0x11, 0x11, 0x11, 0xa0));
+        getContentPane().setBackground(new Color(0x11, 0x11, 0x11, 0xFF));
 
         // ツールバー非表示
         setUndecorated(true);

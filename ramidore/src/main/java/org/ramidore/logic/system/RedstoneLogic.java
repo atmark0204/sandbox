@@ -51,7 +51,7 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
     /**
      * JavaFXスレッドと同期するためのLinkedQueue.
      */
-    private ConcurrentLinkedQueue<RedStoneChartBean> chartDataQ = new ConcurrentLinkedQueue<RedStoneChartBean>();
+    private ConcurrentLinkedQueue<RedStoneChartBean> chartDataQ;
 
     /**
      * チャート用データ.
@@ -63,7 +63,12 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
      */
     public RedstoneLogic() {
 
+        chartDataQ = new ConcurrentLinkedQueue<RedStoneChartBean>();
+
         dataBean = new RedStoneChartBean();
+
+        // 初期データを追加する
+        chartDataQ.add(dataBean);
     }
 
     @Override

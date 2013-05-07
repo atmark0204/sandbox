@@ -73,7 +73,7 @@ public class GuildChatLogic extends AbstractChatLogic {
     @Override
     public void saveConfig(Properties config) {
 
-        config.setProperty("guildChat.enabled", String.valueOf(isEnabled()));
+        config.setProperty("guildChat.enabled", String.valueOf(isNoticeable()));
     }
 
     @Override

@@ -80,7 +80,7 @@ public final class PbLoggerLogic extends AbstractMainLogic {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isNoticeable() {
         return false;
     }
 

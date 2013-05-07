@@ -66,7 +66,7 @@ public final class GvLoggerLogic extends AbstractMainLogic {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isNoticeable() {
         return false;
     }
 

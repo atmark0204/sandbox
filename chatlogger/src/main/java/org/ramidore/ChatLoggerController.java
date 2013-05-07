@@ -392,17 +392,19 @@ public class ChatLoggerController extends AbstractMainController {
      */
     private void initializeOshirase() {
 
-        oshiraseJDialog = new OshiraseJDialog(getConfig());
-
         jfxPanel = new JFXPanel();
 
+        oshiraseJDialog = new OshiraseJDialog(getConfig());
+
         oshiraseJDialog.add(jfxPanel);
+
+        oshiraseJDialog.addLabel();
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
-                oshiraseJDialog.addLabel();
+                //oshiraseJDialog.addLabel();
 
                 jfxPanel.setScene(new Scene(new Group()));
             }
@@ -418,46 +420,53 @@ public class ChatLoggerController extends AbstractMainController {
 
         getService().messageProperty().addListener(listener);
 
-        opacitySlider.setDisable(true);
+        // 初期設定取得
+        boolean noticeable = ((ChatLoggerLogic) getService().getLogic()).isNoticeable();
+        oshiraseWindow.setSelected(noticeable);
+        opacitySlider.setDisable(!noticeable);
+        oshiraseJDialog.setVisible(noticeable);
+        //jfxPanel.setVisible(noticeable);
         oshiraseWindow.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
 
+                ((ChatLoggerLogic) getService().getLogic()).setNoticeable(oshiraseWindow.isSelected());
+
                 // スライダーのenable/disable切り替え
                 opacitySlider.setDisable(!oshiraseWindow.isSelected());
-
                 oshiraseJDialog.setVisible(oshiraseWindow.isSelected());
+                //jfxPanel.setVisible(oshiraseWindow.isSelected());
             }
         });
 
-        sakebiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().isEnabled());
+        sakebiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().isNoticeable());
         sakebiMenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 ((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().setEnabled(sakebiMenu.isSelected());
             }
         });
 
-        normalMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().isEnabled());
+        normalMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().isNoticeable());
         normalMenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 ((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().setEnabled(normalMenu.isSelected());
             }
         });
 
-        partyMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().isEnabled());
+        partyMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().isNoticeable());
         partyMenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 ((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().setEnabled(partyMenu.isSelected());
             }
         });
 
-        guildMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().isEnabled());
+        guildMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().isNoticeable());
         guildMenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 ((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().setEnabled(guildMenu.isSelected());
             }
         });
 
-        mimiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().isEnabled());
+        mimiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().isNoticeable());
         mimiMenu.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 ((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().setEnabled(mimiMenu.isSelected());
@@ -503,6 +512,7 @@ public class ChatLoggerController extends AbstractMainController {
 
         XYChart.Series<Number, Number> seriesChika = new XYChart.Series<Number, Number>();
         seriesChika.setName("地下");
+
 
         XYChart.Series<Number, Number> seriesAkuma = new XYChart.Series<Number, Number>();
         seriesAkuma.setName("悪魔");

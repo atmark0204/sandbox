@@ -89,7 +89,7 @@ public abstract class AbstractChatLogic extends AbstractLogic implements INotice
     }
 
     @Override
-    public final boolean isEnabled() {
+    public final boolean isNoticeable() {
         return enabled;
     }
 

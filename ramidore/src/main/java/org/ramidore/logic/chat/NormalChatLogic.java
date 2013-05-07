@@ -72,7 +72,7 @@ public class NormalChatLogic extends AbstractChatLogic {
     @Override
     public void saveConfig(Properties config) {
 
-        config.setProperty("normalChat.enabled", String.valueOf(isEnabled()));
+        config.setProperty("normalChat.enabled", String.valueOf(isNoticeable()));
     }
 
     @Override

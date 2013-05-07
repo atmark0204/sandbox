@@ -66,7 +66,7 @@ public class PartyChatLogic extends AbstractChatLogic {
     @Override
     public void saveConfig(Properties config) {
 
-        config.setProperty("partyChat.enabled", String.valueOf(isEnabled()));
+        config.setProperty("partyChat.enabled", String.valueOf(isNoticeable()));
     }
 
     @Override

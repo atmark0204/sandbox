@@ -73,7 +73,7 @@ public class SakebiChatLogic extends AbstractChatLogic {
     @Override
     public void saveConfig(Properties config) {
 
-        config.setProperty("sakebiChat.enabled", String.valueOf(isEnabled()));
+        config.setProperty("sakebiChat.enabled", String.valueOf(isNoticeable()));
     }
 
     @Override
