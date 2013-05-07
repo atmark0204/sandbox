@@ -10,7 +10,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.ramidore.bean.ItemBean;
-import org.ramidore.bean.ItemData;
 import org.ramidore.bean.OptionBean;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -86,9 +85,7 @@ public class ItemDatHolder {
 
                 itemMap.put(item.getId(), item);
 
-                ItemData itemData = new ItemData(item);
-
-                log.info(item.getId() + " : " + item.getName() + " : " + item.getFluctuation() + " : " + itemData.getModel());
+                log.info(item.getId() + " : " + item.getName());
             }
 
             byte[] optionCountByte = new byte[2];
