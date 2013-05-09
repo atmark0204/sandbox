@@ -137,20 +137,6 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     @Override
     public boolean execute(PacketData data) {
 
-        if (startDate == null) {
-            // 最初に受信したパケットのタイムスタンプを開始時刻とする
-            startDate = data.getDate();
-
-            // 0 vs 0のデータ追加
-            GvLogTable log0 = new GvLogTable();
-            log0.setDate(DATE_FORMAT.format(startDate));
-
-            logDataQ.add(log0);
-
-            // 開始時刻を書き込む
-            LOG.info(DATE_FORMAT.format(startDate));
-        }
-
         Matcher matcher = pattern.matcher(data.getStrData());
 
         if (matcher.matches()) {
@@ -195,12 +181,20 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
         Matcher startMatcher = startPattern.matcher(data.getStrData());
 
-        if (startMatcher.matches()) {
+        if (startMatcher.matches() && startDate == null) {
+
+            startDate = data.getDate();
 
             String gName0 = RamidoreUtil.encode(startMatcher.group(1), ENCODING);
             String gName1 = RamidoreUtil.encode(startMatcher.group(2), ENCODING);
 
-            LOG.info("開始 : " + gName0 + " vs " + gName1);
+            // 0 vs 0のデータ追加
+            GvLogTable log0 = new GvLogTable();
+            log0.setDate(DATE_FORMAT.format(startDate));
+
+            logDataQ.add(log0);
+
+            LOG.info(DATE_FORMAT.format(startDate) + "\t開始 : " + gName0 + " vs " + gName1);
 
             return true;
         }
@@ -214,7 +208,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             int winCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(3));
             int loseCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(4));
             int drawCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(5));
-            int winPoint = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(6));
+            int winPoint = RamidoreUtil.intValueFromDescHexString(resultMatcher.group(6));
             String resultCode = resultMatcher.group(7);
 
             String result = StringUtils.EMPTY;
@@ -229,7 +223,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 result = "引き分けです。";
             }
 
-            LOG.info("終了 : 【ギルドコード[" + gCode + "]】は【" + gName + "】との対戦で" + result);
+            LOG.info(DATE_FORMAT.format(data.getDate()) + "\t終了 : 【ギルドコード[" + gCode + "]】は【" + gName + "】との対戦で" + result);
             LOG.info(winCnt + "勝 " + loseCnt + "敗 " + drawCnt + "分 勝ち点 " + winPoint);
 
             return true;
