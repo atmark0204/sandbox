@@ -347,7 +347,17 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             statTable.getItems().add(0, currentStat);
         }
 
-        PbStatTable stat = statTable.getItems().get(0);
+        PbStatTable stat = null;
+
+        for (PbStatTable t : statTable.getItems()) {
+
+            if (this.id.equals(t.getId())) {
+
+                stat = t;
+
+                break;
+            }
+        }
 
         int p = currentData.getPoint();
 
