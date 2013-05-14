@@ -377,15 +377,19 @@ public class GvLoggerController extends AbstractMainController {
             @Override
             public void handle(ActionEvent event) {
 
+                GuildBattleLogic logic = ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic();
+
                 FileChooser fc = new FileChooser();
                 fc.setTitle("保存するファイル名を入力してください。");
+                // デフォルトのファイル名は設定できない
+                // JavaFX 3.x で修正予定らしい
                 fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
                 fc.getExtensionFilters().add(new ExtensionFilter("TEXT", ".txt"));
 
                 File f = fc.showSaveDialog(null);
 
                 if (f != null) {
-                    ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic().saveStatData(statTable.getItems(), f);
+                    logic.saveStatData(statTable.getItems(), f);
                 }
             }
         });
