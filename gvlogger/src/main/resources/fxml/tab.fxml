@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?scenebuilder-stylesheet gvlogger.css?>
+
+<AnchorPane id="Content" minHeight="0.0" minWidth="0.0"
+	prefHeight="325.0" prefWidth="809.0" xmlns:fx="http://javafx.com/fxml"
+	fx:controller="org.ramidore.controller.GvLoggerTabController">
+	<children>
+		<Accordion prefHeight="346.0" prefWidth="808.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+			<expandedPane>
+				<TitledPane id="x2" fx:id="x1" animated="false" text="ログ">
+					<content>
+						<AnchorPane id="Content" minHeight="0.0" minWidth="0.0"
+							prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<TableView id="pbStatTable" fx:id="logTable"
+									prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0"
+									AnchorPane.topAnchor="0.0">
+									<columns>
+										<TableColumn id="totalPoint" maxWidth="60.0"
+											minWidth="60.0" prefWidth="60.0" text="time" fx:id="logDateCol" />
+										<TableColumn id="seriesName" maxWidth="300.0"
+											minWidth="10.0" prefWidth="200.0" text="src" fx:id="logSrcCharaCol" />
+										<TableColumn maxWidth="300.0" minWidth="10.0"
+											prefWidth="200.0" text="dst" fx:id="logDstCharaCol" />
+										<TableColumn maxWidth="50.0" minWidth="50.0"
+											prefWidth="50.0" text="guild" fx:id="logGuildCol" />
+										<TableColumn id="totalPoint" maxWidth="50.0"
+											minWidth="50.0" prefWidth="50.0" text="point" fx:id="logPointCol" />
+										<TableColumn id="totalPoint" maxWidth="100.0"
+											prefWidth="100.0" text="point0" fx:id="logPoint0Col" />
+										<TableColumn id="totalPoint" maxWidth="100.0"
+											prefWidth="100.0" text="point1" fx:id="logPoint1Col" />
+									</columns>
+								</TableView>
+							</children>
+						</AnchorPane>
+					</content>
+				</TitledPane>
+			</expandedPane>
+			<panes>
+				<fx:reference source="x1" />
+				<TitledPane id="x2" animated="false" contentDisplay="LEFT"
+					text="統計" textAlignment="LEFT">
+					<content>
+						<AnchorPane id="Content" minHeight="0.0" minWidth="0.0"
+							prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<TableView id="pbStatTable" fx:id="statTable"
+									prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0"
+									AnchorPane.topAnchor="0.0">
+									<columns>
+										<TableColumn editable="false" id="seriesName"
+											maxWidth="50.0" minWidth="10.0" prefWidth="50.0" text="guild"
+											fx:id="statGuildCol" />
+										<TableColumn editable="false" maxWidth="250.0"
+											minWidth="10.0" prefWidth="200.0" text="name" fx:id="statCharaCol" />
+										<TableColumn editable="false" id="totalPoint"
+											maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="kill"
+											fx:id="statKillCountCol" />
+										<TableColumn editable="false" id="totalPoint"
+											maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="death"
+											fx:id="statDeathCountCol" />
+										<TableColumn editable="false" id="totalPoint"
+											maxWidth="100.0" prefWidth="100.0" text="point" fx:id="statPointCol" />
+										<TableColumn editable="true" id="totalPoint"
+											maxWidth="400.0" minWidth="10.0" prefWidth="400.0" text="note"
+											fx:id="statNoteCol" />
+									</columns>
+								</TableView>
+							</children>
+						</AnchorPane>
+					</content>
+				</TitledPane>
+				<TitledPane id="x1" animated="false" text="時系列"
+					textAlignment="LEFT" underline="false">
+					<content>
+						<AnchorPane id="Content" minHeight="0.0" minWidth="0.0"
+							prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<LineChart fx:id="timelineChart" prefHeight="284.0"
+									prefWidth="797.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0"
+									AnchorPane.topAnchor="0.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" />
+									</yAxis>
+								</LineChart>
+							</children>
+						</AnchorPane>
+					</content>
+				</TitledPane>
+				<TitledPane id="x1" animated="false" prefHeight="280.0"
+					prefWidth="808.0" text="個人" textAlignment="LEFT" underline="false">
+					<content>
+						<AnchorPane id="Content" minHeight="0.0" minWidth="0.0"
+							prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<BarChart fx:id="personChart" prefHeight="265.0000915527344"
+									prefWidth="817.0" AnchorPane.bottomAnchor="0.0"
+									AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-12.0"
+									AnchorPane.topAnchor="19.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" />
+									</yAxis>
+								</BarChart>
+								<ChoiceBox fx:id="personChartCb" layoutX="0.0"
+									layoutY="0.0">
+									<items>
+										<FXCollections fx:factory="observableArrayList">
+											<String fx:value="先入れ側" />
+											<String fx:value="後入れ側" />
+										</FXCollections>
+									</items>
+								</ChoiceBox>
+							</children>
+						</AnchorPane>
+					</content>
+				</TitledPane>
+			</panes>
+		</Accordion>
+	</children>
+</AnchorPane>

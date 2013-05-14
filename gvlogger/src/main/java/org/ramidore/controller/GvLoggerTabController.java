@@ -1,39 +1,29 @@
-package org.ramidore;
+package org.ramidore.controller;
 
-import java.io.File;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 
 import org.ramidore.bean.GvLogTable;
 import org.ramidore.bean.GvStatTable;
-import org.ramidore.core.PacketAnalyzeService;
-import org.ramidore.logic.GvLoggerLogic;
-import org.ramidore.logic.system.GuildBattleLogic;
 
 /**
  * . JavaFXコントローラクラス
@@ -41,49 +31,7 @@ import org.ramidore.logic.system.GuildBattleLogic;
  * @author atmark
  *
  */
-public class GvLoggerController extends AbstractMainController {
-
-    /**
-     * ネットワークデバイスのセレクトボックス.
-     */
-    @FXML
-    private ChoiceBox<String> deviceCb;
-
-    /**
-     * IPアドレスのセレクトボックス.
-     */
-    @FXML
-    private ChoiceBox<String> addressCb;
-
-    /**
-     * キャプチャモード選択.
-     */
-    @FXML
-    private ChoiceBox<String> captureModeCb;
-
-    /**
-     * 開始/停止ボタン.
-     */
-    @FXML
-    private ToggleButton startTb;
-
-    /**
-     * 過去データ読み込みボタン.
-     */
-    @FXML
-    private Button loadPastDataB;
-
-    /**
-     * クリアボタン.
-     */
-    @FXML
-    private Button clearB;
-
-    /**
-     * 統計情報保存ボタン.
-     */
-    @FXML
-    private Button saveStatDataB;
+public class GvLoggerTabController extends AbstractController {
 
     /**
      * 時系列表示用チャート.
@@ -198,15 +146,13 @@ public class GvLoggerController extends AbstractMainController {
      */
     private Map<String, GvStatTable> statMap = new ConcurrentHashMap<String, GvStatTable>();
 
+    /**
+     * データキュー.
+     */
+    private ConcurrentLinkedQueue<GvLogTable> logDataQ;
+
     @Override
     public void concreteInitialize() {
-
-        // サービス生成
-        setService(new PacketAnalyzeService(new GvLoggerLogic(), getConfig()));
-
-        loadConfig();
-
-        initializeDeviceSetting();
 
         initializeChart();
 
@@ -249,163 +195,6 @@ public class GvLoggerController extends AbstractMainController {
                 ((GvStatTable) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNote(t.getNewValue());
             }
         });
-    }
-
-    /**
-     * ネットワークデバイスの初期化.
-     */
-    private void initializeDeviceSetting() {
-
-        // デバイス一覧を初期化
-        deviceCb.getItems().addAll(getService().getDeviceNameList());
-        // 初期設定を取得
-        deviceCb.getSelectionModel().select(getService().getCurrentDeviceIndex());
-
-        // 使用デバイス選択
-        deviceCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                // 新しいデバイスを設定
-                getService().setDevice(newVal.intValue());
-
-                // ipアドレス一覧をクリア後更新
-                addressCb.getItems().clear();
-                addressCb.getItems().addAll(getService().getAddressList());
-                addressCb.getSelectionModel().selectFirst();
-
-                // 新しいIPアドレスを設定
-                getService().setListenAddress(0);
-            }
-        });
-
-        // IPアドレス一覧を初期化
-        addressCb.getItems().addAll(getService().getAddressList());
-
-        // 初期設定を取得
-        addressCb.getSelectionModel().select(getService().getCurrentListenAddressIndex());
-
-        // ListenするIPアドレス選択
-        addressCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                if (newVal.intValue() != -1) {
-                    getService().setListenAddress(newVal.intValue());
-                }
-            }
-        });
-
-        captureModeCb.getItems().addAll(PacketAnalyzeService.MODE);
-        captureModeCb.getSelectionModel().selectFirst();
-        captureModeCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                if (newVal.intValue() != -1) {
-                    getService().setMode(newVal.intValue());
-                }
-            }
-        });
-
-        // 開始ボタン押下
-        startTb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // イベントの発生元を取得
-                ToggleButton toggle = (ToggleButton) event.getSource();
-
-                if (toggle.isSelected()) {
-
-                    deviceCb.setDisable(true);
-                    addressCb.setDisable(true);
-                    captureModeCb.setDisable(true);
-                    loadPastDataB.setDisable(true);
-
-                    // 開始
-                    getService().restart();
-
-                } else {
-
-                    deviceCb.setDisable(false);
-                    addressCb.setDisable(false);
-                    captureModeCb.setDisable(false);
-                    loadPastDataB.setDisable(false);
-
-                    // 停止
-                    getService().stop();
-                }
-            }
-        });
-
-        // 過去データ読み込みボタン押下
-        loadPastDataB.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-
-                loadPastDataB.setDisable(true);
-
-                FileChooser fc = new FileChooser();
-                fc.setTitle("select file");
-                fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
-                fc.getExtensionFilters().add(new ExtensionFilter("LOG", "*.log"));
-
-                File f = fc.showOpenDialog(null);
-
-                if (f != null) {
-
-                    clearData();
-
-                    ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic().loadPastData(f.getAbsolutePath());
-                }
-
-                loadPastDataB.setDisable(false);
-            }
-        });
-
-        // クリアボタン押下
-        clearB.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                clearData();
-            }
-        });
-
-        // 統計情報保存ボタン押下
-        saveStatDataB.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                GuildBattleLogic logic = ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic();
-
-                FileChooser fc = new FileChooser();
-                fc.setTitle("保存するファイル名を入力してください。");
-                // デフォルトのファイル名は設定できない
-                // JavaFX 3.x で修正予定らしい
-                fc.setInitialDirectory(new File(new File(".").getAbsoluteFile().getParent()));
-                fc.getExtensionFilters().add(new ExtensionFilter("TEXT", ".txt"));
-
-                File f = fc.showSaveDialog(null);
-
-                if (f != null) {
-                    logic.saveStatData(statTable.getItems(), f);
-                }
-            }
-        });
-    }
-
-    /**
-     * 描画に必要なオブジェクトをクリアする.
-     */
-    private void clearData() {
-        timelineChart.getData().get(0).getData().clear();
-        timelineChart.getData().get(1).getData().clear();
-        personChart.getData().get(0).getData().clear();
-        logTable.getItems().clear();
-        statTable.getItems().clear();
-
-        statMap.clear();
     }
 
     /**
@@ -468,10 +257,6 @@ public class GvLoggerController extends AbstractMainController {
      */
     @SuppressWarnings("unchecked")
     private void statData() {
-
-        GuildBattleLogic logic = ((GvLoggerLogic) getService().getLogic()).getGuildBattleLogic();
-
-        ConcurrentLinkedQueue<GvLogTable> logDataQ = logic.getLogDataQ();
 
         if (logDataQ.isEmpty()) {
             return;
@@ -536,37 +321,39 @@ public class GvLoggerController extends AbstractMainController {
         timelineChart.getData().get(1).getData().add(log.toTimelineData()[1]);
     }
 
-    @Override
-    public void loadConfig() {
-
-        super.loadConfig();
-
-        this.loadConfig(getConfig());
-    }
-
-    @Override
-    public void saveConfig() {
-
-        this.saveConfig(getConfig());
-
-        super.saveConfig();
-    }
-
-    @Override
-    public void loadConfig(Properties config) {
-    }
-
-    @Override
-    public void saveConfig(Properties config) {
+    /**
+     * getter.
+     *
+     * @return logDataQ
+     */
+    public ConcurrentLinkedQueue<GvLogTable> getLogDataQ() {
+        return logDataQ;
     }
 
     /**
-     * Application.stopが呼び出された際にコールされる処理.
+     * setter.
+     *
+     * @param logDataQ セットする logDataQ
      */
-    public void stop() {
+    public void setLogDataQ(ConcurrentLinkedQueue<GvLogTable> logDataQ) {
+        this.logDataQ = logDataQ;
+    }
 
-        this.saveConfig();
+    /**
+     * getter.
+     *
+     * @return statTable
+     */
+    public TableView<GvStatTable> getStatTable() {
+        return statTable;
+    }
 
-        getService().stop();
+    /**
+     * setter.
+     *
+     * @param statTable セットする statTable
+     */
+    public void setStatTable(TableView<GvStatTable> statTable) {
+        this.statTable = statTable;
     }
 }

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import org.ramidore.controller.GvLoggerController;
+
 /**
  * . メインクラス
  *
@@ -22,7 +24,12 @@ public class GvLogger extends Application {
     /**
      * FXMLのパス.
      */
-    private static final String FXML = "/gvlogger.fxml";
+    private static final String FXML = "/fxml/gvlogger.fxml";
+
+    /**
+     * CSSファイルのパス.
+     */
+    private static final String CSS = "/styles/gvlogger.css";
 
     /**
      * Controller.
@@ -44,7 +51,7 @@ public class GvLogger extends Application {
 
         Scene scene = new Scene(root);
 
-        scene.getStylesheets().add("gvlogger.css");
+        scene.getStylesheets().add(CSS);
 
         stage.setScene(scene);
 
