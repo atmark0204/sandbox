@@ -1,4 +1,4 @@
-package org.ramidore;
+package org.ramidore.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,13 +9,8 @@ import java.io.OutputStream;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
-import javafx.fxml.Initializable;
-
 import org.apache.commons.io.IOUtils;
 import org.ramidore.core.IConfigurable;
-import org.ramidore.core.PacketAnalyzeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * AbstractMainController.
@@ -25,12 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author atmark
  *
  */
-public abstract class AbstractMainController implements Initializable, IConfigurable {
-
-    /**
-     * . Logger
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractMainController.class);
+public abstract class AbstractMainController extends AbstractController implements IConfigurable {
 
     /**
      * 設定ファイル名.
@@ -42,13 +32,6 @@ public abstract class AbstractMainController implements Initializable, IConfigur
      */
     private Properties config;
 
-    /**
-     * パケット解析サービス.
-     *
-     * JavaFXアプリケーションスレッドとは異なるスレッドで実行される
-     */
-    private org.ramidore.core.PacketAnalyzeService service;
-
     @Override
     public final void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
@@ -57,15 +40,10 @@ public abstract class AbstractMainController implements Initializable, IConfigur
         concreteInitialize();
     }
 
-    /**
-     * 実初期化メソッド.
-     */
-    abstract void concreteInitialize();
-
     @Override
     public void loadConfig() {
 
-        LOG.trace("load setting");
+        getLOG().trace("load setting");
 
         // ファイルのロード 無い場合空のプロパティ
         config = new Properties();
@@ -76,18 +54,18 @@ public abstract class AbstractMainController implements Initializable, IConfigur
             // 入力ストリームはloadFromXMLでクローズされる
             config.loadFromXML(in);
         } catch (FileNotFoundException e) {
-            LOG.debug(CONFIG + " is not found");
+            getLOG().debug(CONFIG + " is not found");
         } catch (InvalidPropertiesFormatException e) {
-            LOG.debug(CONFIG + " is invalid format");
+            getLOG().debug(CONFIG + " is invalid format");
         } catch (IOException e) {
-            LOG.debug("io error on loading " + CONFIG);
+            getLOG().debug("io error on loading " + CONFIG);
         }
     }
 
     @Override
     public void saveConfig() {
 
-        service.saveConfig(config);
+        getService().saveConfig(config);
 
         // ファイルのセーブ
         OutputStream os = null;
@@ -97,13 +75,13 @@ public abstract class AbstractMainController implements Initializable, IConfigur
             // XML形式のプロパティファイルを出力
             config.storeToXML(os, null);
         } catch (IOException e) {
-            LOG.debug("io error on saving " + CONFIG);
+            getLOG().debug("io error on saving " + CONFIG);
         } finally {
             // 出力ストリームをクローズ
             IOUtils.closeQuietly(os);
         }
 
-        LOG.trace("save config");
+        getLOG().trace("save config");
     }
 
     /**
@@ -124,32 +102,4 @@ public abstract class AbstractMainController implements Initializable, IConfigur
     public void setConfig(Properties config) {
         this.config = config;
     }
-
-    /**
-     * getter.
-     *
-     * @return service
-     */
-    public PacketAnalyzeService getService() {
-        return service;
-    }
-
-    /**
-     * setter.
-     *
-     * @param service セットする service
-     */
-    public void setService(PacketAnalyzeService service) {
-        this.service = service;
-    }
-
-    /**
-     * getter.
-     *
-     * @return log
-     */
-    public static Logger getLog() {
-        return LOG;
-    }
-
 }

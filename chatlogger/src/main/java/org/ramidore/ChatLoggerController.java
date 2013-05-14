@@ -30,6 +30,7 @@ import org.ramidore.bean.ChatTable;
 import org.ramidore.bean.ItemTable;
 import org.ramidore.bean.RedStoneChartBean;
 import org.ramidore.component.OshiraseJDialog;
+import org.ramidore.controller.AbstractMainController;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.ChatLoggerLogic;
 import org.ramidore.logic.system.RedstoneLogic;

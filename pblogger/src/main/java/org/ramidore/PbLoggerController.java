@@ -35,6 +35,7 @@ import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.ramidore.bean.PbLogBean;
 import org.ramidore.bean.PbStatTable;
+import org.ramidore.controller.AbstractMainController;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.PbLoggerLogic;
 import org.ramidore.logic.system.PointBattleLogic;
