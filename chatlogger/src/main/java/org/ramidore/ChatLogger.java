@@ -52,7 +52,7 @@ public class ChatLogger extends Application {
 
         Parent root = loader.getRoot();
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, controller.getStageWidth(), controller.getStageHeight());
 
         scene.getStylesheets().add("chatlogger.css");
 

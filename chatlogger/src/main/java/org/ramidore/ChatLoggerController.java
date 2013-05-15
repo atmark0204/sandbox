@@ -571,6 +571,12 @@ public class ChatLoggerController extends AbstractMainController {
 
         this.saveConfig(getConfig());
 
+        double w = deviceCb.getScene().getWindow().getWidth();
+        double h = deviceCb.getScene().getWindow().getHeight();
+
+        setStageWidth(w);
+        setStageHeight(h);
+
         super.saveConfig();
     }
 
@@ -620,6 +626,12 @@ public class ChatLoggerController extends AbstractMainController {
      * Application.stopが呼び出された際にコールされる処理.
      */
     public void stop() {
+
+        double w = deviceCb.getScene().getWindow().getWidth();
+        double h = deviceCb.getScene().getWindow().getHeight();
+
+        setStageWidth(w);
+        setStageHeight(h);
 
         this.saveConfig();
 

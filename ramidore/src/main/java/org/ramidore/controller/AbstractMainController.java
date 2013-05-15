@@ -32,6 +32,16 @@ public abstract class AbstractMainController extends AbstractController implemen
      */
     private Properties config;
 
+    /**
+     * ステージの横幅.
+     */
+    private double stageWidth;
+
+    /**
+     * ステージの縦幅.
+     */
+    private double stageHeight;
+
     @Override
     public final void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
@@ -60,10 +70,16 @@ public abstract class AbstractMainController extends AbstractController implemen
         } catch (IOException e) {
             getLOG().debug("io error on loading " + CONFIG);
         }
+
+        stageWidth = Double.parseDouble(config.getProperty("stageWidth", "640"));
+        stageHeight = Double.parseDouble(config.getProperty("stageHeight", "480"));
     }
 
     @Override
     public void saveConfig() {
+
+        config.setProperty("stageWidth", String.valueOf(stageWidth));
+        config.setProperty("stageHeight", String.valueOf(stageHeight));
 
         getService().saveConfig(config);
 
@@ -102,4 +118,41 @@ public abstract class AbstractMainController extends AbstractController implemen
     public void setConfig(Properties config) {
         this.config = config;
     }
+
+    /**
+     * getter.
+     *
+     * @return stageWidth
+     */
+    public double getStageWidth() {
+        return stageWidth;
+    }
+
+    /**
+     * setter.
+     *
+     * @param stageWidth セットする stageWidth
+     */
+    public void setStageWidth(double stageWidth) {
+        this.stageWidth = stageWidth;
+    }
+
+    /**
+     * getter.
+     *
+     * @return stageHeight
+     */
+    public double getStageHeight() {
+        return stageHeight;
+    }
+
+    /**
+     * setter.
+     *
+     * @param stageHeight セットする stageHeight
+     */
+    public void setStageHeight(double stageHeight) {
+        this.stageHeight = stageHeight;
+    }
+
 }

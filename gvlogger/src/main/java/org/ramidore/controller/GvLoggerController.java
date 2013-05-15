@@ -369,6 +369,12 @@ public class GvLoggerController extends AbstractMainController {
 
         this.saveConfig(getConfig());
 
+        double w = deviceCb.getScene().getWindow().getWidth();
+        double h = deviceCb.getScene().getWindow().getHeight();
+
+        setStageWidth(w);
+        setStageHeight(h);
+
         super.saveConfig();
     }
 

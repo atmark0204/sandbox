@@ -196,6 +196,12 @@ public class RsMonitorController extends AbstractMainController implements Initi
     @Override
     public void saveConfig() {
 
+        double w = deviceCb.getScene().getWindow().getWidth();
+        double h = deviceCb.getScene().getWindow().getHeight();
+
+        setStageWidth(w);
+        setStageHeight(h);
+
         super.saveConfig();
     }
 
