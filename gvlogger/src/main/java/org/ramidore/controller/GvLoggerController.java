@@ -267,6 +267,8 @@ public class GvLoggerController extends AbstractMainController {
                     tabPane.getTabs().add(tab);
 
                     ((GvLoggerLogic) getService().getLogic()).loadPastData(f);
+
+                    tabPane.getSelectionModel().select(tab);
                 }
             }
         });
