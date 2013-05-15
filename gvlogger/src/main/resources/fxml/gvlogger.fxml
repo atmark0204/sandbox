@@ -28,11 +28,7 @@
         <Tooltip text="ListenするIPアドレスを選択" />
       </tooltip>
     </ChoiceBox>
-    <Button id="clear1b" fx:id="loadPastDataB" layoutX="488.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="過去データ読込" textAlignment="CENTER">
-      <tooltip>
-        <Tooltip text="記録中のデータは消去されるので注意" />
-      </tooltip>
-    </Button>
+    <Button id="clear1b" fx:id="loadPastDataB" layoutX="488.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="過去データ読込" textAlignment="CENTER" />
     <ChoiceBox id="deviceList" fx:id="captureModeCb" layoutX="348.0" layoutY="0.0" prefHeight="23.0" prefWidth="96.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
@@ -41,12 +37,7 @@
         <Tooltip text="動作モード" />
       </tooltip>
     </ChoiceBox>
-    <Button id="clear1b" fx:id="clearB" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="クリア" textAlignment="CENTER">
-      <tooltip>
-        <Tooltip text="表示されているデータをクリア" />
-      </tooltip>
-    </Button>
-    <Button id="clear1b" fx:id="saveStatDataB" layoutX="629.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="統計情報保存" textAlignment="CENTER" />
+    <Button id="clear1b" fx:id="saveStatDataB" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="統計情報保存" textAlignment="CENTER" />
     <TabPane fx:id="tabPane" prefHeight="377.0" prefWidth="808.0000999999975" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
   </children>
 </AnchorPane>

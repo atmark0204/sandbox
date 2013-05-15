@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<?scenebuilder-stylesheet gvlogger.css?>
+<?scenebuilder-stylesheet ../styles/gvlogger.css?>
 
 <AnchorPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="808.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.controller.GvLoggerController">
   <children>
@@ -47,9 +47,6 @@
       </tooltip>
     </Button>
     <Button id="clear1b" fx:id="saveStatDataB" layoutX="629.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="統計情報保存" textAlignment="CENTER" />
-    <TabPane fx:id="tabPane" prefHeight="377.0" prefWidth="808.0000999999975" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
-      <tabs>
-      </tabs>
-    </TabPane>
+    <TabPane fx:id="tabPane" prefHeight="377.0" prefWidth="808.0000999999975" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
   </children>
 </AnchorPane>

@@ -75,12 +75,6 @@ public class GvLoggerController extends AbstractMainController {
     private Button loadPastDataB;
 
     /**
-     * クリアボタン.
-     */
-    @FXML
-    private Button clearB;
-
-    /**
      * 統計情報保存ボタン.
      */
     @FXML
@@ -270,14 +264,6 @@ public class GvLoggerController extends AbstractMainController {
 
                     tabPane.getSelectionModel().select(tab);
                 }
-            }
-        });
-
-        // クリアボタン押下
-        clearB.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
             }
         });
 
