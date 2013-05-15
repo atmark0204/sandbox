@@ -1,8 +1,8 @@
 package org.ramidore.util;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.ramidore.Const;
 import org.ramidore.core.PacketData;
-import org.ramidore.logic.AbstractLogic;
 
 /**
  * デバッグ用ユーティリティクラス.
@@ -65,7 +65,7 @@ public final class DebugUtil {
 
             byte[] line = ArrayUtils.subarray(b, indexS, indexE);
 
-            lineBuilder.append(RamidoreUtil.encode(RamidoreUtil.toHex(line), AbstractLogic.ENCODING));
+            lineBuilder.append(RamidoreUtil.encode(RamidoreUtil.toHex(line), Const.ENCODING));
 
             resultBuilder.append(lineBuilder.toString() + "\n");
         }

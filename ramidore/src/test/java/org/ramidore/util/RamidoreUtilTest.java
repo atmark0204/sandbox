@@ -9,8 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
-import org.ramidore.logic.AbstractLogic;
-import org.ramidore.util.RamidoreUtil;
+import org.ramidore.Const;
 
 /**
  * Test.
@@ -200,7 +199,7 @@ public class RamidoreUtilTest {
 
         String hexStr = "82A0";
 
-        String actual = RamidoreUtil.encode(hexStr, AbstractLogic.ENCODING);
+        String actual = RamidoreUtil.encode(hexStr, Const.ENCODING);
 
         assertThat(actual, is("あ"));
     }

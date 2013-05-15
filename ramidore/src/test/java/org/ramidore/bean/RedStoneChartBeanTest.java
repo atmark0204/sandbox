@@ -11,6 +11,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
+/**
+ * RedStoneChartBean.
+ *
+ * @author atmark
+ *
+ */
 public class RedStoneChartBeanTest {
 
     /**

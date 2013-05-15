@@ -4,6 +4,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.ramidore.Const;
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
@@ -36,22 +37,22 @@ public class MimiChatLogic extends AbstractChatLogic {
     /**
      * . 耳をするパターン
      */
-    private static final String PATTERN_TO = "^..002811CDCDCDCD..000000" + PREFIX_TO + BASE_PATTERN + "(?:00+)"
-            + BASE_PATTERN + "000000(?:.{2})*$";
+    private static final String PATTERN_TO = "^..002811CDCDCDCD..000000" + PREFIX_TO + Const.BASE_PATTERN + "(?:00+)"
+            + Const.BASE_PATTERN + "000000(?:.{2})*$";
 
     /**
      * . 耳が来るパターン
      */
-    private static final String PATTERN_FROM = "^..002811CDCDCDCD..000000" + PREFIX_FROM + BASE_PATTERN + "00"
-            + BASE_PATTERN + "000000(?:.{2})*$";
+    private static final String PATTERN_FROM = "^..002811CDCDCDCD..000000" + PREFIX_FROM + Const.BASE_PATTERN + "00"
+            + Const.BASE_PATTERN + "000000(?:.{2})*$";
 
     /**
      * From, Toが1パケットにまとまって来る場合のパターン.
      * 自分自身に耳をする場合のみ？
      */
-    private static final String PATTERN_FROM_TO = "^..002811CDCDCDCD..000000" + PREFIX_TO + BASE_PATTERN
-            + "0000000000000000" + BASE_PATTERN + "0{2}+" + PREFIX_FROM + BASE_PATTERN + "00"
-            + BASE_PATTERN + "000000(?:.{2})*$";
+    private static final String PATTERN_FROM_TO = "^..002811CDCDCDCD..000000" + PREFIX_TO + Const.BASE_PATTERN
+            + "0000000000000000" + Const.BASE_PATTERN + "0{2}+" + PREFIX_FROM + Const.BASE_PATTERN + "00"
+            + Const.BASE_PATTERN + "000000(?:.{2})*$";
 
     /**
      * . 正規表現オブジェクト
@@ -97,15 +98,15 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mFromTo.matches()) {
 
-            String toName = RamidoreUtil.encode(mFromTo.group(1), ENCODING);
-            String toContent = RamidoreUtil.encode(mFromTo.group(2), ENCODING);
+            String toName = RamidoreUtil.encode(mFromTo.group(1), Const.ENCODING);
+            String toContent = RamidoreUtil.encode(mFromTo.group(2), Const.ENCODING);
 
             addData(new ChatTable(data.getDate(), TO, toName, toContent));
 
             LOG.info(TO + "【" + toName + "】 " + toContent);
 
-            String fromName = RamidoreUtil.encode(mFromTo.group(3), ENCODING);
-            String fromContent = RamidoreUtil.encode(mFromTo.group(4), ENCODING);
+            String fromName = RamidoreUtil.encode(mFromTo.group(3), Const.ENCODING);
+            String fromContent = RamidoreUtil.encode(mFromTo.group(4), Const.ENCODING);
 
             addData(new ChatTable(data.getDate(), FROM, fromName, fromContent));
 
@@ -118,9 +119,9 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mTo.matches()) {
 
-            String name = RamidoreUtil.encode(mTo.group(1), ENCODING);
+            String name = RamidoreUtil.encode(mTo.group(1), Const.ENCODING);
 
-            String content = RamidoreUtil.encode(mTo.group(2), ENCODING);
+            String content = RamidoreUtil.encode(mTo.group(2), Const.ENCODING);
 
             addData(new ChatTable(data.getDate(), TO, name, content));
 
@@ -133,9 +134,9 @@ public class MimiChatLogic extends AbstractChatLogic {
 
         if (mFrom.matches()) {
 
-            String name = RamidoreUtil.encode(mFrom.group(1), ENCODING);
+            String name = RamidoreUtil.encode(mFrom.group(1), Const.ENCODING);
 
-            String content = RamidoreUtil.encode(mFrom.group(2), ENCODING);
+            String content = RamidoreUtil.encode(mFrom.group(2), Const.ENCODING);
 
             addData(new ChatTable(data.getDate(), FROM, name, content));
 

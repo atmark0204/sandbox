@@ -4,6 +4,12 @@ import javafx.scene.chart.XYChart;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * ギルド戦のログ.
+ *
+ * @author atmark
+ *
+ */
 public class GvLogTable {
 
     /**

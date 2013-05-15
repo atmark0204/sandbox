@@ -3,7 +3,7 @@ package org.ramidore.bean;
 import javafx.scene.chart.XYChart.Data;
 
 /**
- * ポイント戦チャート表示用データ.
+ * ポイント戦のログ.
  *
  * @author atmark
  *

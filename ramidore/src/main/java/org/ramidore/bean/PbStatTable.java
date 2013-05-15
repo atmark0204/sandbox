@@ -12,6 +12,11 @@ import javafx.beans.property.SimpleStringProperty;
 public class PbStatTable {
 
     /**
+     * ステージ表示用のフォーマット.
+     */
+    private static final String STAGE_FORMAT = "%s(%s)";
+
+    /**
      * 系列名.
      */
     private String id;
@@ -158,27 +163,27 @@ public class PbStatTable {
 
     public void setStage1() {
 
-        this.stage1.set(point1.get() + " (" + mobCount1.get() + ")");
+        this.stage1.set(String.format(STAGE_FORMAT, point1.get(), mobCount1.get()));
     }
 
     public void setStage2() {
 
-        this.stage2.set(point2.get() + " (" + mobCount2.get() + ")");
+        this.stage2.set(String.format(STAGE_FORMAT, point2.get(), mobCount2.get()));
     }
 
     public void setStage3() {
 
-        this.stage3.set(point3.get() + " (" + mobCount3.get() + ")");
+        this.stage3.set(String.format(STAGE_FORMAT, point3.get(), mobCount3.get()));
     }
 
     public void setStage4() {
 
-        this.stage4.set(point4.get() + " (" + mobCount4.get() + ")");
+        this.stage4.set(String.format(STAGE_FORMAT, point4.get(), mobCount4.get()));
     }
 
     public void setStage5() {
 
-        this.stage5.set(point5.get() + " (" + mobCount5.get() + ")");
+        this.stage5.set(String.format(STAGE_FORMAT, point5.get(), mobCount5.get()));
     }
 
     /**

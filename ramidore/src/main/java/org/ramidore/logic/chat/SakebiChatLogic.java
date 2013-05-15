@@ -4,6 +4,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.ramidore.Const;
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
@@ -27,8 +28,8 @@ public class SakebiChatLogic extends AbstractChatLogic {
      * . パケット全体にマッチする正規表現パターン
      *
      */
-    private static final String PATTERN = "^....2811CDCDCDCD..000000(?:.{2})+005811CCCCCCCC....0CC1" + BASE_PATTERN + "00"
-            + BASE_PATTERN + "(000000(?:.{2})*)?$";
+    private static final String PATTERN = "^....2811CDCDCDCD..000000(?:.{2})+005811CCCCCCCC....0CC1" + Const.BASE_PATTERN + "00"
+            + Const.BASE_PATTERN + "(000000(?:.{2})*)?$";
 
     /**
      * . 正規表現オブジェクト
@@ -48,9 +49,9 @@ public class SakebiChatLogic extends AbstractChatLogic {
 
         if (m.matches()) {
 
-            String name = RamidoreUtil.encode(m.group(1), ENCODING);
+            String name = RamidoreUtil.encode(m.group(1), Const.ENCODING);
 
-            String content = RamidoreUtil.encode(m.group(2), ENCODING);
+            String content = RamidoreUtil.encode(m.group(2), Const.ENCODING);
 
             addData(new ChatTable(data.getDate(), name, content));
 

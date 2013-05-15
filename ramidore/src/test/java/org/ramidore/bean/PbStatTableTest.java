@@ -86,6 +86,6 @@ public class PbStatTableTest {
 
         String actual = target.toCopyStr();
 
-        assertThat(actual, is("id\t1 (11)\t2 (22)\t3 (33)\t4 (44)\t5 (55)\t6"));
+        assertThat(actual, is("id\t1(11)\t2(22)\t3(33)\t4(44)\t5(55)\t6"));
     }
 }

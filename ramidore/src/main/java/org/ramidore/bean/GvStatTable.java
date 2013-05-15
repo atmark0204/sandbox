@@ -6,18 +6,42 @@ import javafx.scene.chart.BarChart;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * gv統計情報.
+ *
+ * @author atmark
+ *
+ */
 public class GvStatTable {
 
+    /**
+     * ギルド名.
+     */
     private SimpleIntegerProperty guildName;
 
+    /**
+     * キャラクタ名.
+     */
     private SimpleStringProperty charaName;
 
+    /**
+     * kill数.
+     */
     private SimpleIntegerProperty killCount;
 
+    /**
+     * death数.
+     */
     private SimpleIntegerProperty deathCount;
 
+    /**
+     * 得失点.
+     */
     private SimpleIntegerProperty point;
 
+    /**
+     * 備考.
+     */
     private SimpleStringProperty note;
 
     public GvStatTable() {

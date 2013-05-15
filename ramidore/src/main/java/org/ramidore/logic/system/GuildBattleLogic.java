@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ramidore.Const;
 import org.ramidore.bean.GvLogTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
@@ -33,7 +34,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      *
      * ※1パケット中に複数回現れる場合がある
      */
-    private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + BASE_PATTERN + "00(?:CC)+" + BASE_PATTERN + "00(?:CC)+";
+    private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + Const.BASE_PATTERN + "00(?:CC)+" + Const.BASE_PATTERN + "00(?:CC)+";
 
     /**
      * パケット全体にマッチする正規表現パターン.
@@ -44,12 +45,12 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     /**
      * 開始情報にマッチする正規表現パターン.
      */
-    private static final String START_PATTERN = "^6C002811CDCDCDCD0200000008001012000001FF58006A120000" + BASE_PATTERN + "00(?:CC)+" + BASE_PATTERN + "00(?:CC)+0000000000000000CDCDCCCC$";
+    private static final String START_PATTERN = "^6C002811CDCDCDCD0200000008001012000001FF58006A120000" + Const.BASE_PATTERN + "00(?:CC)+" + Const.BASE_PATTERN + "00(?:CC)+0000000000000000CDCDCCCC$";
 
     /**
      * 結果情報にマッチする正規表現パターン.
      */
-    private static final String RESULT_PATTERN = "4400F1110000(....)" + BASE_PATTERN + "00(?:.{2})+(?:CC)+(?:....)CCCC..000000..00(..)00(..)00(..)00(....)(..)00..00CCCC";
+    private static final String RESULT_PATTERN = "4400F1110000(....)" + Const.BASE_PATTERN + "00(?:.{2})+(?:CC)+(?:....)CCCC..000000..00(..)00(..)00(..)00(....)(..)00..00CCCC";
 
     /**
      * 正規表現オブジェクト.
@@ -136,8 +137,8 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 int point = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(2));
                 int point0 = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(3));
                 int point1 = RamidoreUtil.intValueFromDescHexString(unitMatcher.group(4));
-                String srcName = RamidoreUtil.encode(unitMatcher.group(5), ENCODING);
-                String dstName = RamidoreUtil.encode(unitMatcher.group(6), ENCODING);
+                String srcName = RamidoreUtil.encode(unitMatcher.group(5), Const.ENCODING);
+                String dstName = RamidoreUtil.encode(unitMatcher.group(6), Const.ENCODING);
 
                 if (!dupChecker.check(data.getDate(), point0, point1)) {
 
@@ -172,8 +173,8 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
             startDate = data.getDate();
 
-            String gName0 = RamidoreUtil.encode(startMatcher.group(1), ENCODING);
-            String gName1 = RamidoreUtil.encode(startMatcher.group(2), ENCODING);
+            String gName0 = RamidoreUtil.encode(startMatcher.group(1), Const.ENCODING);
+            String gName1 = RamidoreUtil.encode(startMatcher.group(2), Const.ENCODING);
 
             // 0 vs 0のデータ追加
             GvLogTable log0 = new GvLogTable();
@@ -191,7 +192,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
         if (resultMatcher.find()) {
 
             String gCode = resultMatcher.group(1);
-            String gName = RamidoreUtil.encode(resultMatcher.group(2), ENCODING);
+            String gName = RamidoreUtil.encode(resultMatcher.group(2), Const.ENCODING);
             int winCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(3));
             int loseCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(4));
             int drawCnt = RamidoreUtil.intValueFromAscHexString(resultMatcher.group(5));

@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.ramidore.Const;
 import org.ramidore.bean.GvLogTable;
 import org.ramidore.bean.GvStatTable;
 import org.slf4j.Logger;
@@ -28,20 +29,30 @@ import org.slf4j.LoggerFactory;
  */
 public class GuildBattleLogLogic {
 
-    private static final String ENCODING = "Windows-31J";
-
     /**
      * Logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(GuildBattleLogLogic.class);
 
+    /**
+     * データキュー.
+     * スレッド間の情報受け渡しに使用
+     */
     private ConcurrentLinkedQueue<GvLogTable> logDataQ;
 
+    /**
+     * コンストラクタ.
+     */
     public GuildBattleLogLogic() {
 
         logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
     }
 
+    /**
+     * コンストラクタ.
+     *
+     * @param absolutePath ログファイルのパス
+     */
     public GuildBattleLogLogic(String absolutePath) {
 
         this();
@@ -61,7 +72,7 @@ public class GuildBattleLogLogic {
         BufferedReader br = null;
 
         try {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePath), ENCODING));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePath), Const.ENCODING));
 
             List<String> list = IOUtils.readLines(br);
 
@@ -143,7 +154,7 @@ public class GuildBattleLogLogic {
         }
 
         try {
-            FileUtils.writeLines(f, ENCODING, lines);
+            FileUtils.writeLines(f, Const.ENCODING, lines);
         } catch (IOException e) {
 
             LOG.error("I/O error " + f.getAbsolutePath());
