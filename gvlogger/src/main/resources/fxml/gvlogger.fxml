@@ -9,9 +9,9 @@
 <?import javafx.scene.paint.*?>
 <?scenebuilder-stylesheet ../styles/gvlogger.css?>
 
-<AnchorPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="808.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.controller.GvLoggerController">
+<AnchorPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.controller.GvLoggerController">
   <children>
-    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
+    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="2.0" layoutY="2.0" prefHeight="24.0" prefWidth="193.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
@@ -19,8 +19,8 @@
         <Tooltip text="ネットワークデバイスを選択" />
       </tooltip>
     </ChoiceBox>
-    <ToggleButton fx:id="startTb" layoutX="444.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" style="" text="開始" textAlignment="CENTER" />
-    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
+    <ToggleButton fx:id="startTb" layoutX="500.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="48.0" style="" text="開始" textAlignment="CENTER" />
+    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="197.0" layoutY="2.0" prefHeight="24.0" prefWidth="174.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
@@ -28,8 +28,8 @@
         <Tooltip text="ListenするIPアドレスを選択" />
       </tooltip>
     </ChoiceBox>
-    <Button id="clear1b" fx:id="loadPastDataB" layoutX="488.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="過去データ読込" textAlignment="CENTER" />
-    <ChoiceBox id="deviceList" fx:id="captureModeCb" layoutX="348.0" layoutY="0.0" prefHeight="23.0" prefWidth="96.0">
+    <Button id="clear1b" fx:id="loadPastDataB" layoutX="550.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="96.0" text="過去データ読込" textAlignment="CENTER" />
+    <ChoiceBox id="deviceList" fx:id="captureModeCb" layoutX="373.0" layoutY="2.0" prefHeight="24.0" prefWidth="125.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
@@ -37,7 +37,7 @@
         <Tooltip text="動作モード" />
       </tooltip>
     </ChoiceBox>
-    <Button id="clear1b" fx:id="saveStatDataB" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="統計情報保存" textAlignment="CENTER" />
-    <TabPane fx:id="tabPane" prefHeight="377.0" prefWidth="808.0000999999975" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
+    <Button id="clear1b" fx:id="saveStatDataB" layoutX="648.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="96.0" text="統計情報保存" textAlignment="CENTER" />
+    <TabPane fx:id="tabPane" prefHeight="368.0" prefWidth="796.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
   </children>
 </AnchorPane>

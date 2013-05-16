@@ -1,29 +1,62 @@
+#container
+{
+	-fx-base: skyblue ;
+	-fx-background-color: snow;
+}
+
+#content
+{
+	-fx-base: skyblue ;
+	-fx-background-color: snow;
+}
+
+/* Button */
+
 .button
 {
-	-fx-background-radius: 0;
 	-fx-background-insets: 0;
 }
 
 .toggle-button
 {
-	-fx-background-radius: 0.0;
 	-fx-background-insets: 0;
 }
 
 .choice-box
 {
-	-fx-background-radius: 0.0;
 	-fx-background-insets: 0;
 }
 
+/* Other */
+
 .titled-pane .title
 {
-	-fx-background-radius: 0.0;
 	-fx-background-insets: 0;
 }
 
 .column-header .label .text
 {
-	-fx-background-insets: 0;
 	-fx-text-alignment: center;
+}
+
+/* Chart */
+
+.chart-legend {
+   -fx-background-color:  transparent;
+   -fx-padding: 10px;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-alternative-row-fill {
+    -fx-fill: snow;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
 }

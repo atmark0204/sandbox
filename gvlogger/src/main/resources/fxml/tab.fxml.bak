@@ -13,6 +13,24 @@
   <children>
     <Accordion prefHeight="346.0" prefWidth="808.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
       <expandedPane>
+        <TitledPane id="x1" fx:id="x2" animated="false" text="時系列" textAlignment="LEFT" underline="false">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <LineChart fx:id="timelineChart" alternativeColumnFillVisible="false" animated="true" horizontalZeroLineVisible="true" prefHeight="284.0" prefWidth="797.0" verticalGridLinesVisible="true" verticalZeroLineVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                  <xAxis>
+                    <CategoryAxis label="" side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                    <NumberAxis label="" side="LEFT" upperBound="10000.0" />
+                  </yAxis>
+                </LineChart>
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+      </expandedPane>
+      <panes>
         <TitledPane id="x2" fx:id="x1" animated="false" text="ログ">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -32,9 +50,6 @@
             </AnchorPane>
           </content>
         </TitledPane>
-      </expandedPane>
-      <panes>
-        <fx:reference source="x1" />
         <TitledPane id="x2" animated="false" contentDisplay="LEFT" text="統計" textAlignment="LEFT">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -53,22 +68,7 @@
             </AnchorPane>
           </content>
         </TitledPane>
-        <TitledPane id="x1" fx:id="x2" animated="false" text="時系列" textAlignment="LEFT" underline="false">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <LineChart fx:id="timelineChart" alternativeColumnFillVisible="false" animated="true" horizontalZeroLineVisible="true" prefHeight="284.0" prefWidth="797.0" verticalGridLinesVisible="true" verticalZeroLineVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                  <xAxis>
-                    <CategoryAxis label="" side="BOTTOM" />
-                  </xAxis>
-                  <yAxis>
-                    <NumberAxis label="" side="LEFT" upperBound="10000.0" />
-                  </yAxis>
-                </LineChart>
-              </children>
-            </AnchorPane>
-          </content>
-        </TitledPane>
+        <fx:reference source="x2" />
         <TitledPane id="x1" animated="false" prefHeight="280.0" prefWidth="808.0" text="個人" textAlignment="LEFT" underline="false">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
