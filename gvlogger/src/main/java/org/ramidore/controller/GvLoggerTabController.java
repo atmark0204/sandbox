@@ -272,6 +272,9 @@ public class GvLoggerTabController extends AbstractController {
             timelineChart.getData().get(0).setName(log.getStrictGuildName0());
             timelineChart.getData().get(1).setName(log.getStrictGuildName1());
 
+            personChartCb.getItems().set(0, log.getStrictGuildName0());
+            personChartCb.getItems().set(1, log.getStrictGuildName1());
+
             return;
         }
 
