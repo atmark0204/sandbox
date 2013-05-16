@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 
@@ -39,6 +41,11 @@ public class GuildBattleLogLogic {
      * スレッド間の情報受け渡しに使用
      */
     private ConcurrentLinkedQueue<GvLogTable> logDataQ;
+
+    /**
+     * ギルド名にマッチする.
+     */
+    private static final Pattern GUILDNAME_PATTERN = Pattern.compile("^開始 : (.*) vs (.*)$");
 
     /**
      * コンストラクタ.
@@ -78,7 +85,16 @@ public class GuildBattleLogLogic {
 
             // 0 vs 0のデータ追加
             GvLogTable log0 = new GvLogTable();
-            log0.setDate(list.get(0));
+
+            String[] elements = StringUtils.split(list.get(0), '\t');
+            log0.setDate(elements[0]);
+
+            Matcher m = GUILDNAME_PATTERN.matcher(elements[1]);
+
+            if (m.matches()) {
+                log0.setStrictGuildName0(m.group(1));
+                log0.setStrictGuildName1(m.group(2));
+            }
 
             logDataQ.add(log0);
 

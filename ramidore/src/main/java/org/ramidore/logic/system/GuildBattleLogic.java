@@ -171,14 +171,17 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
         if (startMatcher.matches() && startDate == null) {
 
+            // 0 vs 0のデータ追加
+            GvLogTable log0 = new GvLogTable();
+
             startDate = data.getDate();
+            log0.setDate(DATE_FORMAT.format(startDate));
 
             String gName0 = RamidoreUtil.encode(startMatcher.group(1), Const.ENCODING);
             String gName1 = RamidoreUtil.encode(startMatcher.group(2), Const.ENCODING);
 
-            // 0 vs 0のデータ追加
-            GvLogTable log0 = new GvLogTable();
-            log0.setDate(DATE_FORMAT.format(startDate));
+            log0.setStrictGuildName0(gName0);
+            log0.setStrictGuildName1(gName1);
 
             logDataQ.add(log0);
 

@@ -51,6 +51,16 @@ public class GvLogTable {
     private int point1 = 0;
 
     /**
+     * 先入れ側ギルド名.
+     */
+    private String strictGuildName0 = "先入れ側";
+
+    /**
+     * 後入れ側ギルド名.
+     */
+    private String strictGuildName1 = "後入れ側";
+
+    /**
      * チャート用データに変換
      *
      *  length = 2
@@ -205,5 +215,41 @@ public class GvLogTable {
      */
     public void setPoint1(int point1) {
         this.point1 = point1;
+    }
+
+    /**
+     * getter.
+     *
+     * @return strictGuildName0
+     */
+    public String getStrictGuildName0() {
+        return strictGuildName0;
+    }
+
+    /**
+     * setter.
+     *
+     * @param strictGuildName0 セットする strictGuildName0
+     */
+    public void setStrictGuildName0(String strictGuildName0) {
+        this.strictGuildName0 = strictGuildName0;
+    }
+
+    /**
+     * getter.
+     *
+     * @return strictGuildName1
+     */
+    public String getStrictGuildName1() {
+        return strictGuildName1;
+    }
+
+    /**
+     * setter.
+     *
+     * @param strictGuildName1 セットする strictGuildName1
+     */
+    public void setStrictGuildName1(String strictGuildName1) {
+        this.strictGuildName1 = strictGuildName1;
     }
 }
