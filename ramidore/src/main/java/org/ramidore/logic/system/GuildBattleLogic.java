@@ -45,12 +45,17 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     /**
      * 開始情報にマッチする正規表現パターン.
      */
-    private static final String START_PATTERN = "^6C002811CDCDCDCD0200000008001012000001FF58006A120000" + Const.BASE_PATTERN + "00(?:CC)+" + Const.BASE_PATTERN + "00(?:CC)+0000000000000000CDCDCCCC$";
+    private static final String START_PATTERN = "^..002811CDCDCDCD..00000008001012000001FF58006A120000" + Const.BASE_PATTERN + "00(?:CC)+" + Const.BASE_PATTERN + "00(?:CC)+0000000000000000CDCDCCCC(?:.{2})*$";
 
     /**
      * 結果情報にマッチする正規表現パターン.
      */
-    private static final String RESULT_PATTERN = "4400F1110000(....)" + Const.BASE_PATTERN + "00(?:.{2})+(?:CC)+(?:....)CCCC..000000..00(..)00(..)00(..)00(....)(..)00..00CCCC";
+    private static final String RESULT_PATTERN = "4400F1110000(....)" + Const.BASE_PATTERN + "00(?:.{2})+(?:CC)+(?:....)CCCC....0000..00(..)00(..)00(..)00(....)(..)00..00CCCC";
+
+    /**
+     * キャラクタ名にマッチする正規表現パターン.
+     */
+    private static final String NAME_PATTERN = "FFFFFFFFCCCC"  + Const.BASE_PATTERN + "00(?:CC)+";
 
     /**
      * 正規表現オブジェクト.
@@ -73,9 +78,21 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     private static Pattern resultPattern = Pattern.compile(RESULT_PATTERN);
 
     /**
+     * 正規表現オブジェクト.
+     */
+    private static Pattern namePattern = Pattern.compile(NAME_PATTERN);
+
+    /**
      * 開始時刻.
      */
     private Date startDate = null;
+
+    /**
+     * 名前のセット.
+     */
+    private Set<String> nameSet;
+
+    private Set<String> killDeathNameSet;
 
     /**
      * 重複チェッカー.
@@ -106,15 +123,8 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
         logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
 
-        reset();
-    }
-
-    /**
-     * 必要オブジェクトをリセットする.
-     */
-    public void reset() {
-
-        startDate = null;
+        nameSet = new HashSet<String>();
+        killDeathNameSet = new HashSet<String>();
 
         logDataQ.clear();
 
@@ -144,6 +154,10 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
                     continue;
                 }
+
+                // 倒すか倒された場合除去する
+                killDeathNameSet.add(srcName);
+                killDeathNameSet.add(dstName);
 
                 // ログ
                 GvLogTable logRow = new GvLogTable();
@@ -190,6 +204,15 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             return true;
         }
 
+        Matcher nameMatcher = namePattern.matcher(data.getStrData());
+
+        if (startDate != null && nameMatcher.find()) {
+
+            String name = RamidoreUtil.encode(nameMatcher.group(1), Const.ENCODING);
+
+            nameSet.add(name);
+        }
+
         Matcher resultMatcher = resultPattern.matcher(data.getStrData());
 
         if (resultMatcher.find()) {
@@ -217,12 +240,21 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             LOG.info(DATE_FORMAT.format(data.getDate()) + "\t終了 : 【ギルドコード[" + gCode + "]】は【" + gName + "】との対戦で" + result);
             LOG.info(winCnt + "勝 " + loseCnt + "敗 " + drawCnt + "分 勝ち点 " + winPoint);
 
+            // 取得できた全キャラ名からkill/deathに名前の載ったキャラ名を除去
+            nameSet.removeAll(killDeathNameSet);
+
+            LOG.info("0死0LA一覧(記録キャラから観測できたキャラのみ)");
+            if (nameSet.isEmpty()) {
+                LOG.info("無し");
+            } else {
+                for (String name : nameSet) {
+
+                    LOG.info(name);
+                }
+            }
+
             return true;
         }
-
-        // 引っかからなかったパケットをダンプ
-        //LOG.info(DATE_FORMAT.format(data.getDate()));
-        //LOG.info(DebugUtil.hexDump(data));
 
         return false;
     }
@@ -273,7 +305,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             if (this.p[0] - t.getPoint0() != diff[0]) {
                 diff[0] = this.p[0] - t.getPoint0();
                 LOG.warn(DATE_FORMAT.format(date) + "\t先入れ側点数にズレが発生 : " + diff[0]);
-            }
+            } else
             if (this.p[1] - t.getPoint1() != diff[1]) {
                 diff[1] = this.p[1] - t.getPoint1();
                 LOG.warn(DATE_FORMAT.format(date) + "\t後入れ側点数にズレが発生 : " + diff[1]);

@@ -98,8 +98,8 @@ public class GuildBattleLogLogic {
 
             logDataQ.add(log0);
 
-            for (int i = 1; i < list.size(); i++) {
-                GvLogTable logRow = loadLine(list.get(i));
+            for (String str : list) {
+                GvLogTable logRow = loadLine(str);
 
                 if (logRow == null) {
                     continue;
