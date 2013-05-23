@@ -34,7 +34,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      *
      * ※1パケット中に複数回現れる場合がある
      */
-    private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + Const.BASE_PATTERN + "00(?:CC)+" + Const.BASE_PATTERN + "00(?:CC)+";
+    private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + Const.BASE_PATTERN + "00(?:CC)*" + Const.BASE_PATTERN + "00(?:CC)*";
 
     /**
      * パケット全体にマッチする正規表現パターン.
