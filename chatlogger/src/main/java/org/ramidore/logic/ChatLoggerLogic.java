@@ -1,5 +1,6 @@
 package org.ramidore.logic;
 
+import java.util.LinkedList;
 import java.util.Properties;
 
 import org.ramidore.core.PacketData;
@@ -26,9 +27,14 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     private boolean noticeable;
 
     /**
+     * お知らせの表示行数.
+     */
+    private int oshiraseLineCount;
+
+    /**
      * お知らせメッセージ.
      */
-    private String oshiraseMessage;
+    private LinkedList<String> oshiraseMessages;
 
     /**
      * 叫び.
@@ -105,35 +111,35 @@ public class ChatLoggerLogic extends AbstractMainLogic {
 
         if (sakebiChatLogic.execute(data)) {
 
-            oshiraseMessage = sakebiChatLogic.getOshiraseMessage();
+            oshiraseMessages.offer(sakebiChatLogic.getOshiraseMessage());
 
             return true;
         }
 
         if (normalChatLogic.execute(data)) {
 
-            oshiraseMessage = normalChatLogic.getOshiraseMessage();
+            oshiraseMessages.offer(normalChatLogic.getOshiraseMessage());
 
             return true;
         }
 
         if (partyChatLogic.execute(data)) {
 
-            oshiraseMessage = partyChatLogic.getOshiraseMessage();
+            oshiraseMessages.offer(partyChatLogic.getOshiraseMessage());
 
             return true;
         }
 
         if (guildChatLogic.execute(data)) {
 
-            oshiraseMessage = guildChatLogic.getOshiraseMessage();
+            oshiraseMessages.offer(guildChatLogic.getOshiraseMessage());
 
             return true;
         }
 
         if (mimiChatLogic.execute(data)) {
 
-            oshiraseMessage = mimiChatLogic.getOshiraseMessage();
+            oshiraseMessages.offer(mimiChatLogic.getOshiraseMessage());
 
             return true;
         }
@@ -154,6 +160,8 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     public void loadConfig(Properties config) {
 
         noticeable = Boolean.parseBoolean(config.getProperty("oshirase.enabled", "false"));
+        oshiraseLineCount = Integer.parseInt(config.getProperty("oshirase.linecount", "1"));
+        oshiraseMessages = new LinkedList<String>();
 
         sakebiChatLogic.loadConfig(config);
         normalChatLogic.loadConfig(config);
@@ -166,6 +174,7 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     public void saveConfig(Properties config) {
 
         config.setProperty("oshirase.enabled", String.valueOf(noticeable));
+        config.setProperty("oshirase.linecount", String.valueOf(oshiraseLineCount));
 
         sakebiChatLogic.saveConfig(config);
         normalChatLogic.saveConfig(config);
@@ -185,7 +194,26 @@ public class ChatLoggerLogic extends AbstractMainLogic {
 
     @Override
     public String getOshiraseMessage() {
-        return oshiraseMessage;
+
+        while (oshiraseMessages.size() > oshiraseLineCount) {
+
+            oshiraseMessages.remove();
+        }
+
+        StringBuilder builder = new StringBuilder("<html>");
+
+        for(int i = 0;i < oshiraseMessages.size(); i++) {
+
+            String line = oshiraseMessages.get(i);
+
+            if (i < oshiraseMessages.size() - 1) {
+                builder.append(line + "<br />");
+            } else {
+                builder.append(line + "</html>");
+            }
+        }
+
+        return builder.toString();
     }
 
     @Override
@@ -333,5 +361,23 @@ public class ChatLoggerLogic extends AbstractMainLogic {
      */
     public void setNoticeable(boolean noticeable) {
         this.noticeable = noticeable;
+    }
+
+    /**
+     * getter.
+     *
+     * @return oshiraseLineCount
+     */
+    public int getOshiraseLineCount() {
+        return oshiraseLineCount;
+    }
+
+    /**
+     * setter.
+     *
+     * @param oshiraseLineCount セットする oshiraseLineCount
+     */
+    public void setOshiraseLineCount(int oshiraseLineCount) {
+        this.oshiraseLineCount = oshiraseLineCount;
     }
 }

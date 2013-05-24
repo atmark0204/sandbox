@@ -9,9 +9,9 @@
 <?import javafx.scene.paint.*?>
 <?scenebuilder-stylesheet chatlogger.css?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.ChatLoggerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.ChatLoggerController">
   <children>
-    <TabPane pickOnBounds="false" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+    <TabPane pickOnBounds="false" prefHeight="389.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
       <tabs>
         <Tab text="叫び">
           <content>
@@ -120,7 +120,7 @@
         </Tab>
       </tabs>
     </TabPane>
-    <MenuButton layoutX="442.0" layoutY="1.0" mnemonicParsing="false" prefHeight="23.0" text="お知らせ">
+    <MenuButton layoutX="463.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" text="お知らせ">
       <items>
         <CheckMenuItem mnemonicParsing="false" text="ウインドウ" fx:id="oshiraseWindow" />
         <SeparatorMenuItem mnemonicParsing="false" />
@@ -131,18 +131,32 @@
         <CheckMenuItem mnemonicParsing="false" text="耳" fx:id="mimiMenu" />
       </items>
     </MenuButton>
-    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
+    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="4.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
     </ChoiceBox>
-    <ToggleButton fx:id="startTb" layoutX="348.0" layoutY="1.0" mnemonicParsing="false" prefHeight="23.0" text="開始" />
-    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="1.0" prefHeight="23.0" prefWidth="174.0">
+    <ToggleButton fx:id="startTb" layoutX="360.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" text="開始" />
+    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="182.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
     </ChoiceBox>
-    <Slider fx:id="opacitySlider" layoutX="531.0" layoutY="2.0" prefHeight="23.0" prefWidth="64.0" />
-    <Button fx:id="clearButton" layoutX="391.0" layoutY="1.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="51.0" text="クリア" />
+    <Slider fx:id="opacitySlider" layoutX="605.0" layoutY="4.0" prefHeight="25.0" prefWidth="64.0" />
+    <Button fx:id="clearButton" layoutX="408.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="クリア" />
+    <ChoiceBox fx:id="oshiraseLineCountCb" layoutX="549.0" layoutY="4.0" prefHeight="25.0" prefWidth="51.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <Integer fx:value="1" />
+          <Integer fx:value="2" />
+          <Integer fx:value="3" />
+          <Integer fx:value="4" />
+          <Integer fx:value="5" />
+        </FXCollections>
+      </items>
+      <tooltip>
+        <Tooltip text="お知らせを表示する行数" />
+      </tooltip>
+    </ChoiceBox>
   </children>
 </AnchorPane>

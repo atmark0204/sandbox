@@ -18,11 +18,15 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -242,6 +246,12 @@ public class ChatLoggerController extends AbstractMainController {
     private CheckMenuItem mimiMenu;
 
     /**
+     * お知らせ表示行数変更UI.
+     */
+    @FXML
+    private ChoiceBox<Integer> oshiraseLineCountCb;
+
+    /**
      * 透明度変更用スライダ.
      */
     @FXML
@@ -264,6 +274,11 @@ public class ChatLoggerController extends AbstractMainController {
      */
     @FXML
     private AreaChart<Number, Number> areaChart;
+
+    /**
+     * 自動起動.
+     */
+    private boolean autoRun;
 
     @Override
     public void concreteInitialize() {
@@ -324,6 +339,12 @@ public class ChatLoggerController extends AbstractMainController {
         itemName.setCellValueFactory(new PropertyValueFactory<ItemTable, String>("name"));
 
         logic.getItemLogic().setItemTable(itemTable);
+
+        setUpContextMenu(sakebiChatTable);
+        setUpContextMenu(normalChatTable);
+        setUpContextMenu(partyChatTable);
+        setUpContextMenu(guildChatTable);
+        setUpContextMenu(mimiChatTable);
     }
 
     /**
@@ -371,6 +392,10 @@ public class ChatLoggerController extends AbstractMainController {
         });
 
         // 開始ボタン押下
+        startTb.selectedProperty().set(autoRun);
+        if (autoRun) {
+            getService().start();
+        }
         startTb.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -379,9 +404,13 @@ public class ChatLoggerController extends AbstractMainController {
 
                 if (toggle.isSelected()) {
                     // 開始
+                    autoRun = true;
+
                     getService().restart();
                 } else {
                     // 停止
+                    autoRun = false;
+
                     getService().stop();
                 }
             }
@@ -487,6 +516,17 @@ public class ChatLoggerController extends AbstractMainController {
             }
         });
 
+        // お知らせ表示行数
+        oshiraseLineCountCb.getSelectionModel().select(((ChatLoggerLogic) getService().getLogic()).getOshiraseLineCount() - 1);
+        oshiraseLineCountCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
+
+                ((ChatLoggerLogic) getService().getLogic()).setOshiraseLineCount(newVal.intValue() + 1);
+            }
+        });
+
+
         // お知らせウインドウの透明度
         opacitySlider.setMin(0.0d);
         opacitySlider.setMax(1.0d);
@@ -585,12 +625,16 @@ public class ChatLoggerController extends AbstractMainController {
 
         // インスタンス生成時に設定を読み込む為不要
         //oshiraseJDialog.loadConfig(config);
+
+        autoRun = Boolean.parseBoolean(config.getProperty("autorun", "false"));
     }
 
     @Override
     public void saveConfig(Properties config) {
 
         oshiraseJDialog.saveConfig(config);
+
+        config.setProperty("autorun", Boolean.toString(autoRun));
     }
 
     /**
@@ -636,5 +680,54 @@ public class ChatLoggerController extends AbstractMainController {
         this.saveConfig();
 
         getService().stop();
+    }
+
+    /**
+     * チャット関連のテーブルについて、コンテキストメニューを設定する.
+     *
+     * @param tableView
+     */
+    private void setUpContextMenu(final TableView<ChatTable> tableView) {
+
+        ContextMenu menu = new ContextMenu();
+        MenuItem item1 = new MenuItem("発言者をコピー");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ChatTable table = tableView.getSelectionModel().getSelectedItem();
+
+                final Clipboard cb = Clipboard.getSystemClipboard();
+
+                final ClipboardContent c = new ClipboardContent();
+
+                c.putString(table.getName());
+
+                cb.setContent(c);
+
+                event.consume();
+            }
+        });
+        menu.getItems().addAll(item1);
+
+        MenuItem item2 = new MenuItem("発言内容をコピー");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ChatTable table = tableView.getSelectionModel().getSelectedItem();
+
+                final Clipboard cb = Clipboard.getSystemClipboard();
+
+                final ClipboardContent c = new ClipboardContent();
+
+                c.putString(table.getContent());
+
+                cb.setContent(c);
+
+                event.consume();
+            }
+        });
+        menu.getItems().addAll(item2);
+
+        tableView.setContextMenu(menu);
     }
 }
