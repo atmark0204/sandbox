@@ -7,7 +7,7 @@
     <name>chatlogger</name>
 
     <packaging>jar</packaging>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->

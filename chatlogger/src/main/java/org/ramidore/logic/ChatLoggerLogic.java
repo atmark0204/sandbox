@@ -111,35 +111,45 @@ public class ChatLoggerLogic extends AbstractMainLogic {
 
         if (sakebiChatLogic.execute(data)) {
 
-            oshiraseMessages.offer(sakebiChatLogic.getOshiraseMessage());
+            if (sakebiChatLogic.isNoticeable()) {
+                oshiraseMessages.offer(sakebiChatLogic.getOshiraseMessage());
+            }
 
             return true;
         }
 
         if (normalChatLogic.execute(data)) {
 
-            oshiraseMessages.offer(normalChatLogic.getOshiraseMessage());
+            if (normalChatLogic.isNoticeable()) {
+                oshiraseMessages.offer(normalChatLogic.getOshiraseMessage());
+            }
 
             return true;
         }
 
         if (partyChatLogic.execute(data)) {
 
-            oshiraseMessages.offer(partyChatLogic.getOshiraseMessage());
+            if (partyChatLogic.isNoticeable()) {
+                oshiraseMessages.offer(partyChatLogic.getOshiraseMessage());
+            }
 
             return true;
         }
 
         if (guildChatLogic.execute(data)) {
 
-            oshiraseMessages.offer(guildChatLogic.getOshiraseMessage());
+            if (guildChatLogic.isNoticeable()) {
+                oshiraseMessages.offer(guildChatLogic.getOshiraseMessage());
+            }
 
             return true;
         }
 
         if (mimiChatLogic.execute(data)) {
 
-            oshiraseMessages.offer(mimiChatLogic.getOshiraseMessage());
+            if (mimiChatLogic.isNoticeable()) {
+                oshiraseMessages.offer(mimiChatLogic.getOshiraseMessage());
+            }
 
             return true;
         }
