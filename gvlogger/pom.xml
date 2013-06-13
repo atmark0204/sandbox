@@ -9,7 +9,7 @@
 	<name>gvlogger</name>
 
 	<packaging>jar</packaging>
-	<version>0.1.3</version>
+	<version>0.1.4</version>
 
 	<organization>
 		<!-- Used as the 'Vendor' for JNLP generation -->

@@ -92,6 +92,9 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
      */
     private Set<String> nameSet;
 
+    /**
+     * K/D対象キャラクタ名のセット.
+     */
     private Set<String> killDeathNameSet;
 
     /**
@@ -135,9 +138,30 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     @Override
     public boolean execute(PacketData data) {
 
+        /* キャラクタ名を含むパケットを無差別に取得する */
+
+        Matcher nameMatcher = namePattern.matcher(data.getStrData());
+
+        // 開始している場合のみ処理を行う
+        // 転送前フィールドでのキャラクタ名まで取得してしまうため
+        if (startDate != null && nameMatcher.find()) {
+
+            String name = RamidoreUtil.encode(nameMatcher.group(1), Const.ENCODING);
+
+            nameSet.add(name);
+        }
+
+        /* 得失点情報にマッチした際の処理 */
+
         Matcher matcher = pattern.matcher(data.getStrData());
 
         if (matcher.matches()) {
+
+            if (startDate == null) {
+                // 開始時刻が取得できていない場合、最初の得失点時の時刻を便宜上の開始時刻とする
+
+                startDate = data.getDate();
+            }
 
             Matcher unitMatcher = unitPattern.matcher(data.getStrData());
 
@@ -181,6 +205,8 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             return true;
         }
 
+        /* gv開始にマッチした際の処理 */
+
         Matcher startMatcher = startPattern.matcher(data.getStrData());
 
         if (startMatcher.matches() && startDate == null) {
@@ -204,14 +230,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             return true;
         }
 
-        Matcher nameMatcher = namePattern.matcher(data.getStrData());
-
-        if (startDate != null && nameMatcher.find()) {
-
-            String name = RamidoreUtil.encode(nameMatcher.group(1), Const.ENCODING);
-
-            nameSet.add(name);
-        }
+        /* gv終了にマッチした際の処理 */
 
         Matcher resultMatcher = resultPattern.matcher(data.getStrData());
 
