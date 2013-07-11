@@ -332,6 +332,9 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         row.setMobCount5(mobCountMap.get(5));
         row.setStage5();
 
+        row.setPoint2Total(row.getPoint1() + row.getPoint2());
+        row.setPoint3Total(row.getPoint2Total() + row.getPoint3());
+        row.setPoint4Total(row.getPoint3Total() + row.getPoint4());
         row.setPointTotal(pointMap.get(5));
 
         statTable.getItems().add(row);

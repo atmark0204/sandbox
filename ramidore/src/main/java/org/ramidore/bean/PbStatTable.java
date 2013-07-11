@@ -97,6 +97,21 @@ public class PbStatTable {
     private SimpleStringProperty stage5;
 
     /**
+     * 2面まで.
+     */
+    private SimpleIntegerProperty point2Total;
+
+    /**
+     * 3面まで.
+     */
+    private SimpleIntegerProperty point3Total;
+
+    /**
+     * 4面まで.
+     */
+    private SimpleIntegerProperty point4Total;
+
+    /**
      * 合計点数.
      */
     private SimpleIntegerProperty pointTotal;
@@ -111,6 +126,9 @@ public class PbStatTable {
         point3 = new SimpleIntegerProperty(0);
         point4 = new SimpleIntegerProperty(0);
         point5 = new SimpleIntegerProperty(0);
+        point2Total = new SimpleIntegerProperty(0);
+        point3Total = new SimpleIntegerProperty(0);
+        point4Total = new SimpleIntegerProperty(0);
         pointTotal = new SimpleIntegerProperty(0);
 
         mobCount1 = new SimpleIntegerProperty(0);
@@ -281,6 +299,33 @@ public class PbStatTable {
      *
      * @return pointTotal
      */
+    public SimpleIntegerProperty point2TotalProperty() {
+        return point2Total;
+    }
+
+    /**
+     * プロパティを返す.
+     *
+     * @return point3Total
+     */
+    public SimpleIntegerProperty point3TotalProperty() {
+        return point3Total;
+    }
+
+    /**
+     * プロパティを返す.
+     *
+     * @return point4Total
+     */
+    public SimpleIntegerProperty point4TotalProperty() {
+        return point4Total;
+    }
+
+    /**
+     * プロパティを返す.
+     *
+     * @return pointTotal
+     */
     public SimpleIntegerProperty pointTotalProperty() {
         return pointTotal;
     }
@@ -442,6 +487,63 @@ public class PbStatTable {
      */
     public void setPoint5(int point5) {
         this.point5.set(point5);
+    }
+
+    /**
+     * getter.
+     *
+     * @return pointTotal
+     */
+    public int getPoint2Total() {
+        return point2Total.get();
+    }
+
+    /**
+     * setter.
+     *
+     * @param pointTotal
+     *            セットする pointTotal
+     */
+    public void setPoint2Total(int pointTotal) {
+        this.point2Total.set(pointTotal);
+    }
+
+    /**
+     * getter.
+     *
+     * @return pointTotal
+     */
+    public int getPoint3Total() {
+        return point3Total.get();
+    }
+
+    /**
+     * setter.
+     *
+     * @param pointTotal
+     *            セットする pointTotal
+     */
+    public void setPoint3Total(int pointTotal) {
+        this.point3Total.set(pointTotal);
+    }
+
+    /**
+     * getter.
+     *
+     * @return pointTotal
+     */
+    public int getPoint4Total() {
+        return point4Total.get();
+    }
+
+    /**
+     * setter.
+     *
+     * @param pointTotal
+     *            セットする pointTotal
+     */
+    public void setPoint4Total(int pointTotal) {
+        this.point4Total.set(pointTotal);
     }
 
     /**

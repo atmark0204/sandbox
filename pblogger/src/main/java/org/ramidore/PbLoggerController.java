@@ -170,10 +170,28 @@ public class PbLoggerController extends AbstractMainController {
     private TableColumn<PbStatTable, String> statStage5Col;
 
     /**
+     * 2面まで合計.
+     */
+    @FXML
+    private TableColumn<PbStatTable, Integer> statStage2TotalCol;
+
+    /**
+     * 3面まで合計.
+     */
+    @FXML
+    private TableColumn<PbStatTable, Integer> statStage3TotalCol;
+
+    /**
+     * 4面まで合計.
+     */
+    @FXML
+    private TableColumn<PbStatTable, Integer> statStage4TotalCol;
+
+    /**
      * 全面点数.
      */
     @FXML
-    private TableColumn<PbStatTable, Integer> statStageTotalCol;
+    private TableColumn<PbStatTable, Integer> statStage5TotalCol;
 
     @Override
     public void concreteInitialize() {
@@ -210,7 +228,10 @@ public class PbLoggerController extends AbstractMainController {
         statStage3Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage3"));
         statStage4Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage4"));
         statStage5Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage5"));
-        statStageTotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("pointTotal"));
+        statStage2TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point2Total"));
+        statStage3TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point3Total"));
+        statStage4TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point4Total"));
+        statStage5TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("pointTotal"));
 
         logic.getPointBattleLogic().setStatTable(pbStatTable);
     }
