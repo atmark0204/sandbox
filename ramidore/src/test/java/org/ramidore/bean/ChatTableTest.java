@@ -122,7 +122,7 @@ public class ChatTableTest {
 
         String actual = target.getName();
 
-        assertThat(actual, is("to 【name】"));
+        assertThat(actual, is("name"));
     }
 
 }

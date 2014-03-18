@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ramidore.Const;
-import org.ramidore.bean.ChatTable;
+import org.ramidore.bean.MimiChatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -101,14 +101,14 @@ public class MimiChatLogic extends AbstractChatLogic {
             String toName = RamidoreUtil.encode(mFromTo.group(1), Const.ENCODING);
             String toContent = RamidoreUtil.encode(mFromTo.group(2), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), TO, toName, toContent));
+            addData(new MimiChatTable(data.getDate(), TO, toName, toContent));
 
             LOG.info(TO + "【" + toName + "】 " + toContent);
 
             String fromName = RamidoreUtil.encode(mFromTo.group(3), Const.ENCODING);
             String fromContent = RamidoreUtil.encode(mFromTo.group(4), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), FROM, fromName, fromContent));
+            addData(new MimiChatTable(data.getDate(), FROM, fromName, fromContent));
 
             LOG.info(FROM + "【" + fromName + "】 " + fromContent);
 
@@ -123,7 +123,7 @@ public class MimiChatLogic extends AbstractChatLogic {
 
             String content = RamidoreUtil.encode(mTo.group(2), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), TO, name, content));
+            addData(new MimiChatTable(data.getDate(), TO, name, content));
 
             LOG.info(TO + "【" + name + "】 " + content);
 
@@ -138,7 +138,7 @@ public class MimiChatLogic extends AbstractChatLogic {
 
             String content = RamidoreUtil.encode(mFrom.group(2), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), FROM, name, content));
+            addData(new MimiChatTable(data.getDate(), FROM, name, content));
 
             LOG.info(FROM + "【" + name + "】 " + content);
 

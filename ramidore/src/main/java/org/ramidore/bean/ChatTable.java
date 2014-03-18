@@ -4,8 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * . 各種チャットのデータモデル
  *
@@ -116,12 +114,7 @@ public class ChatTable {
      * @return name
      */
     public String getName() {
-
-        if (StringUtils.isEmpty(prefix)) {
-            return name;
-        } else {
-            return prefix + "【" + name + "】";
-        }
+        return name;
     }
 
     /**

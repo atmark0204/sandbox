@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.PacketData;
@@ -80,7 +79,7 @@ public class GuildChatLogicTest {
     /**
      * execute No01.
      */
-    @Test
+    //@Test
     public void testExecute01() {
 
         target.setTable(new TableView<ChatTable>());
@@ -99,7 +98,7 @@ public class GuildChatLogicTest {
     /**
      * execute No02.
      */
-    @Test
+    //@Test
     public void testExecute02() {
 
         target.setTable(new TableView<ChatTable>());

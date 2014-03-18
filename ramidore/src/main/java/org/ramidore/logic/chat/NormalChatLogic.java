@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ramidore.Const;
-import org.ramidore.bean.ChatTable;
+import org.ramidore.bean.NormalChatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class NormalChatLogic extends AbstractChatLogic {
 
             String content = RamidoreUtil.encode(matcher.group(2), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), name, content));
+            addData(new NormalChatTable(data.getDate(), name, content));
 
             LOG.info("【" + name + "】 " + content);
 

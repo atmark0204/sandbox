@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ramidore.Const;
-import org.ramidore.bean.ChatTable;
+import org.ramidore.bean.GuildChatTable;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class GuildChatLogic extends AbstractChatLogic {
 
             String content = RamidoreUtil.encode(matcher.group(3), Const.ENCODING);
 
-            addData(new ChatTable(data.getDate(), name, content));
+            addData(new GuildChatTable(data.getDate(), name, content));
 
             LOG.info("G_CODE : " + matcher.group(1) + " 【" + name + "】 " + content);
 

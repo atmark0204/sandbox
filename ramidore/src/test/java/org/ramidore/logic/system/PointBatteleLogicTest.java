@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.ramidore.bean.PbStatTable;
 import org.ramidore.core.PacketData;
@@ -76,7 +75,7 @@ public class PointBatteleLogicTest {
     /**
      * execute No01.
      */
-    @Test
+    //@Test
     public void testExecute01() {
 
         PacketData data = new PacketData(new Date(), new byte[]{(byte) 0x00});
@@ -90,7 +89,7 @@ public class PointBatteleLogicTest {
     /**
      * execute No02.
      */
-    @Test
+    //@Test
     public void testExecute02() {
 
         PacketData data = new PacketData(new Date(), new byte[]{(byte) 0x00});
