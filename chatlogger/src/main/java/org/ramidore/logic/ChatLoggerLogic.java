@@ -178,6 +178,7 @@ public class ChatLoggerLogic extends AbstractMainLogic {
         partyChatLogic.loadConfig(config);
         guildChatLogic.loadConfig(config);
         mimiChatLogic.loadConfig(config);
+        itemLogic.loadConfig(config);
     }
 
     @Override
@@ -191,6 +192,7 @@ public class ChatLoggerLogic extends AbstractMainLogic {
         partyChatLogic.saveConfig(config);
         guildChatLogic.saveConfig(config);
         mimiChatLogic.saveConfig(config);
+        itemLogic.saveConfig(config);
     }
 
     @Override
