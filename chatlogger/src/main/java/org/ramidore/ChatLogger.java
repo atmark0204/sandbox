@@ -79,6 +79,11 @@ public class ChatLogger extends Application {
      */
     public static void main(final String[] args) {
 
-        launch(args);
+    	try {
+    		launch(args);
+    	} catch (Exception e) {
+
+    		LOG.debug(e.getMessage(), e);
+    	}
     }
 }

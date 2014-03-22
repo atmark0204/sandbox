@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.*?>
 <?scenebuilder-stylesheet chatlogger.css?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.ChatLoggerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.ramidore.ChatLoggerController">
   <children>
     <TabPane pickOnBounds="false" prefHeight="389.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
       <tabs>
