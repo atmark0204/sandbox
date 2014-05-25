@@ -2,6 +2,8 @@ package org.ramidore.bean;
 
 import javafx.scene.chart.XYChart;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -10,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class GvLogTable {
 
     /**
@@ -29,7 +33,7 @@ public class GvLogTable {
 
     /**
      * ギルド名
-     *
+     * <p/>
      * 0 : 先入れ側
      * 1 : 後入れ側
      */
@@ -62,8 +66,8 @@ public class GvLogTable {
 
     /**
      * チャート用データに変換
-     *
-     *  length = 2
+     * <p/>
+     * length = 2
      *
      * @return XYChart.Data[]
      */
@@ -78,7 +82,7 @@ public class GvLogTable {
 
     public String toLogFormat() {
 
-        Object[] array = new Object[] {
+        Object[] array = new Object[]{
                 this.date,
                 this.srcCharaName,
                 this.dstCharaName,
@@ -89,167 +93,5 @@ public class GvLogTable {
         };
 
         return StringUtils.join(array, '\t');
-    }
-
-    /**
-     * getter.
-     *
-     * @return date
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * setter.
-     *
-     * @param date セットする date
-     */
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    /**
-     * getter.
-     *
-     * @return srcCharaName
-     */
-    public String getSrcCharaName() {
-        return srcCharaName;
-    }
-
-    /**
-     * setter.
-     *
-     * @param srcCharaName セットする srcCharaName
-     */
-    public void setSrcCharaName(String srcCharaName) {
-        this.srcCharaName = srcCharaName;
-    }
-
-    /**
-     * getter.
-     *
-     * @return dstCharaName
-     */
-    public String getDstCharaName() {
-        return dstCharaName;
-    }
-
-    /**
-     * setter.
-     *
-     * @param dstCharaName セットする dstCharaName
-     */
-    public void setDstCharaName(String dstCharaName) {
-        this.dstCharaName = dstCharaName;
-    }
-
-    /**
-     * getter.
-     *
-     * @return guildName
-     */
-    public int getGuildName() {
-        return guildName;
-    }
-
-    /**
-     * setter.
-     *
-     * @param guildName セットする guildName
-     */
-    public void setGuildName(int guildName) {
-        this.guildName = guildName;
-    }
-
-    /**
-     * getter.
-     *
-     * @return point
-     */
-    public int getPoint() {
-        return point;
-    }
-
-    /**
-     * setter.
-     *
-     * @param point セットする point
-     */
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    /**
-     * getter.
-     *
-     * @return point0
-     */
-    public int getPoint0() {
-        return point0;
-    }
-
-    /**
-     * setter.
-     *
-     * @param point0 セットする point0
-     */
-    public void setPoint0(int point0) {
-        this.point0 = point0;
-    }
-
-    /**
-     * getter.
-     *
-     * @return point1
-     */
-    public int getPoint1() {
-        return point1;
-    }
-
-    /**
-     * setter.
-     *
-     * @param point1 セットする point1
-     */
-    public void setPoint1(int point1) {
-        this.point1 = point1;
-    }
-
-    /**
-     * getter.
-     *
-     * @return strictGuildName0
-     */
-    public String getStrictGuildName0() {
-        return strictGuildName0;
-    }
-
-    /**
-     * setter.
-     *
-     * @param strictGuildName0 セットする strictGuildName0
-     */
-    public void setStrictGuildName0(String strictGuildName0) {
-        this.strictGuildName0 = strictGuildName0;
-    }
-
-    /**
-     * getter.
-     *
-     * @return strictGuildName1
-     */
-    public String getStrictGuildName1() {
-        return strictGuildName1;
-    }
-
-    /**
-     * setter.
-     *
-     * @param strictGuildName1 セットする strictGuildName1
-     */
-    public void setStrictGuildName1(String strictGuildName1) {
-        this.strictGuildName1 = strictGuildName1;
     }
 }

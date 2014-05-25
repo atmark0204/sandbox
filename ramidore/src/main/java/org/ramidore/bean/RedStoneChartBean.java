@@ -1,6 +1,8 @@
 package org.ramidore.bean;
 
 import javafx.scene.chart.AreaChart;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * RedStone返却数チャート用のデータ.
@@ -8,6 +10,8 @@ import javafx.scene.chart.AreaChart;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class RedStoneChartBean {
 
     /**
@@ -114,137 +118,4 @@ public class RedStoneChartBean {
 
         return new AreaChart.Data<Number, Number>(localTotalCount, localAkumaCount);
     }
-
-    /**
-     * getter.
-     *
-     * @return currentTotalCount
-     */
-    public int getCurrentTotalCount() {
-        return currentTotalCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return currentTenjoCount
-     */
-    public int getCurrentTenjoCount() {
-        return currentTenjoCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param currentTenjoCount
-     *            セットする currentTenjoCount
-     */
-    public void setCurrentTenjoCount(int currentTenjoCount) {
-        this.currentTenjoCount = currentTenjoCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return currentChikaCount
-     */
-    public int getCurrentChikaCount() {
-        return currentChikaCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param currentChikaCount
-     *            セットする currentChikaCount
-     */
-    public void setCurrentChikaCount(int currentChikaCount) {
-        this.currentChikaCount = currentChikaCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return currentAkumaCount
-     */
-    public int getCurrentAkumaCount() {
-        return currentAkumaCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param currentAkumaCount
-     *            セットする currentAkumaCount
-     */
-    public void setCurrentAkumaCount(int currentAkumaCount) {
-        this.currentAkumaCount = currentAkumaCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return localTotalCount
-     */
-    public int getLocalTotalCount() {
-        return localTotalCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return localTenjoCount
-     */
-    public int getLocalTenjoCount() {
-        return localTenjoCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param localTenjoCount
-     *            セットする localTenjoCount
-     */
-    public void setLocalTenjoCount(int localTenjoCount) {
-        this.localTenjoCount = localTenjoCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return localChikaCount
-     */
-    public int getLocalChikaCount() {
-        return localChikaCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param localChikaCount
-     *            セットする localChikaCount
-     */
-    public void setLocalChikaCount(int localChikaCount) {
-        this.localChikaCount = localChikaCount;
-    }
-
-    /**
-     * getter.
-     *
-     * @return localAkumaCount
-     */
-    public int getLocalAkumaCount() {
-        return localAkumaCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param localAkumaCount
-     *            セットする localAkumaCount
-     */
-    public void setLocalAkumaCount(int localAkumaCount) {
-        this.localAkumaCount = localAkumaCount;
-    }
-
 }

@@ -1,11 +1,16 @@
 package org.ramidore.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * オプション情報.
  *
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class OptionBean {
 
     /**
@@ -26,58 +31,4 @@ public class OptionBean {
      * 残り.
      */
     private String buf;
-
-    /**
-     * getter.
-     *
-     * @return id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * setter.
-     *
-     * @param id セットする id
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * getter.
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * setter.
-     *
-     * @param name セットする name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * getter.
-     *
-     * @return buf
-     */
-    public String getBuf() {
-        return buf;
-    }
-
-    /**
-     * setter.
-     *
-     * @param buf セットする buf
-     */
-    public void setBuf(String buf) {
-        this.buf = buf;
-    }
 }

@@ -1,8 +1,10 @@
 package org.ramidore.core;
 
-import java.util.Date;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.ramidore.util.RamidoreUtil;
+
+import java.util.Date;
 
 /**
  * パケットモデル.
@@ -10,6 +12,8 @@ import org.ramidore.util.RamidoreUtil;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class PacketData {
 
     /**
@@ -44,62 +48,4 @@ public class PacketData {
 
         strData = RamidoreUtil.toHex(b);
     }
-
-    /**
-     * getter.
-     *
-     * @return date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * setter.
-     *
-     * @param date
-     *            セットする date
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    /**
-     * getter.
-     *
-     * @return rawData
-     */
-    public byte[] getRawData() {
-        return rawData;
-    }
-
-    /**
-     * setter.
-     *
-     * @param rawData
-     *            セットする rawData
-     */
-    public void setRawData(byte[] rawData) {
-        this.rawData = rawData;
-    }
-
-    /**
-     * getter.
-     *
-     * @return strData
-     */
-    public String getStrData() {
-        return strData;
-    }
-
-    /**
-     * setter.
-     *
-     * @param strData
-     *            セットする strData
-     */
-    public void setStrData(String strData) {
-        this.strData = strData;
-    }
-
 }

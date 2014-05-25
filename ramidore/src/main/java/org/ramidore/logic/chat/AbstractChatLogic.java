@@ -1,15 +1,17 @@
 package org.ramidore.logic.chat;
 
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.ramidore.bean.ChatTable;
 import org.ramidore.core.IConfigurable;
 import org.ramidore.core.INoticeable;
 import org.ramidore.core.PacketData;
 import org.ramidore.logic.AbstractLogic;
+
+import java.util.List;
 
 /**
  * . チャット関連の基底クラス
@@ -17,28 +19,28 @@ import org.ramidore.logic.AbstractLogic;
  * @author atmark
  *
  */
+@NoArgsConstructor
 public abstract class AbstractChatLogic extends AbstractLogic implements INoticeable, IConfigurable {
 
     /**
      * . Controllerからセットされる
      */
+    @Getter
+    @Setter
     private TableView<ChatTable> table;
 
     /**
      * . お知らせ用フラグ
      */
+    @Setter
     private boolean enabled = false;
 
     /**
      * 現在のデータ.
      */
+    @Getter
+    @Setter
     private ChatTable currentChatData;
-
-    /**
-     * . コンストラクタ
-     */
-    public AbstractChatLogic() {
-    }
 
     /**
      * . 表示用テーブルにデータを追加する
@@ -91,55 +93,5 @@ public abstract class AbstractChatLogic extends AbstractLogic implements INotice
     @Override
     public final boolean isNoticeable() {
         return enabled;
-    }
-
-    /* アクセサ */
-
-    /**
-     * .
-     *
-     * @return TableView
-     */
-    public final TableView<ChatTable> getTable() {
-        return table;
-    }
-
-    /**
-     * .
-     *
-     *
-     * @param tableView
-     *            TableView
-     */
-    public final void setTable(final TableView<ChatTable> tableView) {
-        this.table = tableView;
-    }
-
-    /**
-     * .
-     *
-     * @param param
-     *            boolean
-     */
-    public final void setEnabled(final boolean param) {
-        this.enabled = param;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return currentChatData
-     */
-    public ChatTable getCurrentChatData() {
-        return currentChatData;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param currentChatData セットする currentChatData
-     */
-    public void setCurrentChatData(ChatTable currentChatData) {
-        this.currentChatData = currentChatData;
     }
 }

@@ -1,5 +1,8 @@
 package org.ramidore.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +13,8 @@ import java.util.Date;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class ItemTable {
 
     /**
@@ -38,41 +43,4 @@ public class ItemTable {
         this.date = DATE_FORMAT.format(date);
         this.name = name;
     }
-
-    /**
-     * getter.
-     *
-     * @return date
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * setter.
-     *
-     * @param date セットする date
-     */
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    /**
-     * getter.
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * setter.
-     *
-     * @param name セットする name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }

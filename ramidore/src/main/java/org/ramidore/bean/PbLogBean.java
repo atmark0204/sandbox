@@ -1,6 +1,8 @@
 package org.ramidore.bean;
 
 import javafx.scene.chart.XYChart.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * ポイント戦のログ.
@@ -8,6 +10,8 @@ import javafx.scene.chart.XYChart.Data;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class PbLogBean {
 
     /**
@@ -107,100 +111,5 @@ public class PbLogBean {
     public Data<Number, Number> toData() {
 
         return new Data<Number, Number>(sequentialNo, point);
-    }
-
-    /**
-     * getter.
-     *
-     * @return point
-     */
-    public int getPoint() {
-        return point;
-    }
-
-    /**
-     * setter.
-     *
-     * @param point
-     *            セットする point
-     */
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    /**
-     * getter.
-     *
-     * @return stageNo
-     */
-    public int getStageNo() {
-        return stageNo;
-    }
-
-    /**
-     * setter.
-     *
-     * @param stageNo
-     *            セットする stageNo
-     */
-    public void setStageNo(int stageNo) {
-        this.stageNo = stageNo;
-    }
-
-    /**
-     * getter.
-     *
-     * @return stageSequentialNo
-     */
-    public int getStageSequentialNo() {
-        return stageSequentialNo;
-    }
-
-    /**
-     * setter.
-     *
-     * @param stageSequentialNo
-     *            セットする stageSequentialNo
-     */
-    public void setStageSequentialNo(int stageSequentialNo) {
-        this.stageSequentialNo = stageSequentialNo;
-    }
-
-    /**
-     * getter.
-     *
-     * @return id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * setter.
-     *
-     * @param id
-     *            セットする id
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * getter.
-     *
-     * @return pointOffset
-     */
-    public int getPointOffset() {
-        return pointOffset;
-    }
-
-    /**
-     * setter.
-     *
-     * @param pointOffset
-     *            セットする pointOffset
-     */
-    public void setPointOffset(int pointOffset) {
-        this.pointOffset = pointOffset;
     }
 }

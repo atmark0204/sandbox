@@ -1,5 +1,8 @@
 package org.ramidore.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +13,8 @@ import java.util.Date;
  * @author atmark
  *
  */
+@Getter
+@Setter
 public class ChatTable {
 
     /**
@@ -87,81 +92,5 @@ public class ChatTable {
     public String toString() {
 
         return prefix + "【" + name + "】 " + content;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return date
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param date
-     *            セットする date
-     */
-    public void setDate(final String date) {
-        this.date = date;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * getter.
-     *
-     * @return prefix
-     */
-    public String getPrefix() {
-        return prefix;
-    }
-
-    /**
-     * setter.
-     *
-     * @param prefix
-     *            セットする prefix
-     */
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param name
-     *            セットする name
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return content
-     */
-    public String getContent() {
-        return content;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param content
-     *            セットする content
-     */
-    public void setContent(final String content) {
-        this.content = content;
     }
 }

@@ -3,7 +3,6 @@ package org.ramidore.bean;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.chart.BarChart;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**

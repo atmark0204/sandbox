@@ -3,14 +3,10 @@
  */
 package org.ramidore.core;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
@@ -18,6 +14,11 @@ import org.jnetpcap.packet.format.FormatUtils;
 import org.ramidore.logic.AbstractMainLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * パケット解析サービス.
@@ -42,7 +43,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      */
     public static final int MODE_DUMP = 2;
 
-    public static final List<String> MODE = Collections.unmodifiableList(new ArrayList<String>(){{
+    public static final List<String> MODE = Collections.unmodifiableList(new ArrayList<String>() {{
         add("on-line cap");
         add("off-line cap");
         add("dump");
@@ -51,50 +52,58 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * 動作モード.
      */
+    @Getter
+    @Setter
     private int mode = MODE_ONLINE;
 
     /**
      * . Logger
      */
+    @Getter
     private static Logger LOG = LoggerFactory.getLogger(PacketAnalyzeService.class);
 
     /**
      * . パケット解析ロジック
      */
+    @Getter
+    @Setter
     private AbstractMainLogic logic;
 
     /**
      * . ネットワークインターフェースのリスト
      */
+    @Getter
     private List<PcapIf> devices = new ArrayList<PcapIf>();
 
     /**
      * . カレントインターフェース
      */
+    @Getter
     private PcapIf currentDevice;
 
     /**
      * . カレントデバイスの持つIPアドレス一覧
      */
+    @Getter
     private List<PcapAddr> addresses;
 
     /**
      * . ListenするIPアドレス
      */
+    @Getter
     private PcapAddr listenAddress;
 
     /**
      * カレントタスク.
      */
+    @Getter
     private AbstractTask currentTask;
 
     /**
      * コンストラクタ.
      *
-     * @param logic
-     *            ロジック
-     * @param config
-     *            設定
+     * @param logic  ロジック
+     * @param config 設定
      */
     public PacketAnalyzeService(AbstractMainLogic logic, Properties config) {
 
@@ -108,12 +117,9 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * コンストラクタ.
      *
-     * @param logic
-     *            ロジック
-     * @param config
-     *            設定
-     * @param mode
-     *            動作モード
+     * @param logic  ロジック
+     * @param config 設定
+     * @param mode   動作モード
      */
     public PacketAnalyzeService(AbstractMainLogic logic, Properties config, int mode) {
 
@@ -261,8 +267,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * . デバイスを設定する
      *
-     * @param i
-     *            デバイスのインデックス
+     * @param i デバイスのインデックス
      */
     public void setDevice(final int i) {
 
@@ -279,6 +284,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
 
     /**
      * 表示用デバイス名一覧を取得.
+     *
      * @return list
      */
     public List<String> getDeviceNameList() {
@@ -295,6 +301,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
 
     /**
      * 表示用IPアドレス一覧を取得.
+     *
      * @return list
      */
     public List<String> getAddressList() {
@@ -322,93 +329,10 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
     /**
      * . ListenするIPアドレスを設定する
      *
-     * @param i
-     *            IPアドレスのインデックス
+     * @param i IPアドレスのインデックス
      */
     public void setListenAddress(final int i) {
 
         listenAddress = addresses.get(i);
-    }
-
-    /**
-     * getter.
-     *
-     * @return logic
-     */
-    public AbstractMainLogic getLogic() {
-        return logic;
-    }
-
-    /**
-     * getter.
-     *
-     * @return devices
-     */
-    public List<PcapIf> getDevices() {
-        return devices;
-    }
-
-    /**
-     * getter.
-     *
-     * @return currentDevice
-     */
-    public PcapIf getCurrentDevice() {
-        return currentDevice;
-    }
-
-    /**
-     * getter.
-     *
-     * @return addresses
-     */
-    public List<PcapAddr> getAddresses() {
-        return addresses;
-    }
-
-    /**
-     * getter.
-     *
-     * @return listenAddress
-     */
-    public PcapAddr getListenAddress() {
-        return listenAddress;
-    }
-
-    /**
-     * getter.
-     *
-     * @return currentTask
-     */
-    public AbstractTask getCurrentTask() {
-        return currentTask;
-    }
-
-    /**
-     * setter.
-     *
-     * @param logic
-     *            セットする logic
-     */
-    public void setLogic(AbstractMainLogic logic) {
-        this.logic = logic;
-    }
-
-    /**
-     * getter.
-     *
-     * @return mode
-     */
-    public int getMode() {
-        return mode;
-    }
-
-    /**
-     * setter.
-     *
-     * @param mode セットする mode
-     */
-    public void setMode(int mode) {
-        this.mode = mode;
     }
 }

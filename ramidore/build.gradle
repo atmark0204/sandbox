@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    mavenRepo url: 'http://clojars.org/repo'
+}
+
+dependencies {
+    compile 'org.projectlombok:lombok:1.12.6'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'org.apache.commons:commons-io:2.4'
+    compile "jnetpcap:jnetpcap:1.4.r1425-1d"
+}
