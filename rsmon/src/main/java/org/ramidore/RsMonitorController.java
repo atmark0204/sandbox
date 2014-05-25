@@ -1,25 +1,20 @@
 package org.ramidore;
 
-import java.util.Properties;
-
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
-
 import org.ramidore.bean.RedStoneChartBean;
 import org.ramidore.controller.AbstractMainController;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.RsMonitorLogic;
 import org.ramidore.logic.system.RedstoneLogic;
+
+import java.util.Properties;
 
 /**
  * . JavaFXコントローラクラス
@@ -77,9 +72,7 @@ public class RsMonitorController extends AbstractMainController implements Initi
         deviceCb.getSelectionModel().select(getService().getCurrentDeviceIndex());
 
         // 使用デバイス選択
-        deviceCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
+        deviceCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
                 getService().setDevice(newVal.intValue());
 
@@ -89,7 +82,6 @@ public class RsMonitorController extends AbstractMainController implements Initi
 
                 addressCb.getSelectionModel().selectFirst();
                 getService().setListenAddress(0);
-            }
         });
 
         // IPアドレス一覧を初期化
@@ -99,31 +91,25 @@ public class RsMonitorController extends AbstractMainController implements Initi
         addressCb.getSelectionModel().select(getService().getCurrentListenAddressIndex());
 
         // ListenするIPアドレス選択
-        addressCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
+        addressCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
-                if (newVal.intValue() != -1) {
-                    getService().setListenAddress(newVal.intValue());
-                }
+            if (newVal.intValue() != -1) {
+                getService().setListenAddress(newVal.intValue());
             }
         });
 
         // 開始ボタン押下
-        startTb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // イベントの発生元を取得
-                ToggleButton toggle = (ToggleButton) event.getSource();
+        startTb.setOnAction(event -> {
+            // イベントの発生元を取得
+            ToggleButton toggle = (ToggleButton) event.getSource();
 
-                if (toggle.isSelected()) {
-                    // 開始
-                    getService().restart();
+            if (toggle.isSelected()) {
+                // 開始
+                getService().restart();
 
-                } else {
-                    // 停止
-                    getService().stop();
-                }
+            } else {
+                // 停止
+                getService().stop();
             }
         });
     }
@@ -157,10 +143,12 @@ public class RsMonitorController extends AbstractMainController implements Initi
      */
     private void prepareTimeline() {
         new AnimationTimer() {
-            @Override public void handle(long now) {
+
+            @Override
+            public void handle(long now) {
                 addDataToSeries();
             }
-        } .start();
+        }.start();
     }
 
     /**
