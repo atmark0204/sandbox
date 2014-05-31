@@ -1,162 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?scenebuilder-stylesheet chatlogger.css?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/2.2" fx:controller="org.ramidore.ChatLoggerController">
-  <children>
-    <TabPane pickOnBounds="false" prefHeight="389.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
-      <tabs>
-        <Tab text="叫び">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="sakebiChatTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="170.0" minWidth="10.0" prefWidth="170.0" text="date" fx:id="sakebiChatDate" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="name" fx:id="sakebiChatName" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content" fx:id="sakebiChatContent" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="一般">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="normalChatTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="170.0" minWidth="10.0" prefWidth="170.0" text="date" fx:id="normalChatDate" />
-                    <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="name" fx:id="normalChatName" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content" fx:id="normalChatContent" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="PT">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="partyChatTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn editable="true" maxWidth="170.0" prefWidth="170.0" text="date" fx:id="partyChatDate" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="name" fx:id="partyChatName" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content" fx:id="partyChatContent" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ギルド">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="guildChatTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="170.0" prefWidth="170.0" text="date" fx:id="guildChatDate" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="name" fx:id="guildChatName" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content" fx:id="guildChatContent" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="耳">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="mimiChatTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="170.0" prefWidth="170.0" text="date" fx:id="mimiChatDate" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="name" fx:id="mimiChatName" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content" fx:id="mimiChatContent" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="アイテム">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView id="sakebiTable" fx:id="itemTable" prefHeight="345.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn maxWidth="170.0" prefWidth="170.0" text="date" fx:id="itemDate" />
-                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="590.0" text="name" fx:id="itemName" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="RedStoneモニタ">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <AreaChart fx:id="areaChart" prefHeight="331.0" prefWidth="786.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
-                  <xAxis>
-                    <NumberAxis side="BOTTOM" upperBound="100.0" />
-                  </xAxis>
-                  <yAxis>
-                    <NumberAxis lowerBound="45000.0" side="LEFT" upperBound="120000.0" />
-                  </yAxis>
-                </AreaChart>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-      </tabs>
-    </TabPane>
-    <MenuButton layoutX="463.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" text="お知らせ">
-      <items>
-        <CheckMenuItem mnemonicParsing="false" text="ウインドウ" fx:id="oshiraseWindow" />
-        <SeparatorMenuItem mnemonicParsing="false" />
-        <CheckMenuItem mnemonicParsing="false" text="叫び" fx:id="sakebiMenu" />
-        <CheckMenuItem mnemonicParsing="false" text="一般" fx:id="normalMenu" />
-        <CheckMenuItem mnemonicParsing="false" text="PT" fx:id="partyMenu" />
-        <CheckMenuItem mnemonicParsing="false" text="ギルド" fx:id="guildMenu" />
-        <CheckMenuItem mnemonicParsing="false" text="耳" fx:id="mimiMenu" />
-      </items>
-    </MenuButton>
-    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="4.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList" />
-      </items>
-    </ChoiceBox>
-    <ToggleButton fx:id="startTb" layoutX="360.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" text="開始" />
-    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="182.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList" />
-      </items>
-    </ChoiceBox>
-    <Slider fx:id="opacitySlider" layoutX="605.0" layoutY="4.0" prefHeight="25.0" prefWidth="64.0" />
-    <Button fx:id="clearButton" layoutX="408.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="クリア" />
-    <ChoiceBox fx:id="oshiraseLineCountCb" layoutX="549.0" layoutY="4.0" prefHeight="25.0" prefWidth="51.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <Integer fx:value="1" />
-          <Integer fx:value="2" />
-          <Integer fx:value="3" />
-          <Integer fx:value="4" />
-          <Integer fx:value="5" />
-        </FXCollections>
-      </items>
-      <tooltip>
-        <Tooltip text="お知らせを表示する行数" />
-      </tooltip>
-    </ChoiceBox>
-  </children>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<!--
+  ~ Copyright 2014.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="422.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="org.ramidore.ChatLoggerController">
+    <children>
+        <TabPane pickOnBounds="false" prefHeight="389.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="33.0">
+            <tabs>
+                <Tab text="叫び">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="sakebiChatTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn maxWidth="170.0" minWidth="10.0" prefWidth="170.0" text="date"
+                                                     fx:id="sakebiChatDate"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="name"
+                                                     fx:id="sakebiChatName"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content"
+                                                     fx:id="sakebiChatContent"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="一般">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="normalChatTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn maxWidth="170.0" minWidth="10.0" prefWidth="170.0" text="date"
+                                                     fx:id="normalChatDate"/>
+                                        <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="name"
+                                                     fx:id="normalChatName"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content"
+                                                     fx:id="normalChatContent"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="PT">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="partyChatTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn editable="true" maxWidth="170.0" prefWidth="170.0" text="date"
+                                                     fx:id="partyChatDate"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="name"
+                                                     fx:id="partyChatName"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content"
+                                                     fx:id="partyChatContent"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="ギルド">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="guildChatTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn maxWidth="170.0" prefWidth="170.0" text="date"
+                                                     fx:id="guildChatDate"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="name"
+                                                     fx:id="guildChatName"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content"
+                                                     fx:id="guildChatContent"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="耳">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="mimiChatTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn maxWidth="170.0" prefWidth="170.0" text="date"
+                                                     fx:id="mimiChatDate"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="name"
+                                                     fx:id="mimiChatName"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="500.0" text="content"
+                                                     fx:id="mimiChatContent"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="アイテム">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView id="sakebiTable" fx:id="itemTable" prefHeight="345.0" prefWidth="602.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn maxWidth="170.0" prefWidth="170.0" text="date" fx:id="itemDate"/>
+                                        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="590.0" text="name"
+                                                     fx:id="itemName"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="RedStoneモニタ">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <AreaChart fx:id="areaChart" prefHeight="331.0" prefWidth="786.0"
+                                           AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+                                    <xAxis>
+                                        <NumberAxis side="BOTTOM" upperBound="100.0"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis lowerBound="45000.0" side="LEFT" upperBound="120000.0"/>
+                                    </yAxis>
+                                </AreaChart>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <MenuButton layoutX="463.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" text="お知らせ">
+            <items>
+                <CheckMenuItem mnemonicParsing="false" text="ウインドウ" fx:id="oshiraseWindow"/>
+                <SeparatorMenuItem mnemonicParsing="false"/>
+                <CheckMenuItem mnemonicParsing="false" text="叫び" fx:id="sakebiMenu"/>
+                <CheckMenuItem mnemonicParsing="false" text="一般" fx:id="normalMenu"/>
+                <CheckMenuItem mnemonicParsing="false" text="PT" fx:id="partyMenu"/>
+                <CheckMenuItem mnemonicParsing="false" text="ギルド" fx:id="guildMenu"/>
+                <CheckMenuItem mnemonicParsing="false" text="耳" fx:id="mimiMenu"/>
+            </items>
+        </MenuButton>
+        <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="4.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ChoiceBox>
+        <ToggleButton fx:id="startTb" layoutX="360.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0"
+                      text="開始"/>
+        <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="182.0" layoutY="4.0" prefHeight="25.0" prefWidth="174.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ChoiceBox>
+        <Slider fx:id="opacitySlider" layoutX="605.0" layoutY="4.0" prefHeight="25.0" prefWidth="64.0"/>
+        <Button fx:id="clearButton" layoutX="408.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="51.0" text="クリア"/>
+        <ChoiceBox fx:id="oshiraseLineCountCb" layoutX="549.0" layoutY="4.0" prefHeight="25.0" prefWidth="51.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Integer fx:value="1"/>
+                    <Integer fx:value="2"/>
+                    <Integer fx:value="3"/>
+                    <Integer fx:value="4"/>
+                    <Integer fx:value="5"/>
+                </FXCollections>
+            </items>
+            <tooltip>
+                <Tooltip text="お知らせを表示する行数"/>
+            </tooltip>
+        </ChoiceBox>
+    </children>
 </AnchorPane>

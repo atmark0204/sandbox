@@ -1,112 +1,128 @@
+<!--
+  ~ Copyright 2014.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <configuration>
 
-	<appender name="FILE_S"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>%d{yyyy-MM}/叫び.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_S"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>%d{yyyy-MM}/叫び.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE_N"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>%d{yyyy-MM}/一般.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_N"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>%d{yyyy-MM}/一般.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE_PT"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>%d{yyyy-MM}/パーティ.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_PT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>%d{yyyy-MM}/パーティ.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE_G"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>%d{yyyy-MM}/ギルド.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_G"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>%d{yyyy-MM}/ギルド.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE_W"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
-			<fileNamePattern>%d{yyyy-MM}/耳打ち.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_W"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>%d{yyyy-MM}/耳打ち.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<appender name="FILE_ITEMDAT" class="ch.qos.logback.core.FileAppender">
-		<file>item.dat.log</file>
-		<append>false</append>
-		<encoder>
-			<pattern>%msg%n
-			</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_ITEMDAT" class="ch.qos.logback.core.FileAppender">
+        <file>item.dat.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%msg%n
+            </pattern>
+        </encoder>
+    </appender>
 
-	<logger name="org.ramidore.logic.chat.SakebiChatLogic" level="INFO">
-		<appender-ref ref="FILE_S" />
-	</logger>
+    <logger name="org.ramidore.logic.chat.SakebiChatLogic" level="INFO">
+        <appender-ref ref="FILE_S"/>
+    </logger>
 
-	<logger name="org.ramidore.logic.chat.NormalChatLogic" level="INFO">
-		<appender-ref ref="FILE_N" />
-	</logger>
+    <logger name="org.ramidore.logic.chat.NormalChatLogic" level="INFO">
+        <appender-ref ref="FILE_N"/>
+    </logger>
 
-	<logger name="org.ramidore.logic.chat.PartyChatLogic" level="INFO">
-		<appender-ref ref="FILE_PT" />
-	</logger>
+    <logger name="org.ramidore.logic.chat.PartyChatLogic" level="INFO">
+        <appender-ref ref="FILE_PT"/>
+    </logger>
 
-	<logger name="org.ramidore.logic.chat.GuildChatLogic" level="INFO">
-		<appender-ref ref="FILE_G" />
-	</logger>
+    <logger name="org.ramidore.logic.chat.GuildChatLogic" level="INFO">
+        <appender-ref ref="FILE_G"/>
+    </logger>
 
-	<logger name="org.ramidore.logic.chat.MimiChatLogic" level="INFO">
-		<appender-ref ref="FILE_W" />
-	</logger>
+    <logger name="org.ramidore.logic.chat.MimiChatLogic" level="INFO">
+        <appender-ref ref="FILE_W"/>
+    </logger>
 
-	<logger name="org.ramidore.logic.item.ItemDatHolder" level="INFO" additivity="false">
-		<appender-ref ref="FILE_ITEMDAT" />
-	</logger>
+    <logger name="org.ramidore.logic.item.ItemDatHolder" level="INFO" additivity="false">
+        <appender-ref ref="FILE_ITEMDAT"/>
+    </logger>
 
-	<!-- for dev env -->
+    <!-- for dev env -->
 
-	<appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
-		<file>debug.log</file>
-		<append>true</append>
-		<encoder>
-			<pattern>%d{MM/dd HH:mm:ss} %n%msg%n
-			</pattern>
-		</encoder>
-	</appender>
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.FileAppender">
+        <file>debug.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{MM/dd HH:mm:ss} %n%msg%n
+            </pattern>
+        </encoder>
+    </appender>
 
-	<logger name="org.ramidore.logic.DebugLogic" level="DEBUG" additivity="false">
-		<appender-ref ref="FILE_DEBUG" />
-	</logger>
+    <logger name="org.ramidore.logic.DebugLogic" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE_DEBUG"/>
+    </logger>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</pattern>
-		</encoder>
-	</appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
 
-	<root level="trace">
-		<appender-ref ref="STDOUT" />
-	</root>
+    <root level="trace">
+        <appender-ref ref="STDOUT"/>
+    </root>
 </configuration>

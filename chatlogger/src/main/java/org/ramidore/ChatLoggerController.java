@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore;
 
 import javafx.animation.AnimationTimer;
@@ -30,7 +46,6 @@ import java.util.Properties;
  * . JavaFXコントローラクラス
  *
  * @author atmark
- *
  */
 public class ChatLoggerController extends AbstractMainController {
 
@@ -251,7 +266,7 @@ public class ChatLoggerController extends AbstractMainController {
 
     /**
      * お知らせウインドウ.
-     *
+     * <p>
      * SwingのJDialog拡張
      */
     private OshiraseJDialog oshiraseJDialog;
@@ -498,10 +513,11 @@ public class ChatLoggerController extends AbstractMainController {
      */
     private void prepareTimeline() {
         new AnimationTimer() {
-            @Override public void handle(long now) {
+            @Override
+            public void handle(long now) {
                 addDataToSeries();
             }
-        } .start();
+        }.start();
     }
 
     /**
@@ -577,8 +593,7 @@ public class ChatLoggerController extends AbstractMainController {
     /**
      * ステージにイベントを追加する.
      *
-     * @param stage
-     *            ステージ
+     * @param stage ステージ
      */
     public void setUpStage(Stage stage) {
 

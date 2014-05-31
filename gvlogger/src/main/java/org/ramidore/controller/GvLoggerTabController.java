@@ -1,29 +1,41 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.controller;
+
+import javafx.animation.AnimationTimer;
+import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DefaultStringConverter;
+import lombok.Getter;
+import lombok.Setter;
+import org.ramidore.bean.GvLogTable;
+import org.ramidore.bean.GvStatTable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Callback;
-import javafx.util.converter.DefaultStringConverter;
-
-import org.ramidore.bean.GvLogTable;
-import org.ramidore.bean.GvStatTable;
+import static javafx.scene.chart.XYChart.Series;
 
 /**
  * . JavaFXコントローラクラス
@@ -102,6 +114,7 @@ public class GvLoggerTabController extends AbstractController {
     /**
      * 統計情報表示用テーブル.
      */
+    @Getter
     @FXML
     private TableView<GvStatTable> statTable;
 
@@ -144,11 +157,12 @@ public class GvLoggerTabController extends AbstractController {
     /**
      * キャラ名と統計データのマップ.
      */
-    private Map<String, GvStatTable> statMap = new ConcurrentHashMap<String, GvStatTable>();
+    private Map<String, GvStatTable> statMap = new ConcurrentHashMap<>();
 
     /**
      * データキュー.
      */
+    @Setter
     private ConcurrentLinkedQueue<GvLogTable> logDataQ;
 
     @Override
@@ -166,35 +180,25 @@ public class GvLoggerTabController extends AbstractController {
 
         // コントローラーのフィールドとデータクラスのプロパティーを紐付ける
 
-        logDateCol.setCellValueFactory(new PropertyValueFactory<GvLogTable, String>("date"));
-        logSrcCharaCol.setCellValueFactory(new PropertyValueFactory<GvLogTable, String>("srcCharaName"));
-        logDstCharaCol.setCellValueFactory(new PropertyValueFactory<GvLogTable, String>("dstCharaName"));
-        logGuildCol.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("guildName"));
-        logPointCol.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("point"));
-        logPoint0Col.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("point0"));
-        logPoint1Col.setCellValueFactory(new PropertyValueFactory<GvLogTable, Integer>("point1"));
+        logDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        logSrcCharaCol.setCellValueFactory(new PropertyValueFactory<>("srcCharaName"));
+        logDstCharaCol.setCellValueFactory(new PropertyValueFactory<>("dstCharaName"));
+        logGuildCol.setCellValueFactory(new PropertyValueFactory<>("guildName"));
+        logPointCol.setCellValueFactory(new PropertyValueFactory<>("point"));
+        logPoint0Col.setCellValueFactory(new PropertyValueFactory<>("point0"));
+        logPoint1Col.setCellValueFactory(new PropertyValueFactory<>("point1"));
 
         statTable.setEditable(true);
-        statGuildCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("guildName"));
-        statCharaCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, String>("charaName"));
-        statKillCountCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("killCount"));
-        statDeathCountCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("deathCount"));
-        statPointCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, Integer>("point"));
-        statNoteCol.setCellValueFactory(new PropertyValueFactory<GvStatTable, String>("note"));
+        statGuildCol.setCellValueFactory(new PropertyValueFactory<>("guildName"));
+        statCharaCol.setCellValueFactory(new PropertyValueFactory<>("charaName"));
+        statKillCountCol.setCellValueFactory(new PropertyValueFactory<>("killCount"));
+        statDeathCountCol.setCellValueFactory(new PropertyValueFactory<>("deathCount"));
+        statPointCol.setCellValueFactory(new PropertyValueFactory<>("point"));
+        statNoteCol.setCellValueFactory(new PropertyValueFactory<>("note"));
 
-        statNoteCol.setCellFactory(new Callback<TableColumn<GvStatTable, String>, TableCell<GvStatTable, String>>() {
-            @Override
-            public TableCell<GvStatTable, String> call(TableColumn<GvStatTable, String> arg0) {
-                return new TextFieldTableCell<GvStatTable, String>(new DefaultStringConverter());
-            }
-        });
+        statNoteCol.setCellFactory(arg0 -> new TextFieldTableCell<>(new DefaultStringConverter()));
 
-        statNoteCol.setOnEditCommit(new EventHandler<CellEditEvent<GvStatTable, String>>() {
-            @Override
-            public void handle(CellEditEvent<GvStatTable, String> t) {
-                ((GvStatTable) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNote(t.getNewValue());
-            }
-        });
+        statNoteCol.setOnEditCommit(t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setNote(t.getNewValue()));
     }
 
     /**
@@ -203,26 +207,20 @@ public class GvLoggerTabController extends AbstractController {
     @SuppressWarnings("unchecked")
     private void initializeChart() {
 
-        XYChart.Series<String, Number> series0 = new XYChart.Series<String, Number>();
-        XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
+        Series<String, Number> series0 = new Series<>();
+        Series<String, Number> series1 = new Series<>();
         series0.setName("先入れ側");
         series1.setName("後入れ側");
 
         timelineChart.getData().add(series0);
         timelineChart.getData().add(series1);
 
-        BarChart.Series<String, Number> series = new BarChart.Series<String, Number>();
+        Series<String, Number> series = new Series<>();
         series.setName("個人成績");
 
         personChart.getData().setAll(series);
 
-        personChartCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                display(newVal.intValue());
-            }
-        });
+        personChartCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> display(newVal.intValue()));
 
         new AnimationTimer() {
             @Override
@@ -239,17 +237,10 @@ public class GvLoggerTabController extends AbstractController {
      */
     private void display(int guild) {
 
-        BarChart.Series<String, Number> series = personChart.getData().get(0);
+        Series<String, Number> series = personChart.getData().get(0);
         series.getData().clear();
 
-        for (GvStatTable row : statTable.getItems()) {
-
-            if (row.getGuildName() == guild) {
-
-                //series.getData().add(new BarChart.Data<String, Number>(row.getCharaName(), row.getPoint()));
-                series.getData().add(row.toBarChartData());
-            }
-        }
+        statTable.getItems().stream().filter(row -> row.getGuildName() == guild).forEach(row -> series.getData().add(row.toBarChartData()));
     }
 
     /**
@@ -280,7 +271,7 @@ public class GvLoggerTabController extends AbstractController {
 
         logTable.getItems().add(log);
 
-        GvStatTable statSrc = null;
+        GvStatTable statSrc;
         if (statMap.containsKey(log.getSrcCharaName())) {
 
             statSrc = statMap.get(log.getSrcCharaName());
@@ -302,7 +293,7 @@ public class GvLoggerTabController extends AbstractController {
             statTable.getItems().add(statMap.get(log.getSrcCharaName()));
         }
 
-        GvStatTable statDst = null;
+        GvStatTable statDst;
         if (statMap.containsKey(log.getDstCharaName())) {
 
             statDst = statMap.get(log.getDstCharaName());
@@ -325,41 +316,5 @@ public class GvLoggerTabController extends AbstractController {
 
         timelineChart.getData().get(0).getData().add(log.toTimelineData()[0]);
         timelineChart.getData().get(1).getData().add(log.toTimelineData()[1]);
-    }
-
-    /**
-     * getter.
-     *
-     * @return logDataQ
-     */
-    public ConcurrentLinkedQueue<GvLogTable> getLogDataQ() {
-        return logDataQ;
-    }
-
-    /**
-     * setter.
-     *
-     * @param logDataQ セットする logDataQ
-     */
-    public void setLogDataQ(ConcurrentLinkedQueue<GvLogTable> logDataQ) {
-        this.logDataQ = logDataQ;
-    }
-
-    /**
-     * getter.
-     *
-     * @return statTable
-     */
-    public TableView<GvStatTable> getStatTable() {
-        return statTable;
-    }
-
-    /**
-     * setter.
-     *
-     * @param statTable セットする statTable
-     */
-    public void setStatTable(TableView<GvStatTable> statTable) {
-        this.statTable = statTable;
     }
 }

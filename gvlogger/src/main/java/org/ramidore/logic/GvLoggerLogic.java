@@ -1,31 +1,49 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic;
+
+import lombok.Getter;
+import org.ramidore.core.PacketData;
+import org.ramidore.logic.system.GuildBattleLogLogic;
+import org.ramidore.logic.system.GuildBattleLogic;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.ramidore.core.PacketData;
-import org.ramidore.logic.system.GuildBattleLogLogic;
-import org.ramidore.logic.system.GuildBattleLogic;
-
 /**
  * . メインロジック
  *
  * @author atmark
- *
  */
 public final class GvLoggerLogic extends AbstractMainLogic {
 
     /**
      * パケット解析ロジック.
      */
+    @Getter
     private GuildBattleLogic guildBattleLogic;
 
     /**
      * ログ1ファイルに対応するロジックのインスタンスマップ.
      */
-    private Map<String, GuildBattleLogLogic> guiBattleLogMap;
+    @Getter
+    private Map<String, GuildBattleLogLogic> guildBattleLogMap;
 
     /**
      * コンストラクタ.
@@ -34,7 +52,7 @@ public final class GvLoggerLogic extends AbstractMainLogic {
 
         guildBattleLogic = new GuildBattleLogic();
 
-        guiBattleLogMap = new HashMap<String, GuildBattleLogLogic>();
+        guildBattleLogMap = new HashMap<>();
     }
 
     @Override
@@ -71,6 +89,7 @@ public final class GvLoggerLogic extends AbstractMainLogic {
     public void loadConfig() {
         // nop
     }
+
     @Override
     public void saveConfig() {
         // nop
@@ -93,42 +112,6 @@ public final class GvLoggerLogic extends AbstractMainLogic {
      */
     public void loadPastData(File f) {
 
-        guiBattleLogMap.put(f.getName(), new GuildBattleLogLogic(f.getAbsolutePath()));
-    }
-
-    /**
-     * getter.
-     *
-     * @return guildBattleLogic
-     */
-    public GuildBattleLogic getGuildBattleLogic() {
-        return guildBattleLogic;
-    }
-
-    /**
-     * setter.
-     *
-     * @param guildBattleLogic セットする guildBattleLogic
-     */
-    public void setGuildBattleLogic(GuildBattleLogic guildBattleLogic) {
-        this.guildBattleLogic = guildBattleLogic;
-    }
-
-    /**
-     * getter.
-     *
-     * @return guiBattleLogMap
-     */
-    public Map<String, GuildBattleLogLogic> getGuiBattleLogMap() {
-        return guiBattleLogMap;
-    }
-
-    /**
-     * setter.
-     *
-     * @param guiBattleLogMap セットする guiBattleLogMap
-     */
-    public void setGuiBattleLogMap(Map<String, GuildBattleLogLogic> guiBattleLogMap) {
-        this.guiBattleLogMap = guiBattleLogMap;
+        guildBattleLogMap.put(f.getName(), new GuildBattleLogLogic(f.getAbsolutePath()));
     }
 }

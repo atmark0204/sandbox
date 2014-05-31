@@ -1,36 +1,16 @@
 package org.ramidore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.ramidore.bean.PbLogBean;
@@ -40,11 +20,13 @@ import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.PbLoggerLogic;
 import org.ramidore.logic.system.PointBattleLogic;
 
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * . JavaFXコントローラクラス
  *
  * @author atmark
- *
  */
 public class PbLoggerController extends AbstractMainController {
 
@@ -122,16 +104,17 @@ public class PbLoggerController extends AbstractMainController {
 
     /**
      * ポイント戦の得点データ保持.
-     *
+     * <p>
      * リストの要素 : 1-5, 全面 マップ key : 系列名(id) value : 系列のSeries
      */
-    private List<Map<String, XYChart.Series<Number, Number>>> pbDataMapList = new ArrayList<Map<String, XYChart.Series<Number, Number>>>(6);
+    private List<Map<String, XYChart.Series<Number, Number>>> pbDataMapList = new ArrayList<>(6);
 
     /**
      * 統計情報表示用テーブル.
      */
     @FXML
-    private TableView<PbStatTable> pbStatTable;;
+    private TableView<PbStatTable> pbStatTable;
+    ;
 
     /**
      * 系列名.
@@ -201,7 +184,7 @@ public class PbLoggerController extends AbstractMainController {
 
         // データを初期化
         for (int i = 0; i < 6; i++) {
-            pbDataMapList.add(new HashMap<String, XYChart.Series<Number, Number>>());
+            pbDataMapList.add(new HashMap<>());
         }
 
         loadConfig();
@@ -222,16 +205,16 @@ public class PbLoggerController extends AbstractMainController {
 
         PbLoggerLogic logic = (PbLoggerLogic) getService().getLogic();
 
-        statIdCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("id"));
-        statStage1Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage1"));
-        statStage2Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage2"));
-        statStage3Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage3"));
-        statStage4Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage4"));
-        statStage5Col.setCellValueFactory(new PropertyValueFactory<PbStatTable, String>("stage5"));
-        statStage2TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point2Total"));
-        statStage3TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point3Total"));
-        statStage4TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("point4Total"));
-        statStage5TotalCol.setCellValueFactory(new PropertyValueFactory<PbStatTable, Integer>("pointTotal"));
+        statIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        statStage1Col.setCellValueFactory(new PropertyValueFactory<>("stage1"));
+        statStage2Col.setCellValueFactory(new PropertyValueFactory<>("stage2"));
+        statStage3Col.setCellValueFactory(new PropertyValueFactory<>("stage3"));
+        statStage4Col.setCellValueFactory(new PropertyValueFactory<>("stage4"));
+        statStage5Col.setCellValueFactory(new PropertyValueFactory<>("stage5"));
+        statStage2TotalCol.setCellValueFactory(new PropertyValueFactory<>("point2Total"));
+        statStage3TotalCol.setCellValueFactory(new PropertyValueFactory<>("point3Total"));
+        statStage4TotalCol.setCellValueFactory(new PropertyValueFactory<>("point4Total"));
+        statStage5TotalCol.setCellValueFactory(new PropertyValueFactory<>("pointTotal"));
 
         logic.getPointBattleLogic().setStatTable(pbStatTable);
     }
@@ -247,20 +230,16 @@ public class PbLoggerController extends AbstractMainController {
         deviceCb.getSelectionModel().select(getService().getCurrentDeviceIndex());
 
         // 使用デバイス選択
-        deviceCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @SuppressWarnings("rawtypes")
-            @Override
-            public void changed(ObservableValue ov, Number oldVal, Number newVal) {
+        deviceCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
-                getService().setDevice(newVal.intValue());
+            getService().setDevice(newVal.intValue());
 
-                addressCb.getItems().clear();
-                addressCb.getItems().addAll(getService().getAddressList());
-                addressCb.getSelectionModel().selectFirst();
+            addressCb.getItems().clear();
+            addressCb.getItems().addAll(getService().getAddressList());
+            addressCb.getSelectionModel().selectFirst();
 
-                // 新しいIPアドレスを設定
-                getService().setListenAddress(0);
-            }
+            // 新しいIPアドレスを設定
+            getService().setListenAddress(0);
         });
 
         // IPアドレス一覧を初期化
@@ -270,33 +249,26 @@ public class PbLoggerController extends AbstractMainController {
         addressCb.getSelectionModel().select(getService().getCurrentListenAddressIndex());
 
         // ListenするIPアドレス選択
-        addressCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @SuppressWarnings("rawtypes")
-            @Override
-            public void changed(ObservableValue ov, Number oldVal, Number newVal) {
+        addressCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
-                if (newVal.intValue() != -1) {
-                    getService().setListenAddress(newVal.intValue());
-                }
+            if (newVal.intValue() != -1) {
+                getService().setListenAddress(newVal.intValue());
             }
         });
 
         // 開始ボタン押下
-        startTb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // イベントの発生元を取得
-                ToggleButton toggle = (ToggleButton) event.getSource();
+        startTb.setOnAction(event -> {
+            // イベントの発生元を取得
+            ToggleButton toggle = (ToggleButton) event.getSource();
 
-                if (toggle.isSelected()) {
-                    // 開始
-                    getService().restart();
+            if (toggle.isSelected()) {
+                // 開始
+                getService().restart();
 
-                    clear1b.setDisable(false);
-                } else {
-                    // 停止
-                    getService().stop();
-                }
+                clear1b.setDisable(false);
+            } else {
+                // 停止
+                getService().stop();
             }
         });
     }
@@ -308,59 +280,41 @@ public class PbLoggerController extends AbstractMainController {
     private void initializeChart() {
 
         clear1b.setDisable(true);
-        clear1b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                clear2b.setDisable(false);
-                clear1b.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
-            }
+        clear1b.setOnAction(ae -> {
+            clear2b.setDisable(false);
+            clear1b.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
         });
         clear2b.setDisable(true);
-        clear2b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                clear3b.setDisable(false);
-                clear2b.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
-            }
+        clear2b.setOnAction(ae -> {
+            clear3b.setDisable(false);
+            clear2b.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
         });
         clear3b.setDisable(true);
-        clear3b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                clear4b.setDisable(false);
-                clear3b.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
-            }
+        clear3b.setOnAction(ae -> {
+            clear4b.setDisable(false);
+            clear3b.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
         });
         clear4b.setDisable(true);
-        clear4b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                clear5b.setDisable(false);
-                clear4b.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
-            }
+        clear4b.setOnAction(ae -> {
+            clear5b.setDisable(false);
+            clear4b.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
         });
         clear5b.setDisable(true);
-        clear5b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                clear5b.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
-            }
+        clear5b.setOnAction(ae -> {
+            clear5b.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().addStageNo();
         });
 
-        loadPastDataB.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ae) {
-                loadPastDataB.setDisable(true);
-                ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().loadPastData();
-            }
+        loadPastDataB.setOnAction(ae -> {
+            loadPastDataB.setDisable(true);
+            ((PbLoggerLogic) getService().getLogic()).getPointBattleLogic().loadPastData();
         });
 
-        List<AnimationTimer> timerList = new ArrayList<AnimationTimer>();
+        List<AnimationTimer> timerList = new ArrayList<>();
 
         for (int i = 0; i < 6; i++) {
             AnimationTimer timer = prepareTimeline(i + 1);
@@ -368,63 +322,45 @@ public class PbLoggerController extends AbstractMainController {
             timerList.add(timer);
         }
 
-        stageCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue ov, Number oldVal, Number newVal) {
+        stageCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> display(newVal.intValue() + 1));
 
-                display(newVal.intValue() + 1);
-            }
-        });
-
-        pbChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                double xStart = pbChart.getXAxis().getLocalToParentTransform().getTx();
-                double axisXRelativeMousePosition = mouseEvent.getX() - xStart;
-                chartExtraLabel.setText(String.format("%d, %d (%d, %d); %d - %d", (int) mouseEvent.getSceneX(), (int) mouseEvent.getSceneY(), (int) mouseEvent.getX(), (int) mouseEvent.getY(),
-                        (int) xStart, pbChart.getXAxis().getValueForDisplay(axisXRelativeMousePosition).intValue()));
-            }
+        pbChart.setOnMouseMoved(mouseEvent -> {
+            double xStart = pbChart.getXAxis().getLocalToParentTransform().getTx();
+            double axisXRelativeMousePosition = mouseEvent.getX() - xStart;
+            chartExtraLabel.setText(String.format("%d, %d (%d, %d); %d - %d", (int) mouseEvent.getSceneX(), (int) mouseEvent.getSceneY(), (int) mouseEvent.getX(), (int) mouseEvent.getY(),
+                    (int) xStart, pbChart.getXAxis().getValueForDisplay(axisXRelativeMousePosition).intValue()));
         });
 
         // Panning works via either secondary (right) mouse or primary with ctrl
         // held down
         ChartPanManager panner = new ChartPanManager(pbChart);
-        panner.setMouseFilter(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (!(mouseEvent.getButton() == MouseButton.SECONDARY || (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.isShortcutDown()))) {
-                    mouseEvent.consume();
-                }
+        panner.setMouseFilter(mouseEvent -> {
+            if (!(mouseEvent.getButton() == MouseButton.SECONDARY || (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.isShortcutDown()))) {
+                mouseEvent.consume();
             }
         });
         panner.start();
 
-        JFXChartUtil.setupZooming(pbChart, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() != MouseButton.PRIMARY || mouseEvent.isShortcutDown()) {
-                    mouseEvent.consume();
-                }
+        JFXChartUtil.setupZooming(pbChart, mouseEvent -> {
+            if (mouseEvent.getButton() != MouseButton.PRIMARY || mouseEvent.isShortcutDown()) {
+                mouseEvent.consume();
             }
         });
 
         ContextMenu menu = new ContextMenu();
         MenuItem item = new MenuItem("コピー");
-        item.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                PbStatTable stat = pbStatTable.getSelectionModel().getSelectedItem();
+        item.setOnAction(event -> {
+            PbStatTable stat = pbStatTable.getSelectionModel().getSelectedItem();
 
-                final Clipboard cb = Clipboard.getSystemClipboard();
+            final Clipboard cb = Clipboard.getSystemClipboard();
 
-                final ClipboardContent c = new ClipboardContent();
+            final ClipboardContent c = new ClipboardContent();
 
-                c.putString(stat.toCopyStr());
+            c.putString(stat.toCopyStr());
 
-                cb.setContent(c);
+            cb.setContent(c);
 
-                event.consume();
-            }
+            event.consume();
         });
         menu.getItems().addAll(item);
 
@@ -434,14 +370,13 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * 指定ステージの全系列のデータを表示する.
      *
-     * @param stageNo
-     *            ステージ番号
+     * @param stageNo ステージ番号
      */
     private void display(int stageNo) {
 
         pbChart.getData().clear();
 
-        Map<String, Series<Number, Number>> map = null;
+        Map<String, Series<Number, Number>> map;
 
         map = pbDataMapList.get(stageNo - 1);
 
@@ -455,8 +390,7 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * チャートの更新アニメーションを定義する.
      *
-     * @param stageNo
-     *            ステージ番号
+     * @param stageNo ステージ番号
      * @return AnimationTimer
      */
     private AnimationTimer prepareTimeline(final int stageNo) {
@@ -471,8 +405,7 @@ public class PbLoggerController extends AbstractMainController {
     /**
      * 別スレッドで更新されているデータを取得し、チャートにデータを追加する.
      *
-     * @param stageNo
-     *            ステージ番号
+     * @param stageNo ステージ番号
      */
     private void addDataToSeries(int stageNo) {
 
@@ -491,7 +424,7 @@ public class PbLoggerController extends AbstractMainController {
         // データ系列名
         String id = data.getId();
 
-        Data<Number, Number> dataElement = null;
+        Data<Number, Number> dataElement;
         if (stageNo < 6) {
             dataElement = data.toStageData();
         } else {
@@ -506,10 +439,10 @@ public class PbLoggerController extends AbstractMainController {
 
         } else {
             // なければ作る
-            XYChart.Series<Number, Number> newSeries = new XYChart.Series<Number, Number>();
+            XYChart.Series<Number, Number> newSeries = new XYChart.Series<>();
 
             newSeries.setName(data.getId());
-            newSeries.getData().add(new Data<Number, Number>(0, 0));
+            newSeries.getData().add(new Data<>(0, 0));
             newSeries.getData().add(dataElement);
 
             pbDataMap.put(id, newSeries);

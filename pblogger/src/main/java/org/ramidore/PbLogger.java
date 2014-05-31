@@ -10,7 +10,6 @@ import javafx.stage.Stage;
  * . メインクラス
  *
  * @author atmark
- *
  */
 public class PbLogger extends Application {
 
@@ -38,7 +37,7 @@ public class PbLogger extends Application {
 
         loader.load();
 
-        controller = (PbLoggerController) loader.getController();
+        controller = loader.getController();
 
         Parent root = loader.getRoot();
 
@@ -62,8 +61,7 @@ public class PbLogger extends Application {
     /**
      * . メイン
      *
-     * @param args
-     *            引数
+     * @param args 引数
      */
     public static void main(final String[] args) {
 
