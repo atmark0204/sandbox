@@ -424,12 +424,7 @@ public class PbLoggerController extends AbstractMainController {
         // データ系列名
         String id = data.getId();
 
-        Data<Number, Number> dataElement;
-        if (stageNo < 6) {
-            dataElement = data.toStageData();
-        } else {
-            dataElement = data.toData();
-        }
+        Data<Number, Number> dataElement = stageNo < 6 ? data.toStageData() : data.toData();
 
         if (pbDataMap.containsKey(id)) {
             // 既にあるものにはデータを追加

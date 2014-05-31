@@ -1,21 +1,24 @@
 package org.ramidore.logic;
 
-import java.util.Properties;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.ramidore.core.PacketData;
 import org.ramidore.logic.system.PointBattleLogic;
+
+import java.util.Properties;
 
 /**
  * . メインロジック
  *
  * @author atmark
- *
  */
 public final class PbLoggerLogic extends AbstractMainLogic {
 
     /**
      * ポイント戦.
      */
+    @Getter
+    @Setter
     private PointBattleLogic pointBattleLogic;
 
     /**
@@ -41,25 +44,6 @@ public final class PbLoggerLogic extends AbstractMainLogic {
         return false;
     }
 
-
-    /**
-     * getter.
-     *
-     * @return pointBattleLogic
-     */
-    public PointBattleLogic getPointBattleLogic() {
-        return pointBattleLogic;
-    }
-
-    /**
-     * setter.
-     *
-     * @param pointBattleLogic セットする pointBattleLogic
-     */
-    public void setPointBattleLogic(PointBattleLogic pointBattleLogic) {
-        this.pointBattleLogic = pointBattleLogic;
-    }
-
     @Override
     public void loadConfig(Properties config) {
         // nop
@@ -74,6 +58,7 @@ public final class PbLoggerLogic extends AbstractMainLogic {
     public void loadConfig() {
         // nop
     }
+
     @Override
     public void saveConfig() {
         // nop
