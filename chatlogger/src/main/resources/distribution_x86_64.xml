@@ -28,22 +28,17 @@
     <baseDirectory>/chatlogger</baseDirectory>
     <fileSets>
         <fileSet>
-            <directory>target</directory>
+            <directory>target/jfx/app</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>chatlogger-*-jfx.jar</include>
+                <include>*</include>
+                <include>lib/*</include>
             </includes>
         </fileSet>
         <fileSet>
             <outputDirectory>/</outputDirectory>
             <includes>
                 <include>readme.txt</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>target/jfx-dependencies/native/windows/x86_64</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
                 <include>jnetpcap.dll</include>
             </includes>
         </fileSet>

@@ -1,16 +1,12 @@
 ダウンロード
 
- 32bit Windows (動作未確認)
-
-  bin/chatlogger-*-x86.zip
-
  64bit Windows
 
   bin/chatlogger-*-x86_64.zip
 
 必要要件
 
- 1. JRE7以降がインストールされていること
+ 1. JRE8以降がインストールされていること
 
   http://java.com/ja/download/
 

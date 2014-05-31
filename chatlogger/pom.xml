@@ -60,7 +60,6 @@
                 <configuration>
                     <descriptors>
                         <descriptor>src/main/resources/distribution_x86_64.xml</descriptor>
-                        <descriptor>src/main/resources/distribution_x86.xml</descriptor>
                     </descriptors>
                 </configuration>
             </plugin>
