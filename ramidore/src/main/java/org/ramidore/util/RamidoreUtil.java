@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.util;
 
 import java.io.UnsupportedEncodingException;
@@ -6,7 +22,6 @@ import java.io.UnsupportedEncodingException;
  * . 共通ロジック
  *
  * @author atmark
- *
  */
 public final class RamidoreUtil {
 
@@ -19,8 +34,7 @@ public final class RamidoreUtil {
     /**
      * . 16進数文字列をエンコードする
      *
-     * @param target
-     *            16進文字列
+     * @param target 16進文字列
      * @return 文字列
      */
     public static String encode(String target, String encoding) {
@@ -48,8 +62,7 @@ public final class RamidoreUtil {
     /**
      * . 16進バイト列を16進文字列に変換
      *
-     * @param b
-     *            16進バイト列
+     * @param b 16進バイト列
      * @return 16進文字列
      */
     public static String toHex(final byte[] b) {
@@ -69,8 +82,7 @@ public final class RamidoreUtil {
     /**
      * . 昇順16進文字列からintに変換
      *
-     * @param hexStr
-     *            16進文字列
+     * @param hexStr 16進文字列
      * @return int
      */
     public static int intValueFromAscHexString(final String hexStr) {
@@ -81,8 +93,7 @@ public final class RamidoreUtil {
     /**
      * . 降順16進文字列からintに変換
      *
-     * @param hexStr
-     *            16進文字列
+     * @param hexStr 16進文字列
      * @return int
      */
     public static int intValueFromDescHexString(final String hexStr) {
@@ -100,8 +111,7 @@ public final class RamidoreUtil {
     /**
      * 降順16進バイト列からintに変換.
      *
-     * @param b
-     *            バイト列
+     * @param b バイト列
      * @return int
      */
     public static int intValueFromDescByteArray(byte[] b) {

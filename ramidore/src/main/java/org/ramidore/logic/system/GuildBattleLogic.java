@@ -1,4 +1,29 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic.system;
+
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+import org.ramidore.Const;
+import org.ramidore.bean.GvLogTable;
+import org.ramidore.core.PacketData;
+import org.ramidore.util.RamidoreUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,19 +33,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.ramidore.Const;
-import org.ramidore.bean.GvLogTable;
-import org.ramidore.core.PacketData;
-import org.ramidore.util.RamidoreUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * GVの得点状況を解析する.
  *
  * @author atmark
- *
  */
 public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
@@ -31,14 +47,13 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
     /**
      * 得点情報にマッチするパターン.
-     *
+     * <p>
      * ※1パケット中に複数回現れる場合がある
      */
     private static final String UNIT_PATTERN = "380069120000(..)00(....)0000(....)0000(....)0000" + Const.BASE_PATTERN + "00(?:CC)*" + Const.BASE_PATTERN + "00(?:CC)*";
 
     /**
      * パケット全体にマッチする正規表現パターン.
-     *
      */
     private static final String PATTERN = "^(?:.{2})+(" + UNIT_PATTERN + ")(?:.{2})*$";
 
@@ -55,7 +70,7 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
     /**
      * キャラクタ名にマッチする正規表現パターン.
      */
-    private static final String NAME_PATTERN = "FFFFFFFFCCCC"  + Const.BASE_PATTERN + "00(?:CC)+";
+    private static final String NAME_PATTERN = "FFFFFFFFCCCC" + Const.BASE_PATTERN + "00(?:CC)+";
 
     /**
      * 正規表現オブジェクト.
@@ -109,9 +124,10 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
     /**
      * ログデータを流し込むキュー.
-     *
+     * <p>
      * コントローラ側で統計処理する
      */
+    @Getter
     private ConcurrentLinkedQueue<GvLogTable> logDataQ;
 
     /**
@@ -248,11 +264,9 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
 
             if ("00".equals(resultCode)) {
                 result = "勝利しました。";
-            } else
-            if ("01".equals(resultCode)) {
+            } else if ("01".equals(resultCode)) {
                 result = "敗北しました。";
-            } else
-            if ("02".equals(resultCode)) {
+            } else if ("02".equals(resultCode)) {
                 result = "引き分けです。";
             }
 
@@ -299,13 +313,14 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
                 return true;
             }
         }
-    };
+    }
+
+    ;
 
     /**
      * ポイントのズレをチェック.
      *
      * @author atmark
-     *
      */
     private class PointChecker {
 
@@ -324,20 +339,10 @@ public class GuildBattleLogic extends AbstractSystemMessageLogic {
             if (this.p[0] - t.getPoint0() != diff[0]) {
                 diff[0] = this.p[0] - t.getPoint0();
                 LOG.warn(DATE_FORMAT.format(date) + "\t先入れ側点数にズレが発生 : " + diff[0]);
-            } else
-            if (this.p[1] - t.getPoint1() != diff[1]) {
+            } else if (this.p[1] - t.getPoint1() != diff[1]) {
                 diff[1] = this.p[1] - t.getPoint1();
                 LOG.warn(DATE_FORMAT.format(date) + "\t後入れ側点数にズレが発生 : " + diff[1]);
             }
         }
-    }
-
-    /**
-     * getter.
-     *
-     * @return logDataQ
-     */
-    public ConcurrentLinkedQueue<GvLogTable> getLogDataQ() {
-        return logDataQ;
     }
 }

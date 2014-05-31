@@ -1,18 +1,23 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic.system;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javafx.collections.ObservableList;
-
+import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,11 +28,17 @@ import org.ramidore.bean.GvStatTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * GVの得点状況を解析する.
  *
  * @author atmark
- *
  */
 public class GuildBattleLogLogic {
 
@@ -40,6 +51,7 @@ public class GuildBattleLogLogic {
      * データキュー.
      * スレッド間の情報受け渡しに使用
      */
+    @Getter
     private ConcurrentLinkedQueue<GvLogTable> logDataQ;
 
     /**
@@ -52,7 +64,7 @@ public class GuildBattleLogLogic {
      */
     public GuildBattleLogLogic() {
 
-        logDataQ = new ConcurrentLinkedQueue<GvLogTable>();
+        logDataQ = new ConcurrentLinkedQueue<>();
     }
 
     /**
@@ -156,7 +168,7 @@ public class GuildBattleLogLogic {
         lines.add("name\tkill\tdeath\tpoint\tnote");
 
         for (GvStatTable item : items) {
-            List<String> itemList = new ArrayList<String>();
+            List<String> itemList = new ArrayList<>();
 
             itemList.add(item.getCharaName());
             itemList.add(String.valueOf(item.getKillCount()));
@@ -175,14 +187,5 @@ public class GuildBattleLogLogic {
 
             LOG.error("I/O error " + f.getAbsolutePath());
         }
-    }
-
-    /**
-     * getter.
-     *
-     * @return logDataQ
-     */
-    public ConcurrentLinkedQueue<GvLogTable> getLogDataQ() {
-        return logDataQ;
     }
 }

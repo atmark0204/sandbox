@@ -38,11 +38,6 @@ public class GvLogger extends Application {
     private static final String APPLICATION_NAME = "gvlogger";
 
     /**
-     * バージョン名.
-     */
-    private static final String VERSION = "0.1.1";
-
-    /**
      * FXMLのパス.
      */
     private static final String FXML = "/fxml/gvlogger.fxml";
@@ -60,7 +55,7 @@ public class GvLogger extends Application {
     @Override
     public void start(final Stage stage) throws Exception {
 
-        stage.setTitle(APPLICATION_NAME + " " + VERSION);
+        stage.setTitle(APPLICATION_NAME);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML));
 

@@ -1,12 +1,22 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic.item;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
+import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.ramidore.bean.ItemBean;
@@ -15,11 +25,17 @@ import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * . item.datをパースしデータを保持する
  *
  * @author atmark
- *
  */
 public class ItemDatHolder {
 
@@ -36,11 +52,13 @@ public class ItemDatHolder {
     /**
      * . itemId/Nameのマップ
      */
+    @Getter
     private Map<String, ItemBean> itemMap;
 
     /**
      * . optionId/Nameのマップ
      */
+    @Getter
     private Map<String, OptionBean> optionMap;
 
     /**
@@ -48,9 +66,9 @@ public class ItemDatHolder {
      */
     public ItemDatHolder() {
 
-        itemMap = new HashMap<String, ItemBean>();
+        itemMap = new HashMap<>();
 
-        optionMap = new HashMap<String, OptionBean>();
+        optionMap = new HashMap<>();
 
         loadData();
     }
@@ -217,41 +235,5 @@ public class ItemDatHolder {
         option.setName(name);
 
         return option;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return itemMap
-     */
-    public Map<String, ItemBean> getItemMap() {
-        return itemMap;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param itemMap セットする itemMap
-     */
-    public void setItemMap(final Map<String, ItemBean> itemMap) {
-        this.itemMap = itemMap;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return optionMap
-     */
-    public Map<String, OptionBean> getOptionMap() {
-        return optionMap;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param optionMap セットする optionMap
-     */
-    public void setOptionMap(final Map<String, OptionBean> optionMap) {
-        this.optionMap = optionMap;
     }
 }

@@ -1,20 +1,36 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic.system;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import lombok.Getter;
 import org.ramidore.bean.RedStoneChartBean;
 import org.ramidore.core.PacketData;
 import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Redstone返却先.
  *
  * @author atmark
- *
  */
 public class RedstoneLogic extends AbstractSystemMessageLogic {
 
@@ -51,6 +67,7 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
     /**
      * JavaFXスレッドと同期するためのLinkedQueue.
      */
+    @Getter
     private ConcurrentLinkedQueue<RedStoneChartBean> chartDataQ;
 
     /**
@@ -63,7 +80,7 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
      */
     public RedstoneLogic() {
 
-        chartDataQ = new ConcurrentLinkedQueue<RedStoneChartBean>();
+        chartDataQ = new ConcurrentLinkedQueue<>();
 
         dataBean = new RedStoneChartBean();
 
@@ -135,25 +152,6 @@ public class RedstoneLogic extends AbstractSystemMessageLogic {
             }
         }
 
-    }
-
-    /**
-     * getter.
-     *
-     * @return chartDataQ
-     */
-    public ConcurrentLinkedQueue<RedStoneChartBean> getChartDataQ() {
-        return chartDataQ;
-    }
-
-    /**
-     * setter.
-     *
-     * @param chartDataQ
-     *            セットする chartDataQ
-     */
-    public void setChartDataQ(ConcurrentLinkedQueue<RedStoneChartBean> chartDataQ) {
-        this.chartDataQ = chartDataQ;
     }
 
 }

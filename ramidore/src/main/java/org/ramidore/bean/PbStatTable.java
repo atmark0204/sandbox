@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.bean;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -7,7 +23,6 @@ import javafx.beans.property.SimpleStringProperty;
  * ポイント戦統計表示用テーブル.
  *
  * @author atmark
- *
  */
 public class PbStatTable {
 
@@ -387,8 +402,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param id
-     *            セットする id
+     * @param id セットする id
      */
     public void setId(String id) {
         this.id = id;
@@ -406,8 +420,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param point1
-     *            セットする point1
+     * @param point1 セットする point1
      */
     public void setPoint1(int point1) {
         this.point1.set(point1);
@@ -425,8 +438,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param point2
-     *            セットする point2
+     * @param point2 セットする point2
      */
     public void setPoint2(int point2) {
         this.point2.set(point2);
@@ -444,8 +456,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param point3
-     *            セットする point3
+     * @param point3 セットする point3
      */
     public void setPoint3(int point3) {
         this.point3.set(point3);
@@ -463,8 +474,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param point4
-     *            セットする point4
+     * @param point4 セットする point4
      */
     public void setPoint4(int point4) {
         this.point4.set(point4);
@@ -482,8 +492,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param point5
-     *            セットする point5
+     * @param point5 セットする point5
      */
     public void setPoint5(int point5) {
         this.point5.set(point5);
@@ -501,8 +510,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param pointTotal
-     *            セットする pointTotal
+     * @param pointTotal セットする pointTotal
      */
     public void setPoint2Total(int pointTotal) {
         this.point2Total.set(pointTotal);
@@ -520,8 +528,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param pointTotal
-     *            セットする pointTotal
+     * @param pointTotal セットする pointTotal
      */
     public void setPoint3Total(int pointTotal) {
         this.point3Total.set(pointTotal);
@@ -539,8 +546,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param pointTotal
-     *            セットする pointTotal
+     * @param pointTotal セットする pointTotal
      */
     public void setPoint4Total(int pointTotal) {
         this.point4Total.set(pointTotal);
@@ -558,8 +564,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param pointTotal
-     *            セットする pointTotal
+     * @param pointTotal セットする pointTotal
      */
     public void setPointTotal(int pointTotal) {
         this.pointTotal.set(pointTotal);
@@ -577,8 +582,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param mobCount1
-     *            セットする mobCount1
+     * @param mobCount1 セットする mobCount1
      */
     public void setMobCount1(int mobCount1) {
         this.mobCount1.set(mobCount1);
@@ -596,8 +600,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param mobCount2
-     *            セットする mobCount2
+     * @param mobCount2 セットする mobCount2
      */
     public void setMobCount2(int mobCount2) {
         this.mobCount2.set(mobCount2);
@@ -615,8 +618,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param mobCount3
-     *            セットする mobCount3
+     * @param mobCount3 セットする mobCount3
      */
     public void setMobCount3(int mobCount3) {
         this.mobCount3.set(mobCount3);
@@ -634,8 +636,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param mobCount4
-     *            セットする mobCount4
+     * @param mobCount4 セットする mobCount4
      */
     public void setMobCount4(int mobCount4) {
         this.mobCount4.set(mobCount4);
@@ -653,8 +654,7 @@ public class PbStatTable {
     /**
      * setter.
      *
-     * @param mobCount5
-     *            セットする mobCount5
+     * @param mobCount5 セットする mobCount5
      */
     public void setMobCount5(int mobCount5) {
         this.mobCount5.set(mobCount5);

@@ -1,25 +1,24 @@
+/*
+ * Copyright 2014.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ramidore.logic.system;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javafx.scene.control.TableView;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,11 +30,17 @@ import org.ramidore.util.RamidoreUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * ポイント戦.
  *
  * @author atmark
- *
  */
 public class PointBattleLogic extends AbstractSystemMessageLogic {
 
@@ -46,13 +51,11 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
     /**
      * 得点情報にマッチする正規表現パターン.
-     *
      */
     private static final String UNIT_PATTERN = "10005C1200000B00....0000(......)00";
 
     /**
      * パケット全体にマッチする正規表現パターン.
-     *
      */
     private static final String PATTERN = "^(?:.{2})*(" + UNIT_PATTERN + ")(?:.{2})*$";
 
@@ -69,16 +72,18 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * JavaFXスレッドと同期するためのLinkedQueueのリスト.
      */
-    private List<ConcurrentLinkedQueue<PbLogBean>> chartDataQList = new ArrayList<ConcurrentLinkedQueue<PbLogBean>>();
+    @Getter
+    private List<ConcurrentLinkedQueue<PbLogBean>> chartDataQList = new ArrayList<>();
 
     /**
      * 統計表示用テーブル.
      */
+    @Setter
     private TableView<PbStatTable> statTable;
 
     /**
      * 識別子.
-     *
+     * <p>
      * インスタンス生成時刻とする
      */
     private String id;
@@ -111,7 +116,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * 現在のポイントマップ.
      */
-    private Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> pointMap = new HashMap<>();
 
     /**
      * 現在の統計情報.
@@ -131,7 +136,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         currentStat = new PbStatTable();
 
         for (int i = 0; i < 6; i++) {
-            chartDataQList.add(new ConcurrentLinkedQueue<PbLogBean>());
+            chartDataQList.add(new ConcurrentLinkedQueue<>());
         }
 
         pointMap.put(0, 0);
@@ -161,7 +166,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
 
             Matcher unitMatcher = unitPattern.matcher(data.getStrData());
 
-            while(unitMatcher.find()) {
+            while (unitMatcher.find()) {
 
                 ConcurrentLinkedQueue<PbLogBean> dataQ = chartDataQList.get(currentStageNo - 1);
                 ConcurrentLinkedQueue<PbLogBean> allDataQ = chartDataQList.get(5);
@@ -210,7 +215,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
      */
     public void loadPastData() {
 
-        Collection<File> fileList = FileUtils.listFiles(new File("./"), new String[] {"log"}, false);
+        Collection<File> fileList = FileUtils.listFiles(new File("./"), new String[]{"log"}, false);
 
         for (File file : fileList) {
 
@@ -233,7 +238,7 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                     continue;
                 }
 
-                List<PbLogBean> dataList = new ArrayList<PbLogBean>();
+                List<PbLogBean> dataList = new ArrayList<>();
 
                 for (int i = 1; i < list.size(); i++) {
                     PbLogBean bean = loadLine(id, list.get(i));
@@ -256,10 +261,8 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
     /**
      * ログの1行を読込みチャート用データを返す.
      *
-     * @param id
-     *            識別子
-     * @param line
-     *            1行の文字列
+     * @param id   識別子
+     * @param line 1行の文字列
      * @return PointBatteleChartBean
      */
     private PbLogBean loadLine(String id, String line) {
@@ -270,23 +273,22 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             return null;
         }
 
-        return new PbLogBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]), Integer.valueOf(element[2]), Integer.valueOf(element[3]));
+        return new PbLogBean(id, Integer.valueOf(element[0]), Integer.valueOf(element[1]),
+                Integer.valueOf(element[2]), Integer.valueOf(element[3]));
     }
 
     /**
      * 1系列について点数の統計を取る.
      *
-     * @param id
-     *            識別子
-     * @param dataList
-     *            データのリスト
+     * @param id       識別子
+     * @param dataList データのリスト
      */
     private void statData(String id, List<PbLogBean> dataList) {
 
         // key : ステージ番号 value : 得点
-        Map<Integer, Integer> pointMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> pointMap = new HashMap<>();
         // key : ステージ番号 value : 得点扱いになった数（死亡によるポイント減少含む）
-        Map<Integer, Integer> mobCountMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> mobCountMap = new HashMap<>();
         for (int i = 0; i < 7; i++) {
             // 0で初期化
             pointMap.put(i, 0);
@@ -365,87 +367,47 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
         int p = currentData.getPoint();
 
         switch (currentStageNo) {
-        case 1:
-            stat.setMobCount1(currentData.getStageSequentialNo());
-            stat.setPoint1(p);
-            stat.setStage1();
-            break;
-        case 2:
-            stat.setMobCount2(currentData.getStageSequentialNo());
-            // 前面の最終点数をマイナスする
-            stat.setPoint2(p - stat.getPoint1());
-            stat.setStage2();
-            break;
-        case 3:
-            stat.setMobCount3(currentData.getStageSequentialNo());
-            stat.setPoint3(p - stat.getPoint1() - stat.getPoint2());
-            stat.setStage3();
-            break;
-        case 4:
-            stat.setMobCount4(currentData.getStageSequentialNo());
-            stat.setPoint4(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3());
-            stat.setStage4();
-            break;
-        case 5:
-            stat.setMobCount5(currentData.getStageSequentialNo());
-            stat.setPoint5(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3() - stat.getPoint4());
-            stat.setStage5();
-            break;
+            case 1:
+                stat.setMobCount1(currentData.getStageSequentialNo());
+                stat.setPoint1(p);
+                stat.setStage1();
+                break;
+            case 2:
+                stat.setMobCount2(currentData.getStageSequentialNo());
+                // 前面の最終点数をマイナスする
+                stat.setPoint2(p - stat.getPoint1());
+                stat.setStage2();
+                break;
+            case 3:
+                stat.setMobCount3(currentData.getStageSequentialNo());
+                stat.setPoint3(p - stat.getPoint1() - stat.getPoint2());
+                stat.setStage3();
+                break;
+            case 4:
+                stat.setMobCount4(currentData.getStageSequentialNo());
+                stat.setPoint4(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3());
+                stat.setStage4();
+                break;
+            case 5:
+                stat.setMobCount5(currentData.getStageSequentialNo());
+                stat.setPoint5(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3() - stat.getPoint4());
+                stat.setStage5();
+                break;
         }
         stat.setPointTotal(p);
-
-    }
-
-    /**
-     * getter.
-     *
-     * @return chartDataQList
-     */
-    public List<ConcurrentLinkedQueue<PbLogBean>> getChartDataQList() {
-        return chartDataQList;
-    }
-
-    /**
-     * setter.
-     *
-     * @param chartDataQList
-     *            セットする chartDataQList
-     */
-    public void setChartDataQList(List<ConcurrentLinkedQueue<PbLogBean>> chartDataQList) {
-        this.chartDataQList = chartDataQList;
-    }
-
-    /**
-     * getter.
-     *
-     * @return statTable
-     */
-    public TableView<PbStatTable> getStatTable() {
-        return statTable;
-    }
-
-    /**
-     * setter.
-     *
-     * @param statTable
-     *            セットする statTable
-     */
-    public void setStatTable(TableView<PbStatTable> statTable) {
-        this.statTable = statTable;
     }
 
     /**
      * 重複ポイント受信チェッカー.
      *
      * @author atmark
-     *
      */
     private class DuplicateChecker {
 
         private Set<Integer> set;
 
         public DuplicateChecker() {
-            set = new HashSet<Integer>();
+            set = new HashSet<>();
         }
 
         public boolean check(int point) {
