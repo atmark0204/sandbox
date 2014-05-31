@@ -10,13 +10,11 @@
 
   http://java.com/ja/download/
 
- 2. 環境変数 JAVA_HOME が設定されていること
-
- 3. WinPcapがインストールされていること
+ 2. WinPcapがインストールされていること
 
   http://www.winpcap.org/
 
- 4. item.datがプログラムと同じディレクトリに配置されていること
+ 3. item.datがプログラムと同じディレクトリに配置されていること
 
 既知の不具合
 

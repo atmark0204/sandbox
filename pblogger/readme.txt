@@ -1,22 +1,16 @@
 ダウンロード
 
- 32bit Windows (動作未確認)
-
-  bin/pblogger-*-x86.zip
-
  64bit Windows
 
   bin/pblogger-*-x86_64.zip
 
 必要要件
 
- 1. JRE7以降がインストールされていること
+ 1. JRE8以降がインストールされていること
 
   http://java.com/ja/download/
 
- 2. 環境変数 JAVA_HOME が設定されていること
-
- 3. WinPcapがインストールされていること
+ 2. WinPcapがインストールされていること
 
   http://www.winpcap.org/
 

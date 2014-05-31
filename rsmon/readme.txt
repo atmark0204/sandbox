@@ -1,9 +1,5 @@
 ダウンロード
 
- 32bit Windows (動作未確認)
-
-  bin/rsmon-*-x86.zip
-
  64bit Windows
 
   bin/rsmon-*-x86_64.zip
@@ -14,8 +10,6 @@
 
   http://java.com/ja/download/
 
- 2. 環境変数 JAVA_HOME が設定されていること
-
- 3. WinPcapがインストールされていること
+ 2. WinPcapがインストールされていること
 
   http://www.winpcap.org/
