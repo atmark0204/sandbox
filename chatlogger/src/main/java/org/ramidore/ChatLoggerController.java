@@ -1,35 +1,20 @@
 package org.ramidore;
 
-import java.util.Properties;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import org.ramidore.bean.ChatTable;
 import org.ramidore.bean.ItemTable;
 import org.ramidore.bean.RedStoneChartBean;
@@ -38,6 +23,8 @@ import org.ramidore.controller.AbstractMainController;
 import org.ramidore.core.PacketAnalyzeService;
 import org.ramidore.logic.ChatLoggerLogic;
 import org.ramidore.logic.system.RedstoneLogic;
+
+import java.util.Properties;
 
 /**
  * . JavaFXコントローラクラス
@@ -305,38 +292,38 @@ public class ChatLoggerController extends AbstractMainController {
 
         ChatLoggerLogic logic = (ChatLoggerLogic) getService().getLogic();
 
-        sakebiChatDate.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("date"));
-        sakebiChatName.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("name"));
-        sakebiChatContent.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("content"));
+        sakebiChatDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        sakebiChatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        sakebiChatContent.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         logic.getSakebiChatLogic().setTable(sakebiChatTable);
 
-        normalChatDate.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("date"));
-        normalChatName.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("name"));
-        normalChatContent.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("content"));
+        normalChatDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        normalChatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        normalChatContent.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         logic.getNormalChatLogic().setTable(normalChatTable);
 
-        partyChatDate.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("date"));
-        partyChatName.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("name"));
-        partyChatContent.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("content"));
+        partyChatDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        partyChatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partyChatContent.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         logic.getPartyChatLogic().setTable(partyChatTable);
 
-        guildChatDate.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("date"));
-        guildChatName.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("name"));
-        guildChatContent.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("content"));
+        guildChatDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        guildChatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        guildChatContent.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         logic.getGuildChatLogic().setTable(guildChatTable);
 
-        mimiChatDate.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("date"));
-        mimiChatName.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("name"));
-        mimiChatContent.setCellValueFactory(new PropertyValueFactory<ChatTable, String>("content"));
+        mimiChatDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        mimiChatName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        mimiChatContent.setCellValueFactory(new PropertyValueFactory<>("content"));
 
         logic.getMimiChatLogic().setTable(mimiChatTable);
 
-        itemDate.setCellValueFactory(new PropertyValueFactory<ItemTable, String>("date"));
-        itemName.setCellValueFactory(new PropertyValueFactory<ItemTable, String>("name"));
+        itemDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        itemName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         logic.getItemLogic().setItemTable(itemTable);
 
@@ -359,19 +346,16 @@ public class ChatLoggerController extends AbstractMainController {
         deviceCb.getSelectionModel().select(getService().getCurrentDeviceIndex());
 
         // 使用デバイス選択
-        deviceCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
+        deviceCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
-                getService().setDevice(newVal.intValue());
+            getService().setDevice(newVal.intValue());
 
-                ObservableList<String> addrs = addressCb.getItems();
-                addrs.clear();
-                addrs.addAll(getService().getAddressList());
+            ObservableList<String> addrs = addressCb.getItems();
+            addrs.clear();
+            addrs.addAll(getService().getAddressList());
 
-                addressCb.getSelectionModel().selectFirst();
-                getService().setListenAddress(0);
-            }
+            addressCb.getSelectionModel().selectFirst();
+            getService().setListenAddress(0);
         });
 
         // IPアドレス一覧を初期化
@@ -381,13 +365,10 @@ public class ChatLoggerController extends AbstractMainController {
         addressCb.getSelectionModel().select(getService().getCurrentListenAddressIndex());
 
         // ListenするIPアドレス選択
-        addressCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
+        addressCb.getSelectionModel().selectedIndexProperty().addListener((ov, oldVal, newVal) -> {
 
-                if (newVal.intValue() != -1) {
-                    getService().setListenAddress(newVal.intValue());
-                }
+            if (newVal.intValue() != -1) {
+                getService().setListenAddress(newVal.intValue());
             }
         });
 
@@ -396,23 +377,20 @@ public class ChatLoggerController extends AbstractMainController {
         if (autoRun) {
             getService().start();
         }
-        startTb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // イベントの発生元を取得
-                ToggleButton toggle = (ToggleButton) event.getSource();
+        startTb.setOnAction(event -> {
+            // イベントの発生元を取得
+            ToggleButton toggle = (ToggleButton) event.getSource();
 
-                if (toggle.isSelected()) {
-                    // 開始
-                    autoRun = true;
+            if (toggle.isSelected()) {
+                // 開始
+                autoRun = true;
 
-                    getService().restart();
-                } else {
-                    // 停止
-                    autoRun = false;
+                getService().restart();
+            } else {
+                // 停止
+                autoRun = false;
 
-                    getService().stop();
-                }
+                getService().stop();
             }
         });
     }
@@ -430,114 +408,64 @@ public class ChatLoggerController extends AbstractMainController {
 
         oshiraseJDialog.addLabel();
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                //oshiraseJDialog.addLabel();
-
-                jfxPanel.setScene(new Scene(new Group()));
-            }
-        });
+        Platform.runLater(() -> jfxPanel.setScene(new Scene(new Group())));
 
         // 別スレッドが持つ値とラベルの値を同期させる
-        ChangeListener<String> listener = new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
-                oshiraseJDialog.getLabel().setText(newVal);
-            }
-        };
+        ChangeListener<String> listener = (ov, oldVal, newVal) -> oshiraseJDialog.getLabel().setText(newVal);
 
         getService().messageProperty().addListener(listener);
 
         // 初期設定取得
-        boolean noticeable = ((ChatLoggerLogic) getService().getLogic()).isNoticeable();
+        boolean noticeable = getService().getLogic().isNoticeable();
         oshiraseWindow.setSelected(noticeable);
         opacitySlider.setDisable(!noticeable);
         oshiraseJDialog.setVisible(noticeable);
         //jfxPanel.setVisible(noticeable);
-        oshiraseWindow.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
+        oshiraseWindow.setOnAction(e -> {
 
-                ((ChatLoggerLogic) getService().getLogic()).setNoticeable(oshiraseWindow.isSelected());
+            ((ChatLoggerLogic) getService().getLogic()).setNoticeable(oshiraseWindow.isSelected());
 
-                // スライダーのenable/disable切り替え
-                opacitySlider.setDisable(!oshiraseWindow.isSelected());
-                oshiraseJDialog.setVisible(oshiraseWindow.isSelected());
-                //jfxPanel.setVisible(oshiraseWindow.isSelected());
-            }
+            // スライダーのenable/disable切り替え
+            opacitySlider.setDisable(!oshiraseWindow.isSelected());
+            oshiraseJDialog.setVisible(oshiraseWindow.isSelected());
+            //jfxPanel.setVisible(oshiraseWindow.isSelected());
         });
 
         sakebiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().isNoticeable());
-        sakebiMenu.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                ((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().setEnabled(sakebiMenu.isSelected());
-            }
-        });
+        sakebiMenu.setOnAction(e -> ((ChatLoggerLogic) getService().getLogic()).getSakebiChatLogic().setEnabled(sakebiMenu.isSelected()));
 
         normalMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().isNoticeable());
-        normalMenu.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                ((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().setEnabled(normalMenu.isSelected());
-            }
-        });
+        normalMenu.setOnAction(e -> ((ChatLoggerLogic) getService().getLogic()).getNormalChatLogic().setEnabled(normalMenu.isSelected()));
 
         partyMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().isNoticeable());
-        partyMenu.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                ((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().setEnabled(partyMenu.isSelected());
-            }
-        });
+        partyMenu.setOnAction(e -> ((ChatLoggerLogic) getService().getLogic()).getPartyChatLogic().setEnabled(partyMenu.isSelected()));
 
         guildMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().isNoticeable());
-        guildMenu.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                ((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().setEnabled(guildMenu.isSelected());
-            }
-        });
+        guildMenu.setOnAction(e -> ((ChatLoggerLogic) getService().getLogic()).getGuildChatLogic().setEnabled(guildMenu.isSelected()));
 
         mimiMenu.setSelected(((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().isNoticeable());
-        mimiMenu.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                ((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().setEnabled(mimiMenu.isSelected());
-            }
-        });
+        mimiMenu.setOnAction(e -> ((ChatLoggerLogic) getService().getLogic()).getMimiChatLogic().setEnabled(mimiMenu.isSelected()));
 
         // クリアボタン押下
-        clearButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        clearButton.setOnAction(event -> {
 
-                sakebiChatTable.getItems().clear();
-                normalChatTable.getItems().clear();
-                partyChatTable.getItems().clear();
-                guildChatTable.getItems().clear();
-                mimiChatTable.getItems().clear();
-            }
+            sakebiChatTable.getItems().clear();
+            normalChatTable.getItems().clear();
+            partyChatTable.getItems().clear();
+            guildChatTable.getItems().clear();
+            mimiChatTable.getItems().clear();
         });
 
         // お知らせ表示行数
-        oshiraseLineCountCb.getSelectionModel().select(((ChatLoggerLogic) getService().getLogic()).getOshiraseLineCount() - 1);
-        oshiraseLineCountCb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                ((ChatLoggerLogic) getService().getLogic()).setOshiraseLineCount(newVal.intValue() + 1);
-            }
-        });
-
+        SingleSelectionModel<Integer> selectionModel = oshiraseLineCountCb.getSelectionModel();
+        selectionModel.select(((ChatLoggerLogic) getService().getLogic()).getOshiraseLineCount() - 1);
+        selectionModel.selectedIndexProperty().addListener((ov, oldVal, newVal) -> ((ChatLoggerLogic) getService().getLogic()).setOshiraseLineCount(newVal.intValue() + 1));
 
         // お知らせウインドウの透明度
         opacitySlider.setMin(0.0d);
         opacitySlider.setMax(1.0d);
         opacitySlider.setValue((double) oshiraseJDialog.getOpacity());
-        opacitySlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number oldVal, Number newVal) {
-
-                oshiraseJDialog.setOpacity(newVal.floatValue());
-            }
-        });
+        opacitySlider.valueProperty().addListener((ov, oldVal, newVal) -> oshiraseJDialog.setOpacity(newVal.floatValue()));
     }
 
     /**
@@ -656,14 +584,7 @@ public class ChatLoggerController extends AbstractMainController {
 
         // 閉じた時 Swing on JavaFXな場合Application.stop()が呼ばれない
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-            @Override
-            public void handle(WindowEvent arg0) {
-
-                oshiraseJDialog.dispose();
-            }
-        });
+        stage.setOnCloseRequest(arg0 -> oshiraseJDialog.dispose());
     }
 
     /**
@@ -691,40 +612,34 @@ public class ChatLoggerController extends AbstractMainController {
 
         ContextMenu menu = new ContextMenu();
         MenuItem item1 = new MenuItem("発言者をコピー");
-        item1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ChatTable table = tableView.getSelectionModel().getSelectedItem();
+        item1.setOnAction(event -> {
+            ChatTable table = tableView.getSelectionModel().getSelectedItem();
 
-                final Clipboard cb = Clipboard.getSystemClipboard();
+            final Clipboard cb = Clipboard.getSystemClipboard();
 
-                final ClipboardContent c = new ClipboardContent();
+            final ClipboardContent c = new ClipboardContent();
 
-                c.putString(table.getName());
+            c.putString(table.getName());
 
-                cb.setContent(c);
+            cb.setContent(c);
 
-                event.consume();
-            }
+            event.consume();
         });
         menu.getItems().addAll(item1);
 
         MenuItem item2 = new MenuItem("発言内容をコピー");
-        item2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ChatTable table = tableView.getSelectionModel().getSelectedItem();
+        item2.setOnAction(event -> {
+            ChatTable table = tableView.getSelectionModel().getSelectedItem();
 
-                final Clipboard cb = Clipboard.getSystemClipboard();
+            final Clipboard cb = Clipboard.getSystemClipboard();
 
-                final ClipboardContent c = new ClipboardContent();
+            final ClipboardContent c = new ClipboardContent();
 
-                c.putString(table.getContent());
+            c.putString(table.getContent());
 
-                cb.setContent(c);
+            cb.setContent(c);
 
-                event.consume();
-            }
+            event.consume();
         });
         menu.getItems().addAll(item2);
 

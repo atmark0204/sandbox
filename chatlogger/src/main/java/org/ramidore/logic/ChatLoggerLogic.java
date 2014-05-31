@@ -1,17 +1,15 @@
 package org.ramidore.logic;
 
-import java.util.LinkedList;
-import java.util.Properties;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.ramidore.core.PacketData;
-import org.ramidore.logic.chat.GuildChatLogic;
-import org.ramidore.logic.chat.MimiChatLogic;
-import org.ramidore.logic.chat.NormalChatLogic;
-import org.ramidore.logic.chat.PartyChatLogic;
-import org.ramidore.logic.chat.SakebiChatLogic;
+import org.ramidore.logic.chat.*;
 import org.ramidore.logic.item.ItemLogic;
 import org.ramidore.logic.system.DameonMessageLogic;
 import org.ramidore.logic.system.RedstoneLogic;
+
+import java.util.LinkedList;
+import java.util.Properties;
 
 /**
  * . メインロジック
@@ -24,11 +22,15 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     /**
      * お知らせ表示の初期設定.
      */
+    @Getter
+    @Setter
     private boolean noticeable;
 
     /**
      * お知らせの表示行数.
      */
+    @Getter
+    @Setter
     private int oshiraseLineCount;
 
     /**
@@ -39,31 +41,37 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     /**
      * 叫び.
      */
+    @Getter
     private SakebiChatLogic sakebiChatLogic;
 
     /**
      * 通常チャット.
      */
+    @Getter
     private NormalChatLogic normalChatLogic;
 
     /**
      * PTチャット.
      */
+    @Getter
     private PartyChatLogic partyChatLogic;
 
     /**
      * ギルドチャット.
      */
+    @Getter
     private GuildChatLogic guildChatLogic;
 
     /**
      * 耳打ち.
      */
+    @Getter
     private MimiChatLogic mimiChatLogic;
 
     /**
      * RS返却.
      */
+    @Getter
     private RedstoneLogic redstoneLogic;
 
     /**
@@ -74,6 +82,7 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     /**
      * アイテム取得.
      */
+    @Getter
     private ItemLogic itemLogic;
 
     /**
@@ -231,165 +240,5 @@ public class ChatLoggerLogic extends AbstractMainLogic {
     @Override
     public boolean isNoticeable() {
         return noticeable;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return sakebiChatLogic
-     */
-    public SakebiChatLogic getSakebiChatLogic() {
-        return sakebiChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param sakebiChatLogic
-     *            セットする sakebiChatLogic
-     */
-    public void setSakebiChatLogic(SakebiChatLogic sakebiChatLogic) {
-        this.sakebiChatLogic = sakebiChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return normalChatLogic
-     */
-    public NormalChatLogic getNormalChatLogic() {
-        return normalChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param normalChatLogic
-     *            セットする normalChatLogic
-     */
-    public void setNormalChatLogic(NormalChatLogic normalChatLogic) {
-        this.normalChatLogic = normalChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return partyChatLogic
-     */
-    public PartyChatLogic getPartyChatLogic() {
-        return partyChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param partyChatLogic
-     *            セットする partyChatLogic
-     */
-    public void setPartyChatLogic(PartyChatLogic partyChatLogic) {
-        this.partyChatLogic = partyChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return guildChatLogic
-     */
-    public GuildChatLogic getGuildChatLogic() {
-        return guildChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param guildChatLogic
-     *            セットする guildChatLogic
-     */
-    public void setGuildChatLogic(GuildChatLogic guildChatLogic) {
-        this.guildChatLogic = guildChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return mimiChatLogic
-     */
-    public MimiChatLogic getMimiChatLogic() {
-        return mimiChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param mimiChatLogic
-     *            セットする mimiChatLogic
-     */
-    public void setMimiChatLogic(MimiChatLogic mimiChatLogic) {
-        this.mimiChatLogic = mimiChatLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return redstoneLogic
-     */
-    public RedstoneLogic getRedstoneLogic() {
-        return redstoneLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param redstoneLogic
-     *            セットする redstoneLogic
-     */
-    public void setRedstoneLogic(RedstoneLogic redstoneLogic) {
-        this.redstoneLogic = redstoneLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @return itemLogic
-     */
-    public ItemLogic getItemLogic() {
-        return itemLogic;
-    }
-
-    /**
-     * . accessor
-     *
-     * @param itemLogic
-     *            セットする itemLogic
-     */
-    public void setItemLogic(ItemLogic itemLogic) {
-        this.itemLogic = itemLogic;
-    }
-
-    /**
-     * setter.
-     *
-     * @param noticeable セットする noticeable
-     */
-    public void setNoticeable(boolean noticeable) {
-        this.noticeable = noticeable;
-    }
-
-    /**
-     * getter.
-     *
-     * @return oshiraseLineCount
-     */
-    public int getOshiraseLineCount() {
-        return oshiraseLineCount;
-    }
-
-    /**
-     * setter.
-     *
-     * @param oshiraseLineCount セットする oshiraseLineCount
-     */
-    public void setOshiraseLineCount(int oshiraseLineCount) {
-        this.oshiraseLineCount = oshiraseLineCount;
     }
 }

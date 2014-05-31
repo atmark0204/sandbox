@@ -48,7 +48,7 @@ public class ChatLogger extends Application {
 
         loader.load();
 
-        controller = (ChatLoggerController) loader.getController();
+        controller = loader.getController();
 
         Parent root = loader.getRoot();
 
