@@ -1,9 +1,8 @@
 /.settings
-/lib
 /target
-/jnetpcap.dll
-/*.log
-/*.pcap
 /config.xml
+/debug.log
+/jnetpcap.dll
 *.iml
 
+/trace.log

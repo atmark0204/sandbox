@@ -1,5 +1,6 @@
 /.settings
 /target
 /config.xml
+/debug.log
 /jnetpcap.dll
 *.iml
