@@ -364,6 +364,10 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
             }
         }
 
+        if (stat == null) {
+            return;
+        }
+
         int p = currentData.getPoint();
 
         switch (currentStageNo) {
@@ -377,21 +381,27 @@ public class PointBattleLogic extends AbstractSystemMessageLogic {
                 // 前面の最終点数をマイナスする
                 stat.setPoint2(p - stat.getPoint1());
                 stat.setStage2();
+                stat.setPoint2Total(p);
                 break;
             case 3:
                 stat.setMobCount3(currentData.getStageSequentialNo());
-                stat.setPoint3(p - stat.getPoint1() - stat.getPoint2());
+                stat.setPoint3(p - (stat.getPoint1() + stat.getPoint2()));
                 stat.setStage3();
+                stat.setPoint3Total(p);
                 break;
             case 4:
                 stat.setMobCount4(currentData.getStageSequentialNo());
-                stat.setPoint4(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3());
+                stat.setPoint4(p - (stat.getPoint1() + stat.getPoint2() + stat.getPoint3()));
                 stat.setStage4();
+                stat.setPoint4Total(p);
                 break;
             case 5:
                 stat.setMobCount5(currentData.getStageSequentialNo());
-                stat.setPoint5(p - stat.getPoint1() - stat.getPoint2() - stat.getPoint3() - stat.getPoint4());
+                stat.setPoint5(p - (stat.getPoint1() + stat.getPoint2() + stat.getPoint3() + stat.getPoint4()));
                 stat.setStage5();
+                break;
+            default:
+                stat.setPointTotal(p);
                 break;
         }
         stat.setPointTotal(p);
