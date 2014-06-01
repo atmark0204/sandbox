@@ -1,90 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?scenebuilder-stylesheet pblogger.css?>
 
-<AnchorPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="1023.0000999999975" xmlns:fx="http://javafx.com/fxml" fx:controller="org.ramidore.PbLoggerController">
-  <children>
-    <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList" />
-      </items>
-    </ChoiceBox>
-    <ToggleButton fx:id="startTb" layoutX="348.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" style="" text="開始" textAlignment="CENTER" />
-    <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList" />
-      </items>
-    </ChoiceBox>
-    <Accordion prefHeight="376.0" prefWidth="807.999977929685" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
-      <expandedPane>
-        <TitledPane fx:id="x2" animated="false" text="統計">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <TableView fx:id="pbStatTable" prefHeight="328.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
-                  <columns>
-                    <TableColumn id="seriesName" maxWidth="225.0" minWidth="10.0" prefWidth="125.0" resizable="false" text="系列" fx:id="statIdCol" />
-                    <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="1面" fx:id="statStage1Col" />
-                    <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="2面" fx:id="statStage2Col" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="3面" fx:id="statStage3Col" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="4面" fx:id="statStage4Col" />
-                    <TableColumn maxWidth="200.0" prefWidth="100.0" text="5面" fx:id="statStage5Col" />
-                    <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="86.0" text="～2面" fx:id="statStage2TotalCol" />
-                    <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="91.0" text="～3面" fx:id="statStage3TotalCol" />
-                    <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="83.0" text="～4面" fx:id="statStage4TotalCol" />
-                    <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="91.0" text="合計" fx:id="statStage5TotalCol" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </TitledPane>
-      </expandedPane>
-      <panes>
-        <TitledPane fx:id="x1" animated="false" text="チャート" textAlignment="LEFT" underline="false">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <LineChart fx:id="pbChart" legendSide="LEFT" prefHeight="307.9999000000025" prefWidth="805.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-                  <xAxis>
-                    <NumberAxis side="BOTTOM" />
-                  </xAxis>
-                  <yAxis>
-                    <NumberAxis side="LEFT" />
-                  </yAxis>
-                </LineChart>
-                <ChoiceBox fx:id="stageCb" layoutX="0.0" layoutY="-2.0" prefHeight="22.0" prefWidth="120.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="1面" />
-                      <String fx:value="2面" />
-                      <String fx:value="3面" />
-                      <String fx:value="4面" />
-                      <String fx:value="5面" />
-                      <String fx:value="全面" />
-                    </FXCollections>
-                  </items>
-                </ChoiceBox>
-                <Label id="chatExtraLabel" fx:id="chartExtraLabel" layoutX="120.0" layoutY="-2.0" prefHeight="21.0" prefWidth="212.0" text="" />
-              </children>
-            </AnchorPane>
-          </content>
-        </TitledPane>
-        <fx:reference source="x2" />
-      </panes>
-    </Accordion>
-    <Button fx:id="clear1b" layoutX="392.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="1面クリア" textAlignment="CENTER" />
-    <Button id="clear1b" fx:id="clear2b" layoutX="456.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="2面クリア" textAlignment="CENTER" />
-    <Button id="clear1b" fx:id="clear3b" layoutX="520.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="3面クリア" textAlignment="CENTER" />
-    <Button id="clear1b" fx:id="clear4b" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="4面クリア" textAlignment="CENTER" />
-    <Button id="clear1b" fx:id="clear5b" layoutX="648.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="5面クリア" textAlignment="CENTER" />
-    <Button id="clear1b" fx:id="loadPastDataB" layoutX="712.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="過去データ読込" textAlignment="CENTER" />
-  </children>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<AnchorPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="478.0" prefWidth="1023.0000999999975" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.ramidore.PbLoggerController">
+    <children>
+        <ChoiceBox id="deviceList" fx:id="deviceCb" layoutX="0.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ChoiceBox>
+        <ToggleButton fx:id="startTb" layoutX="348.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" style=""
+                      text="開始" textAlignment="CENTER"/>
+        <ChoiceBox id="deviceList" fx:id="addressCb" layoutX="174.0" layoutY="0.0" prefHeight="23.0" prefWidth="174.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ChoiceBox>
+        <Accordion prefHeight="376.0" prefWidth="807.999977929685" AnchorPane.bottomAnchor="1.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+            <expandedPane>
+                <TitledPane fx:id="x2" animated="false" text="統計">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="pbStatTable" prefHeight="328.0" prefWidth="806.0"
+                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn id="seriesName" maxWidth="225.0" minWidth="10.0" prefWidth="125.0"
+                                                     resizable="false" text="系列" fx:id="statIdCol"/>
+                                        <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="1面"
+                                                     fx:id="statStage1Col"/>
+                                        <TableColumn maxWidth="200.0" minWidth="10.0" prefWidth="100.0" text="2面"
+                                                     fx:id="statStage2Col"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="3面"
+                                                     fx:id="statStage3Col"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="4面"
+                                                     fx:id="statStage4Col"/>
+                                        <TableColumn maxWidth="200.0" prefWidth="100.0" text="5面"
+                                                     fx:id="statStage5Col"/>
+                                        <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="86.0"
+                                                     text="～2面" fx:id="statStage2TotalCol"/>
+                                        <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="91.0"
+                                                     text="～3面" fx:id="statStage3TotalCol"/>
+                                        <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="83.0"
+                                                     text="～4面" fx:id="statStage4TotalCol"/>
+                                        <TableColumn id="totalPoint" maxWidth="200.0" minWidth="10.0" prefWidth="91.0"
+                                                     text="合計" fx:id="statStage5TotalCol"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+            </expandedPane>
+            <panes>
+                <TitledPane fx:id="x1" animated="false" text="チャート" textAlignment="LEFT" underline="false">
+                    <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <LineChart fx:id="pbChart" legendSide="LEFT" prefHeight="307.9999000000025"
+                                           prefWidth="805.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                                    <xAxis>
+                                        <NumberAxis side="BOTTOM"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT"/>
+                                    </yAxis>
+                                </LineChart>
+                                <ChoiceBox fx:id="stageCb" layoutX="0.0" layoutY="-2.0" prefHeight="22.0"
+                                           prefWidth="120.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="1面"/>
+                                            <String fx:value="2面"/>
+                                            <String fx:value="3面"/>
+                                            <String fx:value="4面"/>
+                                            <String fx:value="5面"/>
+                                            <String fx:value="全面"/>
+                                        </FXCollections>
+                                    </items>
+                                </ChoiceBox>
+                                <Label id="chatExtraLabel" fx:id="chartExtraLabel" layoutX="120.0" layoutY="-2.0"
+                                       prefHeight="21.0" prefWidth="212.0" text=""/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <fx:reference source="x2"/>
+            </panes>
+        </Accordion>
+        <Button fx:id="clear1b" layoutX="392.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0" text="1面クリア"
+                textAlignment="CENTER"/>
+        <Button id="clear1b" fx:id="clear2b" layoutX="456.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0"
+                text="2面クリア" textAlignment="CENTER"/>
+        <Button id="clear1b" fx:id="clear3b" layoutX="520.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0"
+                text="3面クリア" textAlignment="CENTER"/>
+        <Button id="clear1b" fx:id="clear4b" layoutX="584.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0"
+                text="4面クリア" textAlignment="CENTER"/>
+        <Button id="clear1b" fx:id="clear5b" layoutX="648.0" layoutY="0.0" mnemonicParsing="false" prefHeight="23.0"
+                text="5面クリア" textAlignment="CENTER"/>
+        <Button id="clear1b" fx:id="loadPastDataB" layoutX="712.0" layoutY="0.0" mnemonicParsing="false"
+                prefHeight="23.0" text="過去データ読込" textAlignment="CENTER"/>
+    </children>
 </AnchorPane>

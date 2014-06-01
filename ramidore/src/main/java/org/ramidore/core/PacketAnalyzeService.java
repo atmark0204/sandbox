@@ -286,7 +286,7 @@ public class PacketAnalyzeService extends Service<Void> implements IConfigurable
      */
     public void setDevice(final int i) {
 
-        currentDevice = devices.get(i);
+        currentDevice = devices.get(i < devices.size() ? i : 0);
 
         LOG.trace("Choosing " + currentDevice.getDescription() + " on your behalf");
 
